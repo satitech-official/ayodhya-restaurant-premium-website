@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Ayodhya Restaurant ambience placeholder">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#171515"/><stop offset="1" stop-color="#38251d"/></linearGradient><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#d1673c" stop-opacity=".7"/><stop offset="1" stop-color="#d1673c" stop-opacity="0"/></linearGradient></defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <path d="M230 650V310C230 135 370 70 600 70s370 65 370 240v340" fill="#6b4231" stroke="#b68a4a" stroke-width="8"/>
+  <path d="M285 650V330C285 190 400 130 600 130s315 60 315 200v320" fill="#2a1c18"/>
+  <ellipse cx="600" cy="215" rx="180" ry="105" fill="url(#glow)"/>
+  <rect x="360" y="430" width="480" height="32" rx="16" fill="#d6b98c"/><rect x="400" y="460" width="24" height="160" fill="#6b4231"/><rect x="776" y="460" width="24" height="160" fill="#6b4231"/>
+  <g fill="#b84f2f"><circle cx="470" cy="420" r="28"/><circle cx="600" cy="420" r="28"/><circle cx="730" cy="420" r="28"/></g>
+  <g stroke="#b68a4a" opacity=".35"><path d="M320 220l560 390M880 220L320 610M340 170l520 440M860 170L340 610"/></g>
+  <text x="600" y="705" text-anchor="middle" fill="#fff9f1" font-family="Georgia,serif" font-size="56" font-weight="700">AYODHYA</text>
+  <text x="600" y="750" text-anchor="middle" fill="#d6b98c" font-family="Arial,sans-serif" font-size="20" letter-spacing="8">WARM FAMILY DINING</text>
+</svg>

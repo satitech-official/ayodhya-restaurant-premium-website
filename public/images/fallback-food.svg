@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Ayodhya Restaurant food placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#171515"/><stop offset="1" stop-color="#6b4231"/></linearGradient>
+    <radialGradient id="plate"><stop stop-color="#fff9f1"/><stop offset=".72" stop-color="#f4ebdd"/><stop offset=".74" stop-color="#d6b98c"/><stop offset="1" stop-color="#fff9f1"/></radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <g opacity=".16" stroke="#b68a4a"><path d="M0 80h1200M0 160h1200M0 240h1200M0 320h1200M0 400h1200M0 480h1200M0 560h1200M0 640h1200M0 720h1200"/><path d="M80 0v800M160 0v800M240 0v800M320 0v800M400 0v800M480 0v800M560 0v800M640 0v800M720 0v800M800 0v800M880 0v800M960 0v800M1040 0v800M1120 0v800"/></g>
+  <ellipse cx="600" cy="425" rx="310" ry="225" fill="#000" opacity=".2"/>
+  <circle cx="600" cy="390" r="230" fill="url(#plate)"/>
+  <circle cx="600" cy="390" r="150" fill="#b84f2f" opacity=".92"/>
+  <circle cx="548" cy="355" r="54" fill="#f0d28b"/><circle cx="654" cy="425" r="60" fill="#f4c35d"/><circle cx="672" cy="330" r="42" fill="#7b8d42"/><circle cx="520" cy="442" r="43" fill="#d1673c"/>
+  <g fill="#fff9f1" opacity=".9"><circle cx="560" cy="314" r="9"/><circle cx="626" cy="452" r="8"/><circle cx="705" cy="382" r="7"/><circle cx="492" cy="397" r="7"/></g>
+  <text x="600" y="690" text-anchor="middle" fill="#fff9f1" font-family="Georgia,serif" font-size="54" font-weight="700">AYODHYA</text>
+  <text x="600" y="735" text-anchor="middle" fill="#d6b98c" font-family="Arial,sans-serif" font-size="20" letter-spacing="8">RESTAURANT · BETUL</text>
+</svg>

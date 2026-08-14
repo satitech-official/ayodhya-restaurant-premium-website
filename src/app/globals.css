@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+@theme {
+  --color-charcoal: #171515;
+  --color-espresso: #38251d;
+  --color-walnut: #6b4231;
+  --color-terracotta: #b84f2f;
+  --color-burnt: #d1673c;
+  --color-cream: #f4ebdd;
+  --color-sand: #d6b98c;
+  --color-brass: #b68a4a;
+  --color-soft: #fff9f1;
+
+  --font-display: var(--font-cormorant), "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: var(--font-manrope), "Manrope", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-premium: 0 30px 70px -24px rgba(23, 21, 21, 0.45);
+  --shadow-soft: 0 22px 50px -28px rgba(23, 21, 21, 0.35);
+  --shadow-lift: 0 12px 30px -18px rgba(23, 21, 21, 0.4);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-espresso);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: var(--color-terracotta);
+    color: var(--color-soft);
+  }
+
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-terracotta);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-cream);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-walnut);
+    border-radius: 999px;
+    border: 2px solid var(--color-cream);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Architectural arch masks */
+  .clip-arch {
+    clip-path: path("M0 100% L0 34% C0 34% 50% -7% 50% -7% C50% -7% 100% 34% 100% 34% L100% 100% Z");
+  }
+  .clip-arch-round {
+    clip-path: path("M0 100% L0 26% C0 4% 30% 0 50% 0 C70% 0 100% 4% 100% 26% L100% 100% Z");
+  }
+  .clip-window {
+    clip-path: polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%);
+  }
+  .clip-blob {
+    border-radius: 44% 56% 52% 48% / 54% 46% 54% 46%;
+  }
+
+  /* Subtle film-grain */
+  .noise {
+    position: relative;
+  }
+  .noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Jaali-inspired brass lattice */
+  .pattern-jaali {
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(182, 138, 74, 0.16) 0 1px,
+        transparent 1px 14px
+      ),
+      repeating-linear-gradient(-45deg, rgba(182, 138, 74, 0.16) 0 1px, transparent 1px 14px);
+  }
+  .pattern-jaali-light {
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(182, 138, 74, 0.1) 0 1px,
+        transparent 1px 14px
+      ),
+      repeating-linear-gradient(-45deg, rgba(182, 138, 74, 0.1) 0 1px, transparent 1px 14px);
+  }
+
+  /* Thin brass border accent */
+  .brass-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-brass), transparent);
+  }
+
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  @keyframes steam {
+    0% {
+      transform: translateY(0) scaleX(1);
+      opacity: 0;
+    }
+    40% {
+      opacity: 0.7;
+    }
+    100% {
+      transform: translateY(-26px) scaleX(1.5);
+      opacity: 0;
+    }
+  }
+  .animate-steam {
+    animation: steam 2.4s ease-in-out infinite;
+  }
+
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  .animate-drift {
+    animation: drift 6s ease-in-out infinite;
+  }
+
+  @keyframes spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .animate-spin-slow {
+    animation: spin-slow 18s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
