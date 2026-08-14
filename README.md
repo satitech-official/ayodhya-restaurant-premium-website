@@ -1,85 +1,89 @@
 <div align="center">
 
-# 🍽️ Ayodhya Restaurant — Premium Website
-
-### A premium, responsive and modern restaurant experience for Ayodhya Restaurant, Betul
-
 <img src="https://raw.githubusercontent.com/satitech-official/ayodhya-restaurant-premium-website/main/public/og.png" alt="Ayodhya Restaurant Premium Website Preview" width="100%" />
 
 <br />
+<br />
 
-[![Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/satitech-official/ayodhya-restaurant-premium-website)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsatitech-official%2Fayodhya-restaurant-premium-website)
+# 🍽️ Ayodhya Restaurant — Premium Website
 
-![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs)
-![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=111)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Ready-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+### Premium Restaurant Experience · Ganj, Betul, Madhya Pradesh
+
+*Great Food. Great Moments. A Better Digital Experience.*
+
+<br />
+
+[![Live Demo](https://img.shields.io/badge/🌐_LIVE_DEMO-OPEN_WEBSITE-CB6A3A?style=for-the-badge&labelColor=171515)](https://satitech-official.github.io/ayodhya-restaurant-premium-website/)
+[![GitHub Pages](https://img.shields.io/github/actions/workflow/status/satitech-official/ayodhya-restaurant-premium-website/deploy.yml?branch=main&label=GitHub%20Pages&style=for-the-badge)](https://github.com/satitech-official/ayodhya-restaurant-premium-website/actions/workflows/deploy.yml)
+[![Next.js](https://img.shields.io/badge/Next.js-16-171515?style=for-the-badge&logo=nextdotjs)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19-171515?style=for-the-badge&logo=react)](https://react.dev)
+
+<br />
+
+## 🚀 [OPEN LIVE WEBSITE](https://satitech-official.github.io/ayodhya-restaurant-premium-website/)
+
+**Repository:** [satitech-official/ayodhya-restaurant-premium-website](https://github.com/satitech-official/ayodhya-restaurant-premium-website)
 
 </div>
 
 ---
 
-## ✨ Overview
+## ✨ About
 
-Ayodhya Restaurant Premium Website is a production-ready Next.js restaurant experience built for **Ayodhya Restaurant, Betul**. It combines a polished customer-facing website with menu browsing, gallery, offers, reservations, contact features and an admin-ready backend architecture.
+A premium, responsive restaurant website created for **Ayodhya Restaurant, Betul**. The experience combines a modern restaurant presentation with animated sections, menu discovery, gallery, offers, reviews, table reservation, contact and location features.
 
-## 🌟 Key Features
+## 🌟 Website Highlights
 
-- Premium responsive restaurant UI across desktop, tablet and mobile
-- Interactive hero and polished motion effects
+- Premium responsive UI for desktop, tablet and mobile
+- Animated hero with locally bundled fallback imagery
 - Digital menu with categories, search and filters
-- Signature dishes and recommended items
+- Signature dishes and dosa experience
 - Restaurant story and family dining sections
-- Offers and promotional sections
-- Experience gallery and social-style food feed
-- Customer reviews and testimonials
-- Reservation flow
-- Contact and location experience
-- Admin panel architecture
-- PostgreSQL + Drizzle ORM support
-- Local fallback data so public pages stay populated without a database
-- Local image fallbacks to prevent broken-image layouts
-- SEO, Open Graph and social sharing metadata
+- Offers, combos and promotional content
+- Gallery and social-style food feed
+- Customer reviews and Google review links
+- Reservation experience
+- Contact and Google Maps integration
+- Instagram, phone and WhatsApp actions
+- SEO and Open Graph metadata
+- Local fallback content so the public site stays populated without a database
 
-## 🛡️ Stability Improvements
+## 🛠️ Tech Stack
 
-- Public pages remain usable when `DATABASE_URL` is missing or temporarily unavailable.
-- Bundled fallback menu, categories, offers, gallery and reviews keep the public website populated.
-- Broken or expired external food images fall back to local branded artwork.
-- A local Open Graph image is included at `public/og.png`.
-- Duplicate menu category handling is normalized.
-- Dynamic API routes follow the current Next.js async params pattern.
-- Database-dependent APIs return a controlled `503` when PostgreSQL is not configured.
-- Drizzle reads `.env.local` / `.env` rather than relying on a hard-coded database.
-- External Google font build dependency was removed for more deterministic deployments.
+- Next.js 16
+- React 19
+- Tailwind CSS 4
+- Framer Motion
+- Lucide React
+- PostgreSQL
+- Drizzle ORM
 
-## 🚀 Run Locally
+## 🌐 GitHub Pages Deployment
+
+The repository includes an automated GitHub Actions workflow at `.github/workflows/deploy.yml`.
+
+For GitHub Pages, the workflow creates a **public static build** using bundled fallback restaurant data. Server-only admin and API routes are excluded only inside the temporary Actions build workspace and remain untouched in the repository.
+
+Reservation and contact forms use a WhatsApp fallback on the GitHub Pages version so visitors still have a working action on static hosting.
+
+### Live URL
+
+https://satitech-official.github.io/ayodhya-restaurant-premium-website/
+
+## 🔐 Full Admin / Database Deployment
+
+The source repository still contains the full admin panel, authentication, API routes and PostgreSQL/Drizzle architecture. For those server-side features, deploy the same repository on a Node.js-compatible platform such as Vercel and configure the required environment variables.
+
+## 💻 Run Locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-Then open `http://localhost:3000`.
+Open `http://localhost:3000`.
 
-The public website can render immediately using bundled fallback content.
-
-## 🔐 Enable Admin, Reservations & Stored Contact Data
-
-1. Copy `.env.example` to `.env.local`.
-2. Add a valid PostgreSQL `DATABASE_URL`.
-3. Set a strong `ADMIN_PASSWORD` and `AUTH_SECRET`.
-4. Create and seed the database:
-
-```bash
-npm run db:push
-npm run db:seed
-```
-
-Then open `/admin/login` and sign in using the configured admin credentials.
-
-## ✅ Production Validation
+## ✅ Production Checks
 
 ```bash
 npm run typecheck
@@ -87,18 +91,14 @@ npm run lint
 npm run build
 ```
 
-## ☁️ Recommended Deployment
-
-Because this project contains **Next.js server routes, authentication, admin features and database-backed APIs**, deploy the full application on **Vercel or another Node.js-compatible platform** rather than a static-only GitHub Pages export.
-
-Use the **Deploy with Vercel** button at the top of this README to import the repository while preserving the existing design and application architecture.
-
 ---
 
 <div align="center">
 
-### Built for Ayodhya Restaurant, Betul
+### Ayodhya Restaurant · Betul
 
-**Premium dining. Better digital experience.**
+**Premium dining, presented beautifully online.**
+
+Built by **Sati Technologies**
 
 </div>
