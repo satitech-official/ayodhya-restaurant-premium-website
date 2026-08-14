@@ -40,7 +40,10 @@ jobs:
             -exec sed -i '/export const dynamic = "force-dynamic";/d' {} +
 
           # Next.js metadata routes need an explicit static mode during export.
-          for file in src/app/manifest.js src/app/manifest.ts src/app/sitemap.js src/app/sitemap.ts; do
+          for file in \
+            src/app/manifest.js src/app/manifest.ts \
+            src/app/sitemap.js src/app/sitemap.ts \
+            src/app/robots.js src/app/robots.ts; do
             if [ -f "$file" ]; then
               sed -i '/export const dynamic = /d' "$file"
               printf '\nexport const dynamic = "force-static";\n' >> "$file"
