@@ -39,6 +39,12 @@ jobs:
           find src/app -type f \( -name '*.js' -o -name '*.jsx' -o -name '*.ts' -o -name '*.tsx' \) \
             -exec sed -i '/export const dynamic = "force-dynamic";/d' {} +
 
+          # The menu remains fully interactive client-side; only its initial
+          # server-side query-string selection is disabled for the static export.
+          if [ -f 'src/app/(site)/menu/page.jsx' ]; then
+            sed -i 's/const params = await searchParams;/const params = {};/g' 'src/app/(site)/menu/page.jsx'
+          fi
+
           # Next.js metadata routes need an explicit static mode during export.
           for file in \
             src/app/manifest.js src/app/manifest.ts \
