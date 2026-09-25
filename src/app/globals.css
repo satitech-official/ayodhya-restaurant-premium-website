@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  --color-charcoal: #1b120d;
-  --color-espresso: #2f1d13;
-  --color-walnut: #65462c;
-  --color-terracotta: #7a4b2a;
-  --color-burnt: #d4aa5d;
-  --color-cream: #f3eadb;
-  --color-sand: #d7bc87;
-  --color-brass: #c89a48;
-  --color-soft: #fff8ed;
+  --color-charcoal: #160f0a;
+  --color-espresso: #2b190e;
+  --color-walnut: #6d4825;
+  --color-terracotta: #8a5a2b;
+  --color-burnt: #d6a84b;
+  --color-cream: #f3e6cf;
+  --color-sand: #d8ba7a;
+  --color-brass: #c9933c;
+  --color-soft: #fff8ea;
 
   --font-display: var(--font-cormorant), "Cormorant Garamond", ui-serif, Georgia, serif;
   --font-sans: var(--font-manrope), "Manrope", ui-sans-serif, system-ui, sans-serif;
 
-  --shadow-premium: 0 30px 70px -24px rgba(23, 21, 21, 0.45);
-  --shadow-soft: 0 22px 50px -28px rgba(23, 21, 21, 0.35);
-  --shadow-lift: 0 12px 30px -18px rgba(23, 21, 21, 0.4);
+  --shadow-premium: 0 30px 70px -24px rgba(43, 25, 14, 0.5);
+  --shadow-soft: 0 22px 50px -28px rgba(43, 25, 14, 0.38);
+  --shadow-lift: 0 12px 30px -18px rgba(43, 25, 14, 0.42);
 }
 
 @layer base {
@@ -48,12 +48,12 @@
   }
 
   ::selection {
-    background: var(--color-terracotta);
+    background: var(--color-brass);
     color: var(--color-soft);
   }
 
   :where(a, button, input, select, textarea, [tabindex]):focus-visible {
-    outline: 2px solid var(--color-terracotta);
+    outline: 2px solid var(--color-brass);
     outline-offset: 3px;
     border-radius: 4px;
   }
@@ -108,18 +108,18 @@
   .pattern-jaali {
     background-image: repeating-linear-gradient(
         45deg,
-        rgba(182, 138, 74, 0.16) 0 1px,
+        rgba(201, 147, 60, 0.18) 0 1px,
         transparent 1px 14px
       ),
-      repeating-linear-gradient(-45deg, rgba(182, 138, 74, 0.16) 0 1px, transparent 1px 14px);
+      repeating-linear-gradient(-45deg, rgba(201, 147, 60, 0.18) 0 1px, transparent 1px 14px);
   }
   .pattern-jaali-light {
     background-image: repeating-linear-gradient(
         45deg,
-        rgba(182, 138, 74, 0.1) 0 1px,
+        rgba(201, 147, 60, 0.12) 0 1px,
         transparent 1px 14px
       ),
-      repeating-linear-gradient(-45deg, rgba(182, 138, 74, 0.1) 0 1px, transparent 1px 14px);
+      repeating-linear-gradient(-45deg, rgba(201, 147, 60, 0.12) 0 1px, transparent 1px 14px);
   }
 
   /* Thin brass border accent */
