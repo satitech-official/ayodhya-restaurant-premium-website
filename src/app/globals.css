@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  /* Ayodhya golden-brown master palette */
   --color-charcoal: #160f0a;
   --color-espresso: #2b190e;
   --color-walnut: #6d4825;
