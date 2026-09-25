@@ -4,6 +4,8 @@ import { Reveal, Img } from "@/components/primitives";
 import { LogoMark } from "@/components/Logo";
 import { IMAGES, img } from "@/lib/constants";
 
+export const dynamic = "force-static";
+
 export const metadata = {
   title: "Founders",
   description: "The vision and people-first hospitality philosophy behind Ayodhya Restaurant, Betul.",
