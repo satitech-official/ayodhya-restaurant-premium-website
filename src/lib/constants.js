@@ -22,6 +22,7 @@ export const RESTAURANT = {
   instagramUrl: "https://instagram.com/ayodhyarestaurantt",
   facebookUrl: "https://www.facebook.com/search/top?q=Ayodhya%20Restaurant%20Betul",
   mapsQuery: "Ayodhya Restaurant, Ganj, Betul, Madhya Pradesh 460001",
+  googleReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJf0OCHBcJ1jsRfx8E9DDfavw",
   mapsDirectionsUrl:
     "https://www.google.com/maps/dir/?api=1&destination=Ayodhya%20Restaurant%2C%20Ganj%2C%20Betul%2C%20Madhya%20Pradesh%20460001",
   mapsEmbedUrl:
@@ -53,6 +54,7 @@ export const NAV_LINKS = [
   { label: "Experience", href: "/#experience" },
   { label: "Gallery", href: "/gallery" },
   { label: "About", href: "/about" },
+  { label: "Founders", href: "/founders" },
   { label: "Contact", href: "/contact" },
 ];
 
