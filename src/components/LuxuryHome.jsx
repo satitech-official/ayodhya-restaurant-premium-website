@@ -144,7 +144,7 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
             >
               <Link
                 href="/reserve"
-                className="group inline-flex items-center gap-2 rounded-xl bg-terracotta px-7 py-4 text-sm font-bold uppercase tracking-[0.12em] text-soft shadow-[0_18px_50px_-18px_rgba(184,79,47,.8)] transition hover:-translate-y-0.5 hover:bg-burnt"
+                className="group inline-flex items-center gap-2 rounded-xl bg-terracotta px-7 py-4 text-sm font-bold uppercase tracking-[0.12em] text-soft shadow-[0_18px_50px_-18px_rgba(138,90,43,.82)] transition hover:-translate-y-0.5 hover:bg-burnt"
               >
                 <CalendarDays className="h-4 w-4" /> Book a Table
               </Link>
@@ -186,7 +186,7 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
       </section>
 
       <section className="relative overflow-hidden bg-charcoal py-20 lg:py-28">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(182,138,74,.12),transparent_30%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(201,147,60,.13),transparent_30%)]" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
@@ -307,7 +307,7 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
       </section>
 
       <section id="reviews" className="relative overflow-hidden bg-charcoal py-20 lg:py-28">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_50%,rgba(184,79,47,.12),transparent_32%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_50%,rgba(201,147,60,.13),transparent_32%)]" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-burnt">Guest Love</p>
