@@ -20,6 +20,7 @@ import { Img, Reveal } from "@/components/primitives";
 import { InstagramIcon } from "@/components/icons";
 import { RESTAURANT, IMAGES, img } from "@/lib/constants";
 import { formatPrice } from "@/lib/utils";
+import GoogleReviewForm from "@/components/GoogleReviewForm";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -333,6 +334,8 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
               </Reveal>
             ))}
           </div>
+
+          <GoogleReviewForm />
         </div>
       </section>
 
