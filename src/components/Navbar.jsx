@@ -51,13 +51,13 @@ export default function Navbar({ settings }) {
             <LogoLockup dark />
           </Link>
 
-          <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "link-underline text-[13px] font-semibold uppercase tracking-[0.14em] transition-colors",
+                  "link-underline text-[12px] font-semibold uppercase tracking-[0.13em] transition-colors",
                   pathname === link.href ? "text-burnt" : "text-soft/85 hover:text-soft",
                 )}
               >
@@ -114,6 +114,7 @@ export default function Navbar({ settings }) {
                 { label: "Menu", href: "/menu" },
                 { label: "Gallery", href: "/gallery" },
                 { label: "About", href: "/about" },
+                { label: "Founders", href: "/founders" },
                 { label: "Contact", href: "/contact" },
                 { label: "Reserve a Table", href: "/reserve" },
               ].map((link, i) => (
