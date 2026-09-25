@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -49,39 +48,31 @@ function Rating({ value = 5 }) {
 }
 
 export default function LuxuryHome({ settings, signatures = [], gallery = [], reviews = [] }) {
-  const [videoFailed, setVideoFailed] = useState(false);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-  const heroVideo = `${basePath}/videos/ayodhya-hero.mp4`;
+  const heroPoster = `${basePath}/images/hero-restaurant.webp`;
 
   return (
     <div className="bg-charcoal text-soft">
       <section className="relative min-h-[100svh] overflow-hidden bg-charcoal">
         <div className="absolute inset-0">
-          {!videoFailed && (
-            <video
-              className="h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={`${basePath}/images/hero-restaurant.webp`}
-              onError={() => setVideoFailed(true)}
-              aria-label="Ayodhya Restaurant ambience"
-            >
-              <source src={heroVideo} type="video/mp4" />
-            </video>
-          )}
-          {videoFailed && (
-            <motion.img
-              src={`${basePath}/images/hero-restaurant.webp`}
-              alt="Ayodhya Restaurant ambience"
-              className="h-full w-full object-cover"
-              initial={{ scale: 1.04 }}
-              animate={{ scale: 1.1 }}
-              transition={{ duration: 14, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+          <motion.img
+            src={heroPoster}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover"
+            initial={{ scale: 1.02 }}
+            animate={{ scale: 1.07 }}
+            transition={{ duration: 16, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+          />
+          <div className="absolute inset-0 overflow-hidden" aria-label="Restaurant ambience video">
+            <iframe
+              src="https://player.vimeo.com/video/707085647?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0"
+              title="Elegant restaurant ambience"
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 border-0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              referrerPolicy="strict-origin-when-cross-origin"
             />
-          )}
+          </div>
           <div className="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/82 to-charcoal/28" />
           <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-charcoal/35" />
           <div className="pattern-jaali-light absolute inset-0 opacity-[0.08]" />
