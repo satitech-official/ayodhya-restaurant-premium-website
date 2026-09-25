@@ -68,6 +68,12 @@ jobs:
             | xargs -0 -r sed -i 's#/images/#/ayodhya-restaurant-premium-website/images/#g'
           touch out/.nojekyll
 
+      - name: Verify founders static route
+        shell: bash
+        run: |
+          test -f out/founders/index.html
+          echo "Founders route exported successfully."
+
       - name: Configure and enable GitHub Pages
         uses: actions/configure-pages@v5
         with:
