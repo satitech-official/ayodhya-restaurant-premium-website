@@ -72,10 +72,10 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
             playsInline
             preload="auto"
             poster={heroPoster}
-            aria-label="Aerial drone view of an aesthetic restaurant at twilight"
+            aria-label="Cinematic aesthetic restaurant interior showcase"
           >
             <source
-              src="https://videos.pexels.com/video-files/32249709/13754209_1920_1080_30fps.mp4"
+              src="https://videos.pexels.com/video-files/31631562/13476222_3840_2160_25fps.mp4"
               type="video/mp4"
             />
           </video>
