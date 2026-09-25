@@ -75,6 +75,7 @@ export default function Footer({ settings }) {
               {[
                 ["Menu", "/menu"],
                 ["About", "/about"],
+                ["Founders", "/founders"],
                 ["Gallery", "/gallery"],
                 ["Contact", "/contact"],
               ].map(([label, href]) => (
