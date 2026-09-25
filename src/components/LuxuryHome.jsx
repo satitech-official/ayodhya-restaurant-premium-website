@@ -64,15 +64,21 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
             animate={{ scale: 1.07 }}
             transition={{ duration: 16, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
           />
-          <div className="absolute inset-0 overflow-hidden" aria-label="Restaurant ambience video">
-            <iframe
-              src="https://player.vimeo.com/video/707085647?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0"
-              title="Elegant restaurant ambience"
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 border-0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              referrerPolicy="strict-origin-when-cross-origin"
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster={heroPoster}
+            aria-label="Warm restaurant dining ambience"
+          >
+            <source
+              src="https://videos.pexels.com/video-files/34344023/14549712_2560_1440_30fps.mp4"
+              type="video/mp4"
             />
-          </div>
+          </video>
           <div className="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/82 to-charcoal/28" />
           <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-charcoal/35" />
           <div className="pattern-jaali-light absolute inset-0 opacity-[0.08]" />
