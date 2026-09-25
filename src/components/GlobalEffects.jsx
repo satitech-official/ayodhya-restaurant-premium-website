@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowUp } from "lucide-react";
+import { LogoLockup, LogoMark } from "@/components/Logo";
 
 export function PageLoader() {
   const [done, setDone] = useState(false);
@@ -21,30 +22,59 @@ export function PageLoader() {
           exit={{ opacity: 0, transition: { duration: 0.6, ease: "easeInOut" } }}
           aria-hidden="true"
         >
-          <div className="relative flex h-24 w-24 items-center justify-center">
+          <div className="relative flex h-32 w-32 items-center justify-center">
             <motion.span
-              className="absolute inset-0 rounded-full border border-brass/40"
+              className="absolute inset-0 rounded-full border border-brass/35"
               animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
             />
-            <span className="absolute inset-3 rounded-full border border-brass/30" />
             <motion.span
-              className="absolute inset-6 rounded-full border border-burnt/60"
-              animate={{ scale: [1, 1.08, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-2 rounded-full border border-dashed border-brass/25"
+              animate={{ rotate: -360 }}
+              transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
             />
-            <span className="relative flex flex-col items-center">
-              <span className="h-1 w-1 rounded-full bg-burnt animate-steam" />
-              <span className="h-1 w-1 rounded-full bg-burnt animate-steam [animation-delay:0.5s]" />
-            </span>
+            <motion.span
+              className="absolute inset-5 rounded-full bg-gradient-to-br from-brass/10 via-transparent to-burnt/10 ring-1 ring-brass/20"
+              animate={{ scale: [1, 1.045, 1], opacity: [0.7, 1, 0.7] }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="relative flex h-20 w-20 items-center justify-center rounded-full bg-charcoal/75 backdrop-blur-md"
+              initial={{ opacity: 0, scale: 0.82 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <LogoMark className="h-14 w-14" />
+            </motion.div>
           </div>
-          <p className="mt-8 font-display text-3xl font-semibold tracking-[0.3em]">AYODHYA</p>
-          <motion.p
-            className="mt-3 text-xs uppercase tracking-[0.3em] text-cream/50"
-            animate={{ opacity: [0.4, 1, 0.4] }}
-            transition={{ duration: 2, repeat: Infinity }}
+
+          <motion.div
+            className="mt-7"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.15 }}
           >
-            Preparing your experience…
+            <LogoLockup dark />
+          </motion.div>
+
+          <motion.div
+            className="mt-6 h-px w-44 overflow-hidden bg-cream/10"
+            aria-hidden="true"
+          >
+            <motion.span
+              className="block h-full bg-gradient-to-r from-transparent via-brass to-transparent"
+              initial={{ x: "-100%" }}
+              animate={{ x: "100%" }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.div>
+
+          <motion.p
+            className="mt-4 text-[10px] font-semibold uppercase tracking-[0.34em] text-cream/45"
+            animate={{ opacity: [0.45, 0.95, 0.45] }}
+            transition={{ duration: 1.8, repeat: Infinity }}
+          >
+            Preparing your dining experience
           </motion.p>
         </motion.div>
       )}
