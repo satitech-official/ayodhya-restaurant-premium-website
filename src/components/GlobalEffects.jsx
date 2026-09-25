@@ -52,7 +52,7 @@ export function PageLoader() {
               />
 
               <motion.div
-                className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full bg-charcoal/75 shadow-[0_0_60px_rgba(182,138,74,.14)] backdrop-blur-md"
+                className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full bg-charcoal/75 shadow-[0_0_60px_rgba(201,147,60,.18)] backdrop-blur-md"
                 initial={{ opacity: 0, scale: 0.6, rotate: -8 }}
                 animate={{
                   opacity: 1,
@@ -74,7 +74,7 @@ export function PageLoader() {
               </motion.div>
 
               <motion.span
-                className="absolute bottom-2 h-1.5 w-1.5 rounded-full bg-burnt shadow-[0_0_14px_rgba(209,103,60,.8)]"
+                className="absolute bottom-2 h-1.5 w-1.5 rounded-full bg-burnt shadow-[0_0_14px_rgba(214,168,75,.8)]"
                 animate={{ opacity: [0.25, 1, 0.25], scale: [0.8, 1.35, 0.8] }}
                 transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
               />
