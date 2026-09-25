@@ -9,7 +9,7 @@ export function PageLoader() {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 1500);
+    const t = setTimeout(() => setDone(true), 1900);
     return () => clearTimeout(t);
   }, []);
 
@@ -17,65 +17,95 @@ export function PageLoader() {
     <AnimatePresence>
       {!done && (
         <motion.div
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-charcoal text-soft"
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-charcoal text-soft"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.6, ease: "easeInOut" } }}
+          exit={{
+            opacity: 0,
+            scale: 1.015,
+            transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+          }}
           aria-hidden="true"
         >
-          <div className="relative flex h-32 w-32 items-center justify-center">
-            <motion.span
-              className="absolute inset-0 rounded-full border border-brass/35"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            />
-            <motion.span
-              className="absolute inset-2 rounded-full border border-dashed border-brass/25"
-              animate={{ rotate: -360 }}
-              transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-            />
-            <motion.span
-              className="absolute inset-5 rounded-full bg-gradient-to-br from-brass/10 via-transparent to-burnt/10 ring-1 ring-brass/20"
-              animate={{ scale: [1, 1.045, 1], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-            />
+          <div className="pattern-jaali-light absolute inset-0 opacity-[0.055]" />
+          <motion.div
+            className="absolute h-[420px] w-[420px] rounded-full bg-brass/5 blur-[110px]"
+            animate={{ scale: [0.9, 1.12, 0.9], opacity: [0.35, 0.75, 0.35] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          <div className="relative flex flex-col items-center justify-center px-6 text-center">
+            <div className="relative flex h-40 w-40 items-center justify-center sm:h-44 sm:w-44">
+              <motion.span
+                className="absolute inset-0 rounded-full border border-brass/25"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.span
+                className="absolute inset-3 rounded-full border border-dashed border-brass/30"
+                animate={{ rotate: -360 }}
+                transition={{ duration: 13, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.span
+                className="absolute inset-7 rounded-full border border-burnt/25 bg-gradient-to-br from-brass/10 via-transparent to-burnt/10"
+                animate={{ scale: [1, 1.06, 1], opacity: [0.55, 1, 0.55] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              <motion.div
+                className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full bg-charcoal/75 shadow-[0_0_60px_rgba(182,138,74,.14)] backdrop-blur-md"
+                initial={{ opacity: 0, scale: 0.6, rotate: -8 }}
+                animate={{
+                  opacity: 1,
+                  scale: [1, 1.045, 1],
+                  rotate: 0,
+                }}
+                transition={{
+                  opacity: { duration: 0.5 },
+                  rotate: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+                  scale: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
+                }}
+              >
+                <motion.div
+                  animate={{ y: [0, -2, 0] }}
+                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <LogoMark className="h-16 w-16 sm:h-[70px] sm:w-[70px]" />
+                </motion.div>
+              </motion.div>
+
+              <motion.span
+                className="absolute bottom-2 h-1.5 w-1.5 rounded-full bg-burnt shadow-[0_0_14px_rgba(209,103,60,.8)]"
+                animate={{ opacity: [0.25, 1, 0.25], scale: [0.8, 1.35, 0.8] }}
+                transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+
             <motion.div
-              className="relative flex h-20 w-20 items-center justify-center rounded-full bg-charcoal/75 backdrop-blur-md"
-              initial={{ opacity: 0, scale: 0.82 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-7"
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
             >
-              <LogoMark className="h-14 w-14" />
+              <LogoLockup dark />
             </motion.div>
+
+            <div className="relative mt-6 h-px w-48 overflow-hidden bg-cream/10 sm:w-56">
+              <motion.span
+                className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-transparent via-brass to-transparent"
+                initial={{ x: -90 }}
+                animate={{ x: 260 }}
+                transition={{ duration: 1.25, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+
+            <motion.p
+              className="mt-4 text-[9px] font-semibold uppercase tracking-[0.34em] text-cream/45 sm:text-[10px]"
+              animate={{ opacity: [0.35, 0.9, 0.35] }}
+              transition={{ duration: 1.65, repeat: Infinity, ease: "easeInOut" }}
+            >
+              Preparing your dining experience
+            </motion.p>
           </div>
-
-          <motion.div
-            className="mt-7"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.15 }}
-          >
-            <LogoLockup dark />
-          </motion.div>
-
-          <motion.div
-            className="mt-6 h-px w-44 overflow-hidden bg-cream/10"
-            aria-hidden="true"
-          >
-            <motion.span
-              className="block h-full bg-gradient-to-r from-transparent via-brass to-transparent"
-              initial={{ x: "-100%" }}
-              animate={{ x: "100%" }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </motion.div>
-
-          <motion.p
-            className="mt-4 text-[10px] font-semibold uppercase tracking-[0.34em] text-cream/45"
-            animate={{ opacity: [0.45, 0.95, 0.45] }}
-            transition={{ duration: 1.8, repeat: Infinity }}
-          >
-            Preparing your dining experience
-          </motion.p>
         </motion.div>
       )}
     </AnimatePresence>
