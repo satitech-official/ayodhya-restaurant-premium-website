@@ -25,75 +25,149 @@ export function StartupIntro() {
     };
   }, []);
 
+  const sparks = [
+    { x: "-39%", y: "-28%", s: 5, d: 0.1 },
+    { x: "38%", y: "-24%", s: 4, d: 0.5 },
+    { x: "-44%", y: "18%", s: 3, d: 0.9 },
+    { x: "42%", y: "23%", s: 5, d: 1.2 },
+    { x: "-26%", y: "41%", s: 4, d: 0.3 },
+    { x: "25%", y: "42%", s: 3, d: 1.5 },
+    { x: "-9%", y: "-45%", s: 3, d: 0.7 },
+    { x: "9%", y: "46%", s: 4, d: 1.0 },
+  ];
+
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          className="fixed inset-0 z-[140] flex items-center justify-center overflow-hidden bg-[#2d1209]"
+          className="fixed inset-0 z-[140] flex items-center justify-center overflow-hidden bg-[#2b1007]"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.015, transition: { duration: 0.7, ease: EASE } }}
+          exit={{ opacity: 0, scale: 1.02, transition: { duration: 0.7, ease: EASE } }}
           aria-label="Ayodhya Restaurant intro"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(211,164,76,.14),transparent_34%),linear-gradient(180deg,#3a190d_0%,#2a1008_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_47%,rgba(225,173,72,.17),transparent_27%),radial-gradient(circle_at_center,rgba(116,45,14,.4),transparent_62%),linear-gradient(180deg,#421b0c_0%,#2b1007_100%)]" />
 
           <motion.div
-            className="absolute h-[420px] w-[420px] rounded-full border border-brass/10 sm:h-[560px] sm:w-[560px]"
-            initial={{ opacity: 0, scale: 0.72 }}
-            animate={{ opacity: [0, 0.55, 0.18], scale: [0.72, 1, 1.08], rotate: 18 }}
-            transition={{ duration: 4.1, ease: EASE }}
-          />
-          <motion.div
-            className="absolute h-[330px] w-[330px] rounded-full border border-dashed border-brass/15 sm:h-[450px] sm:w-[450px]"
-            initial={{ opacity: 0, rotate: -20 }}
-            animate={{ opacity: [0, 0.42, 0.16], rotate: 35 }}
-            transition={{ duration: 4.1, ease: EASE }}
+            className="absolute h-[380px] w-[380px] rounded-full bg-brass/10 blur-[95px] sm:h-[520px] sm:w-[520px]"
+            animate={{ scale: [0.82, 1.08, 0.92], opacity: [0.3, 0.72, 0.38] }}
+            transition={{ duration: 4.5, ease: "easeInOut" }}
           />
 
-          <motion.div
-            className="relative z-10 flex w-[92vw] max-w-[900px] items-center justify-center overflow-hidden"
-            initial={{ opacity: 0, y: 18, scale: 0.9, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, scale: [0.96, 1.015, 1], filter: "blur(0px)" }}
-            transition={{
-              opacity: { duration: 0.7 },
-              y: { duration: 0.8, ease: EASE },
-              scale: { duration: 4.1, ease: EASE },
-              filter: { duration: 0.75 },
-            }}
-          >
-            <img
-              src={FULL_LOGO_DATA_URI}
-              alt="Ayodhya Restaurant — Where Taste Meets Tradition"
-              className="w-full select-none object-contain"
+          <div className="relative flex h-[320px] w-[320px] items-center justify-center sm:h-[430px] sm:w-[430px]">
+            <motion.span
+              className="absolute inset-[7%] rounded-full border-[2px] border-[#e6b65d]/45 shadow-[0_0_28px_rgba(224,167,68,.22)]"
+              initial={{ opacity: 0, scale: 0.7, rotate: -35 }}
+              animate={{ opacity: [0, 1, 0.72], scale: [0.7, 1, 1.035], rotate: 325 }}
+              transition={{ duration: 4.5, ease: EASE }}
+            />
+
+            <motion.span
+              className="absolute inset-[13%] rounded-full border border-[#f2c96c]/65"
+              initial={{ opacity: 0, rotate: 50 }}
+              animate={{ opacity: [0, 0.85, 0.55], rotate: -310 }}
+              transition={{ duration: 4.5, ease: EASE }}
+            />
+
+            <motion.span
+              className="absolute inset-[1%] rounded-full border border-dashed border-[#d6a84b]/30"
+              initial={{ opacity: 0, rotate: 0 }}
+              animate={{ opacity: [0, 0.6, 0.25], rotate: 220 }}
+              transition={{ duration: 4.5, ease: "easeInOut" }}
+            />
+
+            <motion.div
+              className="absolute inset-[5%] rounded-full"
+              style={{
+                background:
+                  "conic-gradient(from 20deg, transparent 0deg 72deg, rgba(255,213,111,.96) 78deg 83deg, transparent 90deg 204deg, rgba(255,197,71,.9) 211deg 216deg, transparent 224deg 360deg)",
+                filter: "blur(.3px)",
+              }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 3.2, repeat: Infinity, ease: "linear" }}
+            />
+
+            <motion.div
+              className="absolute inset-[10%] rounded-full"
+              style={{
+                background:
+                  "conic-gradient(from 220deg, transparent 0deg 106deg, rgba(255,226,143,.9) 112deg 116deg, transparent 122deg 284deg, rgba(255,196,61,.85) 289deg 293deg, transparent 300deg 360deg)",
+              }}
+              animate={{ rotate: -360 }}
+              transition={{ duration: 4.8, repeat: Infinity, ease: "linear" }}
+            />
+
+            {sparks.map((spark, index) => (
+              <motion.span
+                key={index}
+                className="absolute rounded-full bg-[#ffd875] shadow-[0_0_12px_#e3a73e]"
+                style={{
+                  width: spark.s,
+                  height: spark.s,
+                  left: `calc(50% + ${spark.x})`,
+                  top: `calc(50% + ${spark.y})`,
+                }}
+                animate={{
+                  opacity: [0.1, 1, 0.15],
+                  scale: [0.6, 1.55, 0.7],
+                  y: [0, -8, 0],
+                }}
+                transition={{
+                  duration: 1.7 + index * 0.08,
+                  delay: spark.d,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+
+            <motion.div
+              className="absolute inset-[21%] rounded-full bg-[#4a1b0b]/72 shadow-[0_0_45px_rgba(235,181,80,.18)] backdrop-blur-[1px]"
+              initial={{ opacity: 0, scale: 0.62 }}
+              animate={{ opacity: 1, scale: [0.84, 1.03, 1] }}
+              transition={{ duration: 1.35, ease: EASE }}
+            />
+
+            <motion.img
+              src={SUBMARK_DATA_URI}
+              alt="Ayodhya Restaurant submark"
+              className="relative z-10 h-[48%] w-[48%] select-none rounded-full object-cover"
+              initial={{ opacity: 0, scale: 0.58, rotate: -5, filter: "blur(7px)" }}
+              animate={{
+                opacity: 1,
+                scale: [0.86, 1.045, 1],
+                rotate: 0,
+                filter: "blur(0px)",
+              }}
+              transition={{
+                opacity: { duration: 0.55 },
+                scale: { duration: 2.3, ease: EASE },
+                rotate: { duration: 1.15, ease: EASE },
+                filter: { duration: 0.65 },
+              }}
               draggable={false}
             />
 
             <motion.span
-              className="pointer-events-none absolute -inset-y-10 w-28 rotate-[14deg] bg-gradient-to-r from-transparent via-[#ffe5a3]/28 to-transparent blur-md"
-              initial={{ x: "-180%" }}
-              animate={{ x: "850%" }}
-              transition={{ delay: 0.7, duration: 2.5, ease: "easeInOut" }}
+              className="pointer-events-none absolute z-20 h-[58%] w-10 rotate-[22deg] bg-gradient-to-r from-transparent via-[#ffe9a8]/40 to-transparent blur-md"
+              initial={{ x: -150, opacity: 0 }}
+              animate={{ x: 170, opacity: [0, 0.9, 0] }}
+              transition={{ delay: 0.9, duration: 1.8, ease: "easeInOut" }}
             />
-          </motion.div>
+          </div>
 
           <motion.div
-            className="absolute bottom-[12%] h-px w-44 overflow-hidden bg-brass/10 sm:w-64"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 0.6] }}
-            transition={{ delay: 0.5, duration: 1 }}
+            className="absolute bottom-[11%] flex flex-col items-center gap-3"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: [0, 0.75, 0.45], y: 0 }}
+            transition={{ delay: 1.25, duration: 1.2, ease: EASE }}
           >
-            <motion.span
-              className="block h-full w-20 bg-gradient-to-r from-transparent via-brass to-transparent"
-              initial={{ x: -90 }}
-              animate={{ x: 300 }}
-              transition={{ delay: 0.8, duration: 2.6, ease: "easeInOut" }}
-            />
+            <span className="h-px w-36 bg-gradient-to-r from-transparent via-brass to-transparent sm:w-52" />
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   );
 }
-
 export function RouteLoader() {
   return (
     <div
