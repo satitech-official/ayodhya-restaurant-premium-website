@@ -25,7 +25,7 @@ import GoogleReviewForm from "@/components/GoogleReviewForm";
 const EASE = [0.22, 1, 0.36, 1];
 
 const FEATURES = [
-  { icon: Leaf, title: "Pure Veg", text: "100% vegetarian kitchen" },
+  { icon: Leaf, title: "Vegetarian Dining", text: "A wide vegetarian menu" },
   { icon: UtensilsCrossed, title: "Multiple Cuisines", text: "North • South • Indo-Chinese" },
   { icon: Sparkles, title: "Authentic Taste", text: "Freshly prepared favourites" },
   { icon: Users, title: "Family Friendly", text: "Made for every occasion" },
@@ -94,7 +94,7 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
               className="mb-5 flex flex-wrap items-center gap-3"
             >
               <span className="inline-flex items-center gap-2 rounded-full border border-brass/35 bg-charcoal/45 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.26em] text-brass backdrop-blur-md">
-                <Sparkles className="h-3.5 w-3.5" /> Fine Dining • Pure Veg • Family Restaurant
+                <Sparkles className="h-3.5 w-3.5" /> Fine Dining • Vegetarian • Family Restaurant
               </span>
             </motion.div>
 
