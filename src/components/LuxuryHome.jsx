@@ -173,33 +173,73 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
           </div>
 
           <motion.div
-            className="pointer-events-none absolute right-[2%] top-1/2 hidden w-[42vw] max-w-[640px] -translate-y-1/2 lg:block xl:right-[3.5%]"
-            initial={{ opacity: 0, x: 42, scale: 0.94 }}
+            className="pointer-events-none absolute right-[8%] top-1/2 hidden w-[40vw] max-w-[660px] -translate-y-[48%] lg:block"
+            initial={{ opacity: 0, x: 52, scale: 0.93 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 1.15, delay: 0.38, ease: EASE }}
             aria-hidden="true"
           >
             <div className="relative">
-              <div className="absolute inset-[12%] rounded-full bg-brass/10 blur-[70px]" />
-              <motion.img
-                src={FULL_LOGO_DATA_URI}
-                alt=""
-                className="relative z-10 w-full select-none object-contain opacity-[0.98] drop-shadow-[0_18px_42px_rgba(0,0,0,.45)]"
-                style={{
-                  mixBlendMode: "screen",
-                  WebkitMaskImage:
-                    "radial-gradient(ellipse at center, black 55%, rgba(0,0,0,.92) 70%, transparent 92%)",
-                  maskImage:
-                    "radial-gradient(ellipse at center, black 55%, rgba(0,0,0,.92) 70%, transparent 92%)",
-                }}
-                animate={{ y: [0, -5, 0], scale: [1, 1.012, 1] }}
-                transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
-                draggable={false}
-              />
               <motion.div
-                className="absolute inset-x-[15%] bottom-[9%] h-px bg-gradient-to-r from-transparent via-brass/70 to-transparent"
-                animate={{ opacity: [0.25, 0.8, 0.25], scaleX: [0.92, 1.04, 0.92] }}
-                transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-[18%] rounded-full bg-[#d6a84b]/12 blur-[75px]"
+                animate={{ opacity: [0.3, 0.72, 0.3], scale: [0.92, 1.08, 0.92] }}
+                transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              <motion.svg
+                viewBox="0 0 1095 657"
+                className="relative z-10 block w-full overflow-visible drop-shadow-[0_20px_44px_rgba(0,0,0,.48)]"
+                animate={{ y: [0, -5, 0], scale: [1, 1.01, 1] }}
+                transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <defs>
+                  <filter id="heroGoldCutout" x="-12%" y="-18%" width="124%" height="136%">
+                    <feColorMatrix
+                      type="matrix"
+                      values="
+                        1 0 0 0 0
+                        0 1 0 0 0
+                        0 0 1 0 0
+                        0.15 1.40 -0.15 0 -0.42
+                      "
+                    />
+                    <feDropShadow dx="0" dy="4" stdDeviation="5" floodColor="#e0ad4e" floodOpacity="0.18" />
+                  </filter>
+                  <linearGradient id="heroLogoShine" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#fff4c7" stopOpacity="0" />
+                    <stop offset="48%" stopColor="#fff0ad" stopOpacity="0.6" />
+                    <stop offset="55%" stopColor="#fff6d2" stopOpacity="0.9" />
+                    <stop offset="100%" stopColor="#fff4c7" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+
+                <image
+                  href={FULL_LOGO_DATA_URI}
+                  width="1095"
+                  height="657"
+                  preserveAspectRatio="xMidYMid meet"
+                  filter="url(#heroGoldCutout)"
+                />
+
+                <motion.rect
+                  x="-260"
+                  y="80"
+                  width="150"
+                  height="500"
+                  rx="60"
+                  fill="url(#heroLogoShine)"
+                  opacity="0.42"
+                  initial={{ x: -260 }}
+                  animate={{ x: 1220 }}
+                  transition={{ delay: 1.1, duration: 2.7, repeat: Infinity, repeatDelay: 3.4, ease: "easeInOut" }}
+                  style={{ transform: "rotate(10deg)", transformOrigin: "center" }}
+                />
+              </motion.svg>
+
+              <motion.div
+                className="absolute inset-x-[14%] bottom-[13%] h-px bg-gradient-to-r from-transparent via-brass/60 to-transparent"
+                animate={{ opacity: [0.2, 0.72, 0.2], scaleX: [0.92, 1.05, 0.92] }}
+                transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
               />
             </div>
           </motion.div>
