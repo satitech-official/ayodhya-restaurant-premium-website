@@ -1,114 +1,108 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowUp } from "lucide-react";
-import { LogoLockup, LogoMark } from "@/components/Logo";
+import { FULL_LOGO_DATA_URI, SUBMARK_DATA_URI } from "@/lib/brandAssets";
 
-export function PageLoader() {
-  const [done, setDone] = useState(false);
+export function StartupIntro() {
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 1900);
-    return () => clearTimeout(t);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const timer = window.setTimeout(() => {
+      setVisible(false);
+      document.body.style.overflow = previousOverflow;
+    }, 4500);
+
+    return () => {
+      window.clearTimeout(timer);
+      document.body.style.overflow = previousOverflow;
+    };
   }, []);
 
   return (
     <AnimatePresence>
-      {!done && (
+      {visible && (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-charcoal text-soft"
+          className="fixed inset-0 z-[140] flex items-center justify-center overflow-hidden"
+          style={{ backgroundColor: "#32170c" }}
           initial={{ opacity: 1 }}
-          exit={{
-            opacity: 0,
-            scale: 1.015,
-            transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-          }}
-          aria-hidden="true"
+          exit={{ opacity: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } }}
+          aria-label="Ayodhya Restaurant"
         >
-          <div className="pattern-jaali-light absolute inset-0 opacity-[0.055]" />
           <motion.div
-            className="absolute h-[420px] w-[420px] rounded-full bg-brass/5 blur-[110px]"
-            animate={{ scale: [0.9, 1.12, 0.9], opacity: [0.35, 0.75, 0.35] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 42%, rgba(201,147,60,.10), transparent 34%), linear-gradient(180deg, #3a190d 0%, #2a1008 100%)",
+            }}
+            initial={{ opacity: 0.7 }}
+            animate={{ opacity: [0.72, 1, 0.72] }}
+            transition={{ duration: 4.5, ease: "easeInOut" }}
           />
-
-          <div className="relative flex flex-col items-center justify-center px-6 text-center">
-            <div className="relative flex h-40 w-40 items-center justify-center sm:h-44 sm:w-44">
-              <motion.span
-                className="absolute inset-0 rounded-full border border-brass/25"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              />
-              <motion.span
-                className="absolute inset-3 rounded-full border border-dashed border-brass/30"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 13, repeat: Infinity, ease: "linear" }}
-              />
-              <motion.span
-                className="absolute inset-7 rounded-full border border-burnt/25 bg-gradient-to-br from-brass/10 via-transparent to-burnt/10"
-                animate={{ scale: [1, 1.06, 1], opacity: [0.55, 1, 0.55] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              />
-
-              <motion.div
-                className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full bg-charcoal/75 shadow-[0_0_60px_rgba(201,147,60,.18)] backdrop-blur-md"
-                initial={{ opacity: 0, scale: 0.6, rotate: -8 }}
-                animate={{
-                  opacity: 1,
-                  scale: [1, 1.045, 1],
-                  rotate: 0,
-                }}
-                transition={{
-                  opacity: { duration: 0.5 },
-                  rotate: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-                  scale: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
-                }}
-              >
-                <motion.div
-                  animate={{ y: [0, -2, 0] }}
-                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <LogoMark className="h-16 w-16 sm:h-[70px] sm:w-[70px]" />
-                </motion.div>
-              </motion.div>
-
-              <motion.span
-                className="absolute bottom-2 h-1.5 w-1.5 rounded-full bg-burnt shadow-[0_0_14px_rgba(214,168,75,.8)]"
-                animate={{ opacity: [0.25, 1, 0.25], scale: [0.8, 1.35, 0.8] }}
-                transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </div>
-
-            <motion.div
-              className="mt-7"
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <LogoLockup dark />
-            </motion.div>
-
-            <div className="relative mt-6 h-px w-48 overflow-hidden bg-cream/10 sm:w-56">
-              <motion.span
-                className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-transparent via-brass to-transparent"
-                initial={{ x: -90 }}
-                animate={{ x: 260 }}
-                transition={{ duration: 1.25, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </div>
-
-            <motion.p
-              className="mt-4 text-[9px] font-semibold uppercase tracking-[0.34em] text-cream/45 sm:text-[10px]"
-              animate={{ opacity: [0.35, 0.9, 0.35] }}
-              transition={{ duration: 1.65, repeat: Infinity, ease: "easeInOut" }}
-            >
-              Preparing your dining experience
-            </motion.p>
-          </div>
+          <motion.img
+            src={FULL_LOGO_DATA_URI}
+            alt="Ayodhya Restaurant — Where Taste Meets Tradition"
+            className="relative z-10 w-[86vw] max-w-[620px] select-none object-contain"
+            style={{
+              WebkitMaskImage:
+                "radial-gradient(ellipse at center, black 54%, rgba(0,0,0,.94) 66%, transparent 86%)",
+              maskImage:
+                "radial-gradient(ellipse at center, black 54%, rgba(0,0,0,.94) 66%, transparent 86%)",
+            }}
+            initial={{ opacity: 0, scale: 0.88 }}
+            animate={{ opacity: 1, scale: [0.96, 1.015, 1] }}
+            transition={{
+              opacity: { duration: 0.8 },
+              scale: { duration: 4.1, ease: [0.22, 1, 0.36, 1] },
+            }}
+            draggable={false}
+          />
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+export function RouteLoader() {
+  return (
+    <div
+      className="fixed inset-0 z-[120] flex items-center justify-center overflow-hidden"
+      style={{ backgroundColor: "#32170c" }}
+      aria-label="Loading Ayodhya Restaurant"
+    >
+      <div className="relative flex h-44 w-44 items-center justify-center">
+        <motion.span
+          className="absolute inset-0 rounded-full border border-brass/35"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2.8, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.span
+          className="absolute inset-3 rounded-full border border-dashed border-brass/25"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 4.2, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute inset-6 rounded-full bg-brass/5 blur-xl"
+          animate={{ scale: [0.92, 1.12, 0.92], opacity: [0.35, 0.8, 0.35] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.img
+          src={SUBMARK_DATA_URI}
+          alt="Ayodhya Restaurant submark"
+          className="relative z-10 h-28 w-28 select-none object-cover"
+          style={{
+            WebkitMaskImage: "radial-gradient(circle, black 48%, transparent 76%)",
+            maskImage: "radial-gradient(circle, black 48%, transparent 76%)",
+          }}
+          animate={{ scale: [0.96, 1.04, 0.96] }}
+          transition={{ duration: 1.7, repeat: Infinity, ease: "easeInOut" }}
+          draggable={false}
+        />
+      </div>
+    </div>
   );
 }
 
