@@ -21,6 +21,7 @@ import { InstagramIcon } from "@/components/icons";
 import { RESTAURANT, IMAGES, img } from "@/lib/constants";
 import { formatPrice } from "@/lib/utils";
 import GoogleReviewForm from "@/components/GoogleReviewForm";
+import { FULL_LOGO_DATA_URI } from "@/lib/brandAssets";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -86,7 +87,7 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
         </div>
 
         <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-center px-4 pb-24 pt-28 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl lg:max-w-[690px] xl:max-w-[720px]">
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -170,6 +171,38 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
               </a>
             </motion.div>
           </div>
+
+          <motion.div
+            className="pointer-events-none absolute right-[2%] top-1/2 hidden w-[42vw] max-w-[640px] -translate-y-1/2 lg:block xl:right-[3.5%]"
+            initial={{ opacity: 0, x: 42, scale: 0.94 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 1.15, delay: 0.38, ease: EASE }}
+            aria-hidden="true"
+          >
+            <div className="relative">
+              <div className="absolute inset-[12%] rounded-full bg-brass/10 blur-[70px]" />
+              <motion.img
+                src={FULL_LOGO_DATA_URI}
+                alt=""
+                className="relative z-10 w-full select-none object-contain opacity-[0.98] drop-shadow-[0_18px_42px_rgba(0,0,0,.45)]"
+                style={{
+                  mixBlendMode: "screen",
+                  WebkitMaskImage:
+                    "radial-gradient(ellipse at center, black 55%, rgba(0,0,0,.92) 70%, transparent 92%)",
+                  maskImage:
+                    "radial-gradient(ellipse at center, black 55%, rgba(0,0,0,.92) 70%, transparent 92%)",
+                }}
+                animate={{ y: [0, -5, 0], scale: [1, 1.012, 1] }}
+                transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
+                draggable={false}
+              />
+              <motion.div
+                className="absolute inset-x-[15%] bottom-[9%] h-px bg-gradient-to-r from-transparent via-brass/70 to-transparent"
+                animate={{ opacity: [0.25, 0.8, 0.25], scaleX: [0.92, 1.04, 0.92] }}
+                transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+          </motion.div>
         </div>
 
         <div className="relative border-y border-brass/15 bg-charcoal/88 backdrop-blur-xl">
