@@ -1,5 +1,5 @@
 import "./globals.css";
-import { PageLoader, CustomCursor, BackToTop } from "@/components/GlobalEffects";
+import { StartupIntro, CustomCursor, BackToTop } from "@/components/GlobalEffects";
 import JsonLd from "@/components/JsonLd";
 
 export const metadata = {
@@ -42,7 +42,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#171515",
+  themeColor: "#32170c",
   colorScheme: "light",
 };
 
@@ -51,7 +51,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="bg-cream font-sans text-espresso antialiased">
         <JsonLd />
-        <PageLoader />
+        <StartupIntro />
         <CustomCursor />
         {children}
         <BackToTop />
