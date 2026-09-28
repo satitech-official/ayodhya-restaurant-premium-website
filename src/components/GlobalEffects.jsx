@@ -178,4 +178,142 @@ export function BackToTop() {
       )}
     </AnimatePresence>
   );
+}export function PageLoader() {
+  const [done, setDone] = useState(false);
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+  useEffect(() => {
+    const t = setTimeout(() => setDone(true), 4500);
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {!done && (
+        <motion.div
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#3a160c]"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } }}
+          aria-hidden="true"
+        >
+          <motion.div
+            className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201,147,60,.08),transparent_50%)]"
+            animate={{ opacity: [0.55, 1, 0.55] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          <div className="relative flex h-full w-full items-center justify-center">
+            <motion.div
+              className="absolute flex items-center justify-center"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: [1, 1, 0] }}
+              transition={{ times: [0, 0.22, 0.34], duration: 4.5, ease: "easeInOut" }}
+            >
+              <motion.div
+                className="absolute h-40 w-40 rounded-full border border-brass/35 sm:h-48 sm:w-48"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 3.2, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.div
+                className="absolute h-32 w-32 rounded-full border border-dashed border-brass/20 sm:h-40 sm:w-40"
+                animate={{ rotate: -360 }}
+                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.img
+                src={`${basePath}/brand/ayodhya-submark.jpg`}
+                alt=""
+                className="h-28 w-28 rounded-full object-cover sm:h-32 sm:w-32"
+                initial={{ scale: 0.82, opacity: 0 }}
+                animate={{ scale: [0.95, 1.03, 0.95], opacity: 1 }}
+                transition={{ scale: { duration: 1.8, repeat: Infinity, ease: "easeInOut" }, opacity: { duration: 0.4 } }}
+              />
+            </motion.div>
+
+            <motion.img
+              src={`${basePath}/brand/ayodhya-full-logo.jpg`}
+              alt="Ayodhya Restaurant — Where Taste Meets Tradition"
+              className="w-[min(92vw,880px)] rounded-[1.5rem] object-contain shadow-[0_30px_100px_rgba(0,0,0,.35)]"
+              initial={{ opacity: 0, scale: 0.94 }}
+              animate={{ opacity: [0, 0, 1, 1], scale: [0.94, 0.96, 1, 1] }}
+              transition={{ times: [0, 0.25, 0.4, 1], duration: 4.5, ease: [0.22, 1, 0.36, 1] }}
+            />
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+export function CustomCursor() {
+  const [enabled, setEnabled] = useState(false);
+  const [active, setActive] = useState(false);
+  const x = useMotionValue(-100);
+  const y = useMotionValue(-100);
+  const sx = useSpring(x, { stiffness: 350, damping: 30, mass: 0.5 });
+  const sy = useSpring(y, { stiffness: 350, damping: 30, mass: 0.5 });
+
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: fine)");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!mq.matches || reduce) return undefined;
+
+    setEnabled(true);
+    const move = (e) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
+      const target = e.target;
+      const magnetic =
+        target instanceof Element &&
+        Boolean(target.closest("[data-cursor-magnetic], a, button"));
+      setActive(Boolean(magnetic));
+    };
+    window.addEventListener("mousemove", move, { passive: true });
+    return () => window.removeEventListener("mousemove", move);
+  }, [x, y]);
+
+  if (!enabled) return null;
+
+  return (
+    <motion.div
+      aria-hidden="true"
+      className="pointer-events-none fixed left-0 top-0 z-[90] hidden md:block"
+      style={{ x: sx, y: sy }}
+    >
+      <motion.div
+        className="relative -translate-x-1/2 -translate-y-1/2"
+        animate={{ scale: active ? 1.6 : 1, opacity: active ? 0.9 : 0.7 }}
+        transition={{ duration: 0.25 }}
+      >
+        <span className="block h-6 w-6 rounded-full border border-brass/70 bg-brass/10" />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+export function BackToTop() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 900);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.button
+          type="button"
+          aria-label="Back to top"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 16 }}
+          className="fixed bottom-24 right-4 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-brass/40 bg-charcoal text-soft shadow-premium md:bottom-6 md:right-6"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
 }
