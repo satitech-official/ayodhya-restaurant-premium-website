@@ -114,7 +114,6 @@ export default function Navbar({ settings }) {
                 { label: "Menu", href: "/menu" },
                 { label: "Gallery", href: "/gallery" },
                 { label: "About", href: "/about" },
-                { label: "Founders", href: "/founders" },
                 { label: "Contact", href: "/contact" },
                 { label: "Reserve a Table", href: "/reserve" },
               ].map((link, i) => (
