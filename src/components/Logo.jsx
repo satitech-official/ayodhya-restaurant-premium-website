@@ -1,12 +1,13 @@
+import { SUBMARK_DATA_URI } from "@/lib/brandAssets";
+
 export function LogoMark({ className = "h-10 w-10" }) {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   return (
     <span className={`relative inline-flex overflow-hidden rounded-full ${className}`}>
       <img
-        src={`${basePath}/brand/ayodhya-submark.jpg`}
+        src={SUBMARK_DATA_URI}
         alt=""
         aria-hidden="true"
-        className="h-full w-full scale-[2.1] object-cover"
+        className="h-full w-full object-cover"
       />
     </span>
   );
