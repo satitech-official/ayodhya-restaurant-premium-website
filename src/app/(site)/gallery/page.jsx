@@ -11,6 +11,38 @@ export const metadata = {
 
 export default async function GalleryRoute() {
   const images = await getGallery();
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+  const realPhotos = [
+    {
+      id: "ayodhya-real-1",
+      image: `${basePath}/gallery/ayodhya-real-1.webp`,
+      caption: "Window-side dining at Ayodhya",
+      category: "Restaurant",
+      sortOrder: -4,
+    },
+    {
+      id: "ayodhya-real-2",
+      image: `${basePath}/gallery/ayodhya-real-2.webp`,
+      caption: "Birthday celebration setup at Ayodhya",
+      category: "Events",
+      sortOrder: -3,
+    },
+    {
+      id: "ayodhya-real-3",
+      image: `${basePath}/gallery/ayodhya-real-3.webp`,
+      caption: "Ayodhya dining room, ready for guests",
+      category: "Restaurant",
+      sortOrder: -2,
+    },
+    {
+      id: "ayodhya-real-4",
+      image: `${basePath}/gallery/ayodhya-real-4.webp`,
+      caption: "A bright corner overlooking Ganj, Betul",
+      category: "Restaurant",
+      sortOrder: -1,
+    },
+  ];
 
   return (
     <div className="bg-cream pb-24 pt-28 lg:pb-16">
@@ -29,7 +61,7 @@ export default async function GalleryRoute() {
         </div>
 
         <div className="mt-10">
-          <GalleryPage images={images} />
+          <GalleryPage images={[...realPhotos, ...images]} />
         </div>
       </div>
     </div>
