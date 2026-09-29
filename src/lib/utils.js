@@ -3,10 +3,20 @@ export function cn(...classes) {
 }
 
 export function formatPrice(value) {
-  const n = Number(value);
-  if (Number.isNaN(n)) return "";
-  // Indian locale formatting, e.g. 1,230
-  return `₹${n.toLocaleString("en-IN", { maximumFractionDigits: n % 1 === 0 ? 0 : 2 })}`;
+  const raw = String(value ?? "").trim();
+  if (!raw) return "";
+
+  const formatOne = (part) => {
+    const n = Number(part.trim());
+    if (Number.isNaN(n)) return part.trim();
+    return `₹${n.toLocaleString("en-IN", { maximumFractionDigits: n % 1 === 0 ? 0 : 2 })}`;
+  };
+
+  if (raw.includes("/")) {
+    return raw.split("/").map(formatOne).join(" / ");
+  }
+
+  return formatOne(raw);
 }
 
 export function slugify(str) {
