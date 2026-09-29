@@ -1,4 +1,5 @@
 import GalleryPage from "@/components/GalleryPage";
+import VideoGallery from "@/components/VideoGallery";
 import { getGallery } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
@@ -12,6 +13,13 @@ export const metadata = {
 export default async function GalleryRoute() {
   const images = await getGallery();
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+  const videos = [
+    { src: `${basePath}/gallery/videos/ayodhya-video-1.mp4`, title: "From the Ayodhya Kitchen", label: "Live Preparation" },
+    { src: `${basePath}/gallery/videos/ayodhya-video-2.mp4`, title: "A Signature Serve", label: "Food Story" },
+    { src: `${basePath}/gallery/videos/ayodhya-video-3.mp4`, title: "Inside Ayodhya", label: "Restaurant Experience" },
+    { src: `${basePath}/gallery/videos/ayodhya-video-4.mp4`, title: "The Ayodhya Ambience", label: "Walk Through" },
+  ];
 
   const realPhotos = [
     {
@@ -62,6 +70,7 @@ export default async function GalleryRoute() {
 
         <div className="mt-10">
           <GalleryPage images={[...realPhotos, ...images]} />
+          <VideoGallery videos={videos} />
         </div>
       </div>
     </div>
