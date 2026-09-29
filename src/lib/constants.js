@@ -58,27 +58,25 @@ export const NAV_LINKS = [
 ];
 
 export const MENU_CATEGORIES = [
-  { slug: "recommended", name: "Recommended", icon: "⭐" },
-  { slug: "starters", name: "Starters", icon: "🥟" },
-  { slug: "pizza", name: "Pizza", icon: "🍕" },
-  { slug: "kebabs", name: "Kebabs", icon: "🍢" },
-  { slug: "chinese", name: "Chinese", icon: "🥢" },
-  { slug: "soups-salads", name: "Soups & Salads", icon: "🍲" },
-  { slug: "north-indian", name: "North Indian", icon: "🍛" },
-  { slug: "paneer-specials", name: "Paneer Specials", icon: "🧀" },
-  { slug: "rice-biryani", name: "Rice & Biryani", icon: "🍚" },
-  { slug: "breads", name: "Breads", icon: "🫓" },
-  { slug: "south-indian", name: "South Indian", icon: "🥞" },
-  { slug: "dosa-specials", name: "Dosa Specials", icon: "🌯" },
-  { slug: "delhi-chaat", name: "Delhi Chaat", icon: "🫕" },
-  { slug: "pasta", name: "Pasta", icon: "🍝" },
-  { slug: "noodles", name: "Noodles", icon: "🍜" },
-  { slug: "sandwiches", name: "Sandwiches", icon: "🥪" },
-  { slug: "maggi", name: "Maggi", icon: "🍥" },
-  { slug: "desserts", name: "Desserts", icon: "🍨" },
-  { slug: "shakes", name: "Shakes", icon: "🥤" },
   { slug: "beverages", name: "Beverages", icon: "🍹" },
-  { slug: "combos", name: "Combos", icon: "🎁" },
+  { slug: "signature-starters", name: "Chef's Signature Starters", icon: "✨" },
+  { slug: "chinese", name: "Starters / Chinese", icon: "🥢" },
+  { slug: "street-food", name: "Street Food", icon: "🥪" },
+  { slug: "pasta", name: "Pasta", icon: "🍝" },
+  { slug: "soups", name: "Soup", icon: "🍲" },
+  { slug: "tandoor", name: "Tandoor", icon: "🍢" },
+  { slug: "pizza", name: "Pizza", icon: "🍕" },
+  { slug: "raita", name: "Raita", icon: "🥣" },
+  { slug: "north-indian", name: "Main Course", icon: "🍛" },
+  { slug: "signature-main", name: "Chef's Signature", icon: "👑" },
+  { slug: "papad-salad", name: "Papad & Salad", icon: "🥗" },
+  { slug: "paneer-specials", name: "Paneer", icon: "🧀" },
+  { slug: "dal", name: "Dal", icon: "🥘" },
+  { slug: "rice-biryani", name: "Rice", icon: "🍚" },
+  { slug: "desserts", name: "Sweet", icon: "🍨" },
+  { slug: "breads", name: "Bread", icon: "🫓" },
+  { slug: "dosa-specials", name: "Dosa", icon: "🌯" },
+  { slug: "south-indian", name: "Uttapam & Idli", icon: "🥞" },
 ];
 
 export const MENU_FILTERS = [
@@ -161,14 +159,14 @@ export const COMBOS = [
 
 export const DOSA_EXPERIENCE = [
   {
-    name: "Masala Dosa",
+    name: "Butter Masala Dosa",
     tag: "Classic",
     spice: 1,
     description:
       "Crisp golden crepe folded around a spiced potato masala, served with sambar and coconut chutney.",
     ingredients: ["Fermented rice batter", "Spiced potato masala", "Sambar", "Coconut chutney"],
     image: "dosa1",
-    price: 130,
+    price: 100,
   },
   {
     name: "Jini Paneer Dosa",
@@ -178,7 +176,7 @@ export const DOSA_EXPERIENCE = [
       "A street-famous loaded dosa tossed with cheese, paneer, capsicum and tangy house sauces.",
     ingredients: ["Cheese", "Paneer", "Capsicum", "House sauces"],
     image: "dosa3",
-    price: 210,
+    price: 160,
   },
   {
     name: "Cheese Burst Dosa",
@@ -188,27 +186,27 @@ export const DOSA_EXPERIENCE = [
       "A molten, pull-apart cheese core inside a crackling dosa — pure comfort in every bite.",
     ingredients: ["Mozzarella blend", "Butter", "Masala base"],
     image: "dosa4",
-    price: 200,
+    price: 170,
   },
   {
-    name: "AK-47 Dosa",
+    name: "AK 47 Dosa",
     tag: "Fiery",
     spice: 4,
     description:
       "Not for the faint-hearted — a fiery schezwan-loaded dosa that lives up to its name.",
     ingredients: ["Schezwan chutney", "Chilli masala", "Crunchy veggies"],
     image: "dosa5",
-    price: 220,
+    price: 200,
   },
   {
-    name: "Bhurj Khalifa Dosa",
+    name: "Burj Khalifa Dosa",
     tag: "Showstopper",
     spice: 3,
     description:
       "Our tallest, most loaded dosa — stacked with bhurji-style paneer, veggies and cheese.",
     ingredients: ["Paneer bhurji", "Cheese", "Capsicum", "Special spices"],
     image: "dosa2",
-    price: 230,
+    price: 350,
   },
 ];
 
