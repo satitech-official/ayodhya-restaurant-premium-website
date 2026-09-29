@@ -81,8 +81,9 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
               type="video/mp4"
             />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/82 to-charcoal/28" />
-          <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-charcoal/35" />
+          <div className="absolute inset-0 bg-gradient-to-r from-charcoal/92 via-charcoal/68 to-charcoal/16" />
+          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/78 via-transparent to-charcoal/18" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_48%,rgba(212,168,75,.12),transparent_28%)]" />
           <div className="pattern-jaali-light absolute inset-0 opacity-[0.08]" />
         </div>
 
@@ -173,53 +174,34 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
           </div>
 
           <motion.div
-            className="pointer-events-none absolute right-[6.5%] top-[52%] hidden w-[29vw] max-w-[470px] -translate-y-1/2 lg:block xl:right-[7.5%]"
-            initial={{ opacity: 0, x: 54, scale: 0.92 }}
+            className="pointer-events-none absolute right-[8%] top-[54%] hidden w-[27vw] max-w-[430px] -translate-y-1/2 lg:block xl:right-[8.5%]"
+            initial={{ opacity: 0, x: 34, scale: 0.97 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 1.15, delay: 0.42, ease: EASE }}
+            transition={{ duration: 1, delay: 0.35, ease: EASE }}
             aria-hidden="true"
           >
             <div className="relative">
               <motion.div
-                className="absolute -inset-[18%] rounded-full border border-brass/10"
-                initial={{ opacity: 0, scale: 0.82, rotate: -12 }}
-                animate={{ opacity: [0.12, 0.34, 0.12], scale: [0.9, 1.04, 0.9], rotate: 10 }}
-                transition={{ duration: 7.2, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-[18%] rounded-full bg-brass/8 blur-[58px]"
+                animate={{ opacity: [0.14, 0.3, 0.14], scale: [0.96, 1.04, 0.96] }}
+                transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
               />
 
               <motion.div
-                className="absolute -inset-[8%] rounded-full border border-dashed border-brass/15"
-                animate={{ rotate: 360, opacity: [0.12, 0.28, 0.12] }}
+                className="absolute -inset-[10%] rounded-full border border-brass/12"
+                animate={{ rotate: 360, opacity: [0.08, 0.18, 0.08] }}
                 transition={{
                   rotate: { duration: 18, repeat: Infinity, ease: "linear" },
-                  opacity: { duration: 4.6, repeat: Infinity, ease: "easeInOut" },
+                  opacity: { duration: 4.8, repeat: Infinity, ease: "easeInOut" },
                 }}
-              />
-
-              <motion.div
-                className="absolute inset-[22%] rounded-full bg-brass/10 blur-[65px]"
-                animate={{ opacity: [0.18, 0.42, 0.18], scale: [0.94, 1.07, 0.94] }}
-                transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
-              />
-
-              <motion.span
-                className="absolute -left-[12%] top-1/2 h-20 w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-brass/55 to-transparent"
-                animate={{ opacity: [0.18, 0.7, 0.18], scaleY: [0.75, 1.05, 0.75] }}
-                transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-              />
-
-              <motion.span
-                className="absolute -left-[12%] top-[29%] h-2 w-2 rounded-full bg-brass shadow-[0_0_16px_rgba(201,147,60,.8)]"
-                animate={{ y: [0, 54, 0], opacity: [0.25, 1, 0.25] }}
-                transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
               />
 
               <motion.img
                 src={heroLogo}
                 alt=""
-                className="relative z-10 block w-full select-none object-contain opacity-[0.93] drop-shadow-[0_12px_28px_rgba(0,0,0,.38)]"
-                initial={{ opacity: 0, y: 18, scale: 0.94 }}
-                animate={{ opacity: 0.93, y: [0, -4, 0], scale: [1, 1.006, 1] }}
+                className="relative z-10 block w-full select-none object-contain opacity-[0.72] mix-blend-screen drop-shadow-[0_10px_26px_rgba(0,0,0,.28)]"
+                initial={{ opacity: 0, y: 10, scale: 0.97 }}
+                animate={{ opacity: 0.72, y: [0, -4, 0], scale: [1, 1.01, 1] }}
                 transition={{
                   opacity: { duration: 0.75, delay: 0.2 },
                   y: { duration: 5.4, repeat: Infinity, ease: "easeInOut" },
@@ -229,8 +211,15 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
               />
 
               <motion.div
-                className="absolute inset-x-[18%] -bottom-[3%] h-px bg-gradient-to-r from-transparent via-brass/45 to-transparent"
-                animate={{ opacity: [0.15, 0.52, 0.15], scaleX: [0.88, 1.04, 0.88] }}
+                className="absolute inset-y-[16%] left-[-18%] w-[18%] -skew-x-12 rounded-full bg-gradient-to-r from-transparent via-brass/18 to-transparent blur-xl"
+                initial={{ x: 0, opacity: 0 }}
+                animate={{ x: ["0%", "520%"], opacity: [0, 0.55, 0] }}
+                transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 2.8, ease: "easeInOut" }}
+              />
+
+              <motion.div
+                className="absolute inset-x-[20%] -bottom-[4%] h-px bg-gradient-to-r from-transparent via-brass/28 to-transparent"
+                animate={{ opacity: [0.12, 0.32, 0.12], scaleX: [0.94, 1.02, 0.94] }}
                 transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
               />
             </div>
