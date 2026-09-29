@@ -70,7 +70,7 @@ export default async function MenuPage({ searchParams }) {
         </div>
 
         <p className="mt-10 text-center text-xs text-walnut/70">
-          Menu prices are indicative — please confirm current rates and availability with the restaurant.
+          Prices shown match the restaurant menu provided to us. Taxes are not included; availability may vary.
         </p>
       </div>
     </div>
