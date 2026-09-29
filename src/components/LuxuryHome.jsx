@@ -21,7 +21,6 @@ import { InstagramIcon } from "@/components/icons";
 import { RESTAURANT, IMAGES, img } from "@/lib/constants";
 import { formatPrice } from "@/lib/utils";
 import GoogleReviewForm from "@/components/GoogleReviewForm";
-import { FULL_LOGO_DATA_URI } from "@/lib/brandAssets";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -52,6 +51,7 @@ function Rating({ value = 5 }) {
 export default function LuxuryHome({ settings, signatures = [], gallery = [], reviews = [] }) {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const heroPoster = `${basePath}/images/hero-restaurant.webp`;
+  const heroLogo = `${basePath}/brand/ayodhya-hero-logo.webp`;
 
   return (
     <div className="bg-charcoal text-soft">
@@ -173,104 +173,38 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
           </div>
 
           <motion.div
-            className="pointer-events-none absolute right-[4.5%] top-[51%] hidden w-[38vw] max-w-[620px] -translate-y-1/2 lg:block xl:right-[5.5%]"
-            initial={{ opacity: 0, x: 46, scale: 0.94 }}
+            className="pointer-events-none absolute right-[4.5%] top-[50%] hidden w-[39vw] max-w-[640px] -translate-y-1/2 lg:block xl:right-[5.5%]"
+            initial={{ opacity: 0, x: 42, scale: 0.95 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 1.15, delay: 0.38, ease: EASE }}
+            transition={{ duration: 1.05, delay: 0.35, ease: EASE }}
             aria-hidden="true"
           >
             <div className="relative">
               <motion.div
-                className="absolute inset-[17%] rounded-full bg-brass/10 blur-[72px]"
-                animate={{ opacity: [0.25, 0.62, 0.25], scale: [0.94, 1.06, 0.94] }}
-                transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-[20%] rounded-full bg-brass/10 blur-[74px]"
+                animate={{ opacity: [0.22, 0.58, 0.22], scale: [0.95, 1.06, 0.95] }}
+                transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
               />
 
-              <motion.svg
-                viewBox="0 0 1095 657"
-                className="relative z-10 block w-full overflow-visible drop-shadow-[0_14px_34px_rgba(0,0,0,.42)]"
-                animate={{ y: [0, -4, 0], scale: [1, 1.008, 1] }}
-                transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <defs>
-                  <filter id="heroLogoLuma" x="-8%" y="-8%" width="116%" height="116%">
-                    <feColorMatrix type="luminanceToAlpha" />
-                    <feComponentTransfer>
-                      <feFuncA type="linear" slope="2.55" intercept="-0.72" />
-                    </feComponentTransfer>
-                  </filter>
+              <motion.img
+                src={heroLogo}
+                alt=""
+                className="relative z-10 block w-full select-none object-contain drop-shadow-[0_18px_38px_rgba(0,0,0,.46)]"
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, y: [0, -4, 0], scale: [1, 1.008, 1] }}
+                transition={{
+                  opacity: { duration: 0.7, delay: 0.2 },
+                  y: { duration: 5.2, repeat: Infinity, ease: "easeInOut" },
+                  scale: { duration: 5.2, repeat: Infinity, ease: "easeInOut" },
+                }}
+                draggable={false}
+              />
 
-                  <mask
-                    id="heroLogoTransparentMask"
-                    maskUnits="userSpaceOnUse"
-                    x="0"
-                    y="0"
-                    width="1095"
-                    height="657"
-                  >
-                    <rect width="1095" height="657" fill="black" />
-                    <image
-                      href={FULL_LOGO_DATA_URI}
-                      width="1095"
-                      height="657"
-                      preserveAspectRatio="xMidYMid meet"
-                      filter="url(#heroLogoLuma)"
-                    />
-                  </mask>
-
-                  <linearGradient id="heroLogoGold" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#fff0a7" />
-                    <stop offset="18%" stopColor="#d7a437" />
-                    <stop offset="43%" stopColor="#ffdf72" />
-                    <stop offset="68%" stopColor="#b97816" />
-                    <stop offset="86%" stopColor="#f2c652" />
-                    <stop offset="100%" stopColor="#9d6110" />
-                  </linearGradient>
-
-                  <linearGradient id="heroLogoShimmer" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#fff8d5" stopOpacity="0" />
-                    <stop offset="50%" stopColor="#fff8d5" stopOpacity=".7" />
-                    <stop offset="100%" stopColor="#fff8d5" stopOpacity="0" />
-                  </linearGradient>
-
-                  <filter id="heroLogoGlow" x="-15%" y="-20%" width="130%" height="140%">
-                    <feDropShadow dx="0" dy="5" stdDeviation="5" floodColor="#000000" floodOpacity=".48" />
-                    <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#e0aa3e" floodOpacity=".28" />
-                  </filter>
-                </defs>
-
-                <g mask="url(#heroLogoTransparentMask)" filter="url(#heroLogoGlow)">
-                  <rect width="1095" height="657" fill="url(#heroLogoGold)" />
-
-                  <image
-                    href={FULL_LOGO_DATA_URI}
-                    width="1095"
-                    height="657"
-                    preserveAspectRatio="xMidYMid meet"
-                    opacity=".54"
-                    style={{ mixBlendMode: "screen" }}
-                  />
-
-                  <motion.rect
-                    x="-240"
-                    y="-80"
-                    width="145"
-                    height="830"
-                    rx="70"
-                    fill="url(#heroLogoShimmer)"
-                    initial={{ x: -240 }}
-                    animate={{ x: 1210 }}
-                    transition={{
-                      delay: 1.2,
-                      duration: 2.25,
-                      repeat: Infinity,
-                      repeatDelay: 4,
-                      ease: "easeInOut",
-                    }}
-                    style={{ transform: "rotate(9deg)", transformOrigin: "center" }}
-                  />
-                </g>
-              </motion.svg>
+              <motion.div
+                className="absolute inset-x-[13%] bottom-[7%] h-px bg-gradient-to-r from-transparent via-brass/55 to-transparent"
+                animate={{ opacity: [0.18, 0.65, 0.18], scaleX: [0.94, 1.04, 0.94] }}
+                transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+              />
             </div>
           </motion.div>
         </div>
