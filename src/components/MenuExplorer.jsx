@@ -13,11 +13,10 @@ const GROUPS = {
   popular: (i) => i.bestseller || i.recommended,
   "south-indian": (i) => ["south-indian", "dosa-specials"].includes(i.category),
   "north-indian": (i) =>
-    ["north-indian", "paneer-specials", "rice-biryani", "breads"].includes(i.category),
-  chinese: (i) => ["chinese", "noodles", "soups-salads"].includes(i.category),
-  "quick-bites": (i) =>
-    ["sandwiches", "maggi", "starters", "delhi-chaat", "noodles", "pasta"].includes(i.category),
-  beverages: (i) => ["beverages", "shakes"].includes(i.category),
+    ["north-indian", "signature-main", "paneer-specials", "dal", "rice-biryani", "breads", "papad-salad", "raita"].includes(i.category),
+  chinese: (i) => ["chinese", "signature-starters", "soups"].includes(i.category),
+  "quick-bites": (i) => ["street-food", "signature-starters", "chinese", "pasta"].includes(i.category),
+  beverages: (i) => i.category === "beverages",
 };
 
 export default function MenuExplorer({ items, categories, initialCategory = "recommended" }) {
