@@ -15,10 +15,10 @@ export default async function GalleryRoute() {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
   const videos = [
-    { src: `${basePath}/gallery/videos/ayodhya-video-1.mp4`, title: "From the Ayodhya Kitchen", label: "Live Preparation" },
-    { src: `${basePath}/gallery/videos/ayodhya-video-2.mp4`, title: "A Signature Serve", label: "Food Story" },
-    { src: `${basePath}/gallery/videos/ayodhya-video-3.mp4`, title: "Inside Ayodhya", label: "Restaurant Experience" },
-    { src: `${basePath}/gallery/videos/ayodhya-video-4.mp4`, title: "The Ayodhya Ambience", label: "Walk Through" },
+    { src: "https://gcdn.picsart.com/editing-temp/bcdefeb1-7fd1-4b04-afba-114e1836bb14.mp4", title: "From the Ayodhya Kitchen", label: "Live Preparation" },
+    { src: "https://gcdn.picsart.com/editing-temp/570bdba7-8cb4-4797-b9e1-48e7b4ee0665.mp4", title: "A Signature Serve", label: "Food Story" },
+    { src: "https://gcdn.picsart.com/editing-temp/06c99ee8-bb59-48de-8597-c51361a36796.mp4", title: "Inside Ayodhya", label: "Restaurant Experience" },
+    { src: "https://gcdn.picsart.com/editing-temp/08f1ef2e-ba58-4ddd-9879-43766731d4a0.mp4", title: "The Ayodhya Ambience", label: "Walk Through" },
   ];
 
   const realPhotos = [
