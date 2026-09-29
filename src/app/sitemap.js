@@ -3,6 +3,7 @@ export default function sitemap() {
   const routes = [
     { path: "", priority: 1 },
     { path: "/menu", priority: 0.9 },
+    { path: "/menu-book", priority: 0.8 },
     { path: "/gallery", priority: 0.7 },
     { path: "/about", priority: 0.7 },
     { path: "/contact", priority: 0.8 },
