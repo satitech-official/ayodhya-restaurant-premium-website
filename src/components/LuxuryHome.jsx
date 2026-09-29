@@ -173,74 +173,104 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
           </div>
 
           <motion.div
-            className="pointer-events-none absolute right-[8%] top-1/2 hidden w-[40vw] max-w-[660px] -translate-y-[48%] lg:block"
-            initial={{ opacity: 0, x: 52, scale: 0.93 }}
+            className="pointer-events-none absolute right-[4.5%] top-[51%] hidden w-[38vw] max-w-[620px] -translate-y-1/2 lg:block xl:right-[5.5%]"
+            initial={{ opacity: 0, x: 46, scale: 0.94 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 1.15, delay: 0.38, ease: EASE }}
             aria-hidden="true"
           >
             <div className="relative">
               <motion.div
-                className="absolute inset-[18%] rounded-full bg-[#d6a84b]/12 blur-[75px]"
-                animate={{ opacity: [0.3, 0.72, 0.3], scale: [0.92, 1.08, 0.92] }}
-                transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-[17%] rounded-full bg-brass/10 blur-[72px]"
+                animate={{ opacity: [0.25, 0.62, 0.25], scale: [0.94, 1.06, 0.94] }}
+                transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
               />
 
               <motion.svg
                 viewBox="0 0 1095 657"
-                className="relative z-10 block w-full overflow-visible drop-shadow-[0_20px_44px_rgba(0,0,0,.48)]"
-                animate={{ y: [0, -5, 0], scale: [1, 1.01, 1] }}
-                transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
+                className="relative z-10 block w-full overflow-visible drop-shadow-[0_14px_34px_rgba(0,0,0,.42)]"
+                animate={{ y: [0, -4, 0], scale: [1, 1.008, 1] }}
+                transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
               >
                 <defs>
-                  <filter id="heroGoldCutout" x="-12%" y="-18%" width="124%" height="136%">
-                    <feColorMatrix
-                      type="matrix"
-                      values="
-                        1 0 0 0 0
-                        0 1 0 0 0
-                        0 0 1 0 0
-                        0.15 1.40 -0.15 0 -0.42
-                      "
-                    />
-                    <feDropShadow dx="0" dy="4" stdDeviation="5" floodColor="#e0ad4e" floodOpacity="0.18" />
+                  <filter id="heroLogoLuma" x="-8%" y="-8%" width="116%" height="116%">
+                    <feColorMatrix type="luminanceToAlpha" />
+                    <feComponentTransfer>
+                      <feFuncA type="linear" slope="2.55" intercept="-0.72" />
+                    </feComponentTransfer>
                   </filter>
-                  <linearGradient id="heroLogoShine" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#fff4c7" stopOpacity="0" />
-                    <stop offset="48%" stopColor="#fff0ad" stopOpacity="0.6" />
-                    <stop offset="55%" stopColor="#fff6d2" stopOpacity="0.9" />
-                    <stop offset="100%" stopColor="#fff4c7" stopOpacity="0" />
+
+                  <mask
+                    id="heroLogoTransparentMask"
+                    maskUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="1095"
+                    height="657"
+                  >
+                    <rect width="1095" height="657" fill="black" />
+                    <image
+                      href={FULL_LOGO_DATA_URI}
+                      width="1095"
+                      height="657"
+                      preserveAspectRatio="xMidYMid meet"
+                      filter="url(#heroLogoLuma)"
+                    />
+                  </mask>
+
+                  <linearGradient id="heroLogoGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#fff0a7" />
+                    <stop offset="18%" stopColor="#d7a437" />
+                    <stop offset="43%" stopColor="#ffdf72" />
+                    <stop offset="68%" stopColor="#b97816" />
+                    <stop offset="86%" stopColor="#f2c652" />
+                    <stop offset="100%" stopColor="#9d6110" />
                   </linearGradient>
+
+                  <linearGradient id="heroLogoShimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#fff8d5" stopOpacity="0" />
+                    <stop offset="50%" stopColor="#fff8d5" stopOpacity=".7" />
+                    <stop offset="100%" stopColor="#fff8d5" stopOpacity="0" />
+                  </linearGradient>
+
+                  <filter id="heroLogoGlow" x="-15%" y="-20%" width="130%" height="140%">
+                    <feDropShadow dx="0" dy="5" stdDeviation="5" floodColor="#000000" floodOpacity=".48" />
+                    <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#e0aa3e" floodOpacity=".28" />
+                  </filter>
                 </defs>
 
-                <image
-                  href={FULL_LOGO_DATA_URI}
-                  width="1095"
-                  height="657"
-                  preserveAspectRatio="xMidYMid meet"
-                  filter="url(#heroGoldCutout)"
-                />
+                <g mask="url(#heroLogoTransparentMask)" filter="url(#heroLogoGlow)">
+                  <rect width="1095" height="657" fill="url(#heroLogoGold)" />
 
-                <motion.rect
-                  x="-260"
-                  y="80"
-                  width="150"
-                  height="500"
-                  rx="60"
-                  fill="url(#heroLogoShine)"
-                  opacity="0.42"
-                  initial={{ x: -260 }}
-                  animate={{ x: 1220 }}
-                  transition={{ delay: 1.1, duration: 2.7, repeat: Infinity, repeatDelay: 3.4, ease: "easeInOut" }}
-                  style={{ transform: "rotate(10deg)", transformOrigin: "center" }}
-                />
+                  <image
+                    href={FULL_LOGO_DATA_URI}
+                    width="1095"
+                    height="657"
+                    preserveAspectRatio="xMidYMid meet"
+                    opacity=".54"
+                    style={{ mixBlendMode: "screen" }}
+                  />
+
+                  <motion.rect
+                    x="-240"
+                    y="-80"
+                    width="145"
+                    height="830"
+                    rx="70"
+                    fill="url(#heroLogoShimmer)"
+                    initial={{ x: -240 }}
+                    animate={{ x: 1210 }}
+                    transition={{
+                      delay: 1.2,
+                      duration: 2.25,
+                      repeat: Infinity,
+                      repeatDelay: 4,
+                      ease: "easeInOut",
+                    }}
+                    style={{ transform: "rotate(9deg)", transformOrigin: "center" }}
+                  />
+                </g>
               </motion.svg>
-
-              <motion.div
-                className="absolute inset-x-[14%] bottom-[13%] h-px bg-gradient-to-r from-transparent via-brass/60 to-transparent"
-                animate={{ opacity: [0.2, 0.72, 0.2], scaleX: [0.92, 1.05, 0.92] }}
-                transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
-              />
             </div>
           </motion.div>
         </div>
