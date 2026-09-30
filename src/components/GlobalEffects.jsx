@@ -206,7 +206,7 @@ export function StartupIntro() {
             <img
               src={wordmarkSrc}
               alt="Ayodhya Restaurant"
-              className="h-12 w-auto object-contain opacity-90 sm:h-14"
+              className="h-16 w-auto object-contain opacity-90 sm:h-20"
               draggable={false}
             />
             <motion.div
@@ -260,7 +260,7 @@ export function RouteLoader() {
         <motion.img
           src={wordmarkSrc}
           alt="Ayodhya Restaurant"
-          className="absolute -bottom-12 h-10 w-auto object-contain opacity-90 sm:-bottom-14 sm:h-12"
+          className="absolute -bottom-16 h-14 w-auto object-contain opacity-90 sm:-bottom-20 sm:h-16"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 0.9, y: 0 }}
           transition={{ delay: 0.28, duration: 0.5, ease: EASE }}
