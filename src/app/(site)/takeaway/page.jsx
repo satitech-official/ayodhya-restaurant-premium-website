@@ -1,7 +1,7 @@
 import TakeawayOrder from "@/components/TakeawayOrder";
 import { getCategories, getMenuItems } from "@/lib/data";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export const metadata = {
   title: "Takeaway & Self Pickup | Ayodhya Restaurant Betul",

@@ -3,7 +3,7 @@ import { ArrowUpRight, BookOpenText, Sparkles } from "lucide-react";
 import MenuExplorer from "@/components/MenuExplorer";
 import { getMenuItems, getCategories } from "@/lib/data";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export const metadata = {
   title: "Menu | Vegetarian Restaurant in Betul",

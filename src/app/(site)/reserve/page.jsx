@@ -4,7 +4,7 @@ import OpenStatus from "@/components/OpenStatus";
 import { getSettings } from "@/lib/data";
 import { RESTAURANT } from "@/lib/constants";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export const metadata = {
   title: "Reserve a Table",
