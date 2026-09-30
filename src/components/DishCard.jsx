@@ -7,25 +7,25 @@ import { formatPrice } from "@/lib/utils";
 const CAT_EMOJI = Object.fromEntries(MENU_CATEGORIES.map((c) => [c.slug, c.icon]));
 
 const CATEGORY_PHOTO_HINT = {
-  beverages: "drink beverage",
-  "signature-starters": "indian starter",
-  chinese: "indo chinese food",
-  "street-food": "indian street food",
-  pasta: "pasta",
-  soups: "soup",
-  tandoor: "tandoori indian food",
-  pizza: "pizza",
-  raita: "indian raita",
-  "north-indian": "north indian curry",
-  "signature-main": "indian curry",
-  "papad-salad": "indian salad",
-  "paneer-specials": "paneer indian food",
-  dal: "indian dal",
-  "rice-biryani": "indian rice biryani",
-  desserts: "indian dessert",
-  breads: "indian naan bread",
-  "dosa-specials": "south indian dosa",
-  "south-indian": "south indian food",
+  beverages: "drink,beverage",
+  "signature-starters": "indian,starter,food",
+  chinese: "chinese,food",
+  "street-food": "indian,streetfood",
+  pasta: "pasta,food",
+  soups: "soup,food",
+  tandoor: "tandoori,indian,food",
+  pizza: "pizza,food",
+  raita: "raita,indian,food",
+  "north-indian": "indian,curry,food",
+  "signature-main": "indian,curry,food",
+  "papad-salad": "salad,indian,food",
+  "paneer-specials": "paneer,indian,food",
+  dal: "dal,indian,food",
+  "rice-biryani": "rice,indian,food",
+  desserts: "dessert,indian,food",
+  breads: "naan,indian,food",
+  "dosa-specials": "dosa,indian,food",
+  "south-indian": "southindian,food",
 };
 
 function stableLock(value = "") {
@@ -37,16 +37,44 @@ function stableLock(value = "") {
   return (Math.abs(hash >>> 0) % 900000) + 10000;
 }
 
+function dishPhotoTags(item) {
+  const n = String(item?.name || "").toLowerCase();
+  const rules = [
+    [/paneer/, "paneer,indian,food"],
+    [/dosa/, "dosa,southindian,food"],
+    [/idli/, "idli,southindian,food"],
+    [/uttapam/, "uttapam,southindian,food"],
+    [/biryani/, "biryani,indian,food"],
+    [/pulao|rice|khichdi/, "rice,indian,food"],
+    [/dal/, "dal,indian,food"],
+    [/naan|roti|paratha|kulcha/, "naan,indian,food"],
+    [/pizza/, "pizza,food"],
+    [/pasta/, "pasta,food"],
+    [/soup/, "soup,food"],
+    [/sandwich/, "sandwich,food"],
+    [/fries|potato/, "fries,food"],
+    [/coffee/, "coffee,drink"],
+    [/shake/, "milkshake,drink"],
+    [/mojito|lagoon|soda|lassi|butter milk|buttermilk/, "cold,drink"],
+    [/kebab|tikka|chaap|tandoor/, "tikka,indian,food"],
+    [/manchurian|noodles|chowmein|schezwan|chilli/, "chinese,food"],
+    [/pav bhaji/, "pavbhaji,indian,food"],
+    [/pakode|pakora/, "pakora,indian,food"],
+    [/kofta/, "kofta,indian,food"],
+    [/mushroom/, "mushroom,indian,food"],
+    [/salad/, "salad,food"],
+    [/raita/, "raita,indian,food"],
+    [/gulab jamun|rasgulla/, "indian,dessert"],
+    [/ice cream/, "icecream,dessert"],
+  ];
+  const matched = rules.find(([rx]) => rx.test(n));
+  return matched ? matched[1] : (CATEGORY_PHOTO_HINT[item?.category] || "indian,food");
+}
+
 function realFoodImage(item) {
-  const cleanName = String(item?.name || "indian food")
-    .replace(/\([^)]*\)/g, " ")
-    .replace(/\bhalf\b|\bfull\b/gi, " ")
-    .replace(/[^a-zA-Z0-9\s&-]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-  const hint = CATEGORY_PHOTO_HINT[item?.category] || "indian food";
-  const query = encodeURIComponent(`${cleanName} ${hint}`);
-  return `https://loremflickr.com/900/650/${query}?lock=${stableLock(item?.id || item?.name)}`;
+  const tags = dishPhotoTags(item);
+  const lock = stableLock(`${item?.name || ""}|${item?.price || ""}|${item?.category || ""}|${item?.id || ""}`);
+  return `https://loremflickr.com/900/650/${tags}/all?lock=${lock}`;
 }
 
 export default function DishCard({ item }) {
