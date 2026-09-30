@@ -165,7 +165,7 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
               className="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-sm text-cream/75"
             >
               <a href={RESTAURANT.mapsDirectionsUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-soft">
-                <MapPin className="h-4 w-4 text-burnt" /> In front of Lashkare Hospital, Ganj, Betul
+                <MapPin className="h-4 w-4 text-burnt" /> Civil Lines, Near Lashkare Hospital, Ganj, Betul
               </a>
               <a href={RESTAURANT.phoneHref} className="inline-flex items-center gap-2 hover:text-soft">
                 <Phone className="h-4 w-4 text-burnt" /> {RESTAURANT.phoneDisplay}
@@ -249,12 +249,12 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
             </Link>
           </div>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {signatures.slice(0, 8).map((item, i) => (
-              <Reveal key={item.id || item.name} delay={(i % 4) * 0.05}>
+              <Reveal key={item.id || item.name} delay={(i % 4) * 0.05} className="h-full">
                 <Link
                   href="/menu"
-                  className="group block overflow-hidden rounded-[1.4rem] border border-brass/15 bg-espresso/50 shadow-[0_24px_70px_-40px_rgba(0,0,0,.9)] transition duration-500 hover:-translate-y-1 hover:border-brass/45"
+                  className="group flex h-full flex-col overflow-hidden rounded-[1.4rem] border border-brass/15 bg-espresso/50 shadow-[0_24px_70px_-40px_rgba(0,0,0,.9)] transition duration-500 hover:-translate-y-1 hover:border-brass/45"
                 >
                   <div className="relative aspect-[5/4] overflow-hidden">
                     <Img
@@ -267,13 +267,13 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
                       <span className="absolute left-4 top-4 rounded-full bg-terracotta px-3 py-1 text-[9px] font-bold uppercase tracking-[0.16em] text-soft">Bestseller</span>
                     )}
                   </div>
-                  <div className="p-5">
+                  <div className="flex flex-1 flex-col p-4 sm:p-5">
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brass">{item.cuisine || "House Favourite"}</p>
-                    <div className="mt-2 flex items-start justify-between gap-4">
-                      <h3 className="font-display text-2xl leading-tight text-soft">{item.name}</h3>
-                      <span className="font-display text-xl text-burnt">{formatPrice(item.price)}</span>
+                    <div className="mt-2 grid min-h-[4.25rem] grid-cols-[minmax(0,1fr)_auto] items-start gap-3 sm:min-h-[4.6rem]">
+                      <h3 className="font-display text-xl leading-tight text-soft sm:text-2xl">{item.name}</h3>
+                      <span className="whitespace-nowrap font-display text-lg text-burnt sm:text-xl">{formatPrice(item.price)}</span>
                     </div>
-                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-cream/55">{item.description}</p>
+                    <p className="mt-auto line-clamp-2 pt-2 text-sm leading-6 text-cream/55">{item.description}</p>
                   </div>
                 </Link>
               </Reveal>
@@ -413,7 +413,7 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
           <a href={RESTAURANT.mapsDirectionsUrl} target="_blank" rel="noreferrer" className="group rounded-[1.2rem] border border-brass/15 bg-espresso/35 p-5 transition hover:border-brass/40">
             <MapPin className="h-5 w-5 text-burnt" />
             <h3 className="mt-3 font-display text-xl text-soft">Visit Us</h3>
-            <p className="mt-2 text-sm leading-6 text-cream/55">In front of Lashkare Hospital, Ganj, Betul, Madhya Pradesh 460001</p>
+            <p className="mt-2 text-sm leading-6 text-cream/55">Civil Lines, Near Lashkare Hospital, Ganj, Betul, Madhya Pradesh 460001</p>
           </a>
           <a href={RESTAURANT.phoneHref} className="group rounded-[1.2rem] border border-brass/15 bg-espresso/35 p-5 transition hover:border-brass/40">
             <Phone className="h-5 w-5 text-burnt" />
