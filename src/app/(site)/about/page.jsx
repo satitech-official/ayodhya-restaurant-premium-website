@@ -3,7 +3,7 @@ import { ArrowRight, MapPin, Phone } from "lucide-react";
 import { Reveal, SectionHeading, ArchImage, Img } from "@/components/primitives";
 import { img, IMAGES, RESTAURANT } from "@/lib/constants";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export const metadata = {
   title: "About",

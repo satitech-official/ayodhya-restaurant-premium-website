@@ -2,7 +2,7 @@ import GalleryPage from "@/components/GalleryPage";
 import VideoGallery from "@/components/VideoGallery";
 import { getGallery } from "@/lib/data";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export const metadata = {
   title: "Gallery",
