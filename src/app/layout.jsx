@@ -3,7 +3,7 @@ import { StartupIntro, CustomCursor, BackToTop } from "@/components/GlobalEffect
 import JsonLd from "@/components/JsonLd";
 
 export const metadata = {
-  metadataBase: new URL("https://ayodhyarestaurant.in"),
+  metadataBase: new URL("https://ayodhyarestaurant.com"),
   title: {
     default: "Ayodhya Restaurant Betul | Great Food, Great Moments",
     template: "%s | Ayodhya Restaurant Betul",
@@ -20,12 +20,20 @@ export const metadata = {
     "North Indian restaurant Betul",
     "vegetarian food Betul",
     "restaurant near Ganj Betul",
+    "restaurant near Lashkare Hospital Betul",
+    "restaurant Civil Lines Betul",
+    "pure veg restaurant Betul",
+    "best family dining Betul",
+    "Ayodhya Restaurant Ganj Betul",
   ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Ayodhya Restaurant Betul | Great Food, Great Moments",
     description:
       "North Indian, South Indian, Indo-Chinese, pizzas, dosas and beverages — in the heart of Ganj, Betul. Reserve a table or order today.",
-    url: "https://ayodhyarestaurant.in",
+    url: "https://ayodhyarestaurant.com",
     siteName: "Ayodhya Restaurant",
     locale: "en_IN",
     type: "website",
@@ -38,7 +46,17 @@ export const metadata = {
       "North Indian, South Indian, Indo-Chinese, pizzas, dosas and beverages — in the heart of Ganj, Betul.",
     images: ["/og.png"],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export const viewport = {
