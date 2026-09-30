@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CheckCircle2,
   Clock3,
@@ -55,6 +55,15 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
   const [pickupTime, setPickupTime] = useState("ASAP — restaurant to confirm");
   const [note, setNote] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!cartOpen) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [cartOpen]);
 
   const visibleItems = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -166,11 +175,11 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
   };
 
   const OrderPanel = ({ mobile = false }) => (
-    <div className={mobile ? "flex max-h-[86vh] flex-col" : ""}>
-      <div className="flex items-start justify-between gap-4 border-b border-brass/15 pb-5">
+    <div className={mobile ? "flex max-h-[calc(100dvh-1.25rem)] flex-col" : ""}>
+      <div className="flex items-start justify-between gap-3 border-b border-brass/15 pb-4">
         <div>
           <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-terracotta">Your Pickup Order</p>
-          <h2 className="mt-1 font-display text-3xl text-charcoal">Takeaway Cart</h2>
+          <h2 className="mt-1 font-display text-2xl text-charcoal sm:text-3xl">Takeaway Cart</h2>
         </div>
         {mobile && (
           <button
@@ -184,7 +193,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
         )}
       </div>
 
-      <div className={mobile ? "overflow-y-auto py-5" : "py-5"}>
+      <div className={mobile ? "min-h-0 flex-1 overflow-y-auto overscroll-contain py-4 pr-1" : "py-5"}>
         {!cartItems.length ? (
           <div className="rounded-2xl border border-dashed border-charcoal/15 bg-white/45 p-6 text-center">
             <ShoppingBag className="mx-auto h-7 w-7 text-terracotta" />
@@ -246,7 +255,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name"
-              className="mt-2 w-full rounded-xl border border-charcoal/10 bg-white px-4 py-3 text-sm text-charcoal outline-none transition focus:border-terracotta"
+              className="mt-2 w-full rounded-xl border border-charcoal/10 bg-white px-4 py-3.5 text-base text-charcoal outline-none transition focus:border-terracotta sm:text-sm"
             />
           </div>
 
@@ -260,7 +269,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
               onChange={(e) => setPhone(e.target.value)}
               inputMode="tel"
               placeholder="10-digit mobile number"
-              className="mt-2 w-full rounded-xl border border-charcoal/10 bg-white px-4 py-3 text-sm text-charcoal outline-none transition focus:border-terracotta"
+              className="mt-2 w-full rounded-xl border border-charcoal/10 bg-white px-4 py-3.5 text-base text-charcoal outline-none transition focus:border-terracotta sm:text-sm"
             />
           </div>
 
@@ -272,7 +281,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
               id={mobile ? "pickup-time-mobile" : "pickup-time"}
               value={pickupTime}
               onChange={(e) => setPickupTime(e.target.value)}
-              className="mt-2 w-full rounded-xl border border-charcoal/10 bg-white px-4 py-3 text-sm text-charcoal outline-none transition focus:border-terracotta"
+              className="mt-2 w-full rounded-xl border border-charcoal/10 bg-white px-4 py-3.5 text-base text-charcoal outline-none transition focus:border-terracotta sm:text-sm"
             >
               <option>ASAP — restaurant to confirm</option>
               <option>In about 30 minutes</option>
@@ -292,7 +301,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
               onChange={(e) => setNote(e.target.value)}
               rows={3}
               placeholder="Less spicy, no onion, packing note…"
-              className="mt-2 w-full resize-none rounded-xl border border-charcoal/10 bg-white px-4 py-3 text-sm text-charcoal outline-none transition focus:border-terracotta"
+              className="mt-2 w-full resize-none rounded-xl border border-charcoal/10 bg-white px-4 py-3.5 text-base text-charcoal outline-none transition focus:border-terracotta sm:text-sm"
             />
           </div>
         </div>
@@ -316,51 +325,57 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-charcoal pb-14 pt-28 text-soft sm:pb-16">
+      <section className="relative overflow-hidden bg-charcoal pb-9 pt-24 text-soft sm:pb-14 sm:pt-28">
         <div className="pattern-jaali-light absolute inset-0 opacity-[0.1]" aria-hidden="true" />
         <div className="absolute -right-20 top-10 h-72 w-72 rounded-full bg-brass/10 blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.28em] text-brass">
+          <p className="flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.22em] text-brass sm:text-[11px] sm:tracking-[0.28em]">
             <span className="h-px w-8 bg-current opacity-60" /> Takeaway · Self Pickup
           </p>
-          <div className="mt-5 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div className="mt-4 grid gap-6 sm:mt-5 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-8">
             <div className="max-w-3xl">
-              <h1 className="font-display text-5xl font-semibold leading-[0.98] sm:text-6xl lg:text-7xl">
+              <h1 className="max-w-[18ch] font-display text-[2.55rem] font-semibold leading-[0.95] tracking-[-0.025em] sm:text-6xl lg:text-7xl">
                 Order Ahead. Pick Up Fresh.
               </h1>
-              <p className="mt-5 max-w-2xl text-base leading-7 text-cream/68 sm:text-lg">
+              <p className="mt-4 max-w-2xl text-sm leading-6 text-cream/68 sm:mt-5 sm:text-lg sm:leading-7">
                 Choose your favourites, send your pickup order to Ayodhya, and collect it yourself from the restaurant once the team confirms it is ready.
               </p>
             </div>
-            <div className="grid gap-2 text-sm text-cream/65 sm:grid-cols-3 lg:grid-cols-1">
-              <span className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brass" /> Choose dishes</span>
-              <span className="inline-flex items-center gap-2"><Clock3 className="h-4 w-4 text-brass" /> Pick a time</span>
-              <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 text-brass" /> Collect at Ayodhya</span>
+            <div className="grid grid-cols-3 gap-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-cream/65 sm:text-sm sm:normal-case sm:tracking-normal lg:grid-cols-1">
+              <span className="flex min-w-0 flex-col items-center gap-1.5 rounded-xl border border-brass/15 bg-white/[0.035] px-2 py-3 text-center sm:flex-row sm:justify-center lg:justify-start lg:border-0 lg:bg-transparent lg:p-0 lg:text-left">
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-brass" /> Choose dishes
+              </span>
+              <span className="flex min-w-0 flex-col items-center gap-1.5 rounded-xl border border-brass/15 bg-white/[0.035] px-2 py-3 text-center sm:flex-row sm:justify-center lg:justify-start lg:border-0 lg:bg-transparent lg:p-0 lg:text-left">
+                <Clock3 className="h-4 w-4 shrink-0 text-brass" /> Pick a time
+              </span>
+              <span className="flex min-w-0 flex-col items-center gap-1.5 rounded-xl border border-brass/15 bg-white/[0.035] px-2 py-3 text-center sm:flex-row sm:justify-center lg:justify-start lg:border-0 lg:bg-transparent lg:p-0 lg:text-left">
+                <MapPin className="h-4 w-4 shrink-0 text-brass" /> Self pickup
+              </span>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-cream pb-32 pt-10 text-charcoal md:pb-16">
+      <section className="overflow-x-clip bg-cream pb-40 pt-5 text-charcoal sm:pt-8 md:pb-20 lg:pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_390px]">
             <div>
-              <div className="sticky top-[72px] z-20 -mx-4 border-y border-sand bg-cream/95 px-4 py-4 backdrop-blur-md sm:mx-0 sm:rounded-2xl sm:border">
+              <div className="sticky top-[72px] z-20 -mx-4 border-y border-sand bg-cream/95 px-4 py-3 shadow-[0_12px_28px_-24px_rgba(60,27,12,.45)] backdrop-blur-md sm:mx-0 sm:rounded-2xl sm:border sm:py-4">
                 <div className="relative">
                   <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-walnut/55" />
                   <input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Search takeaway menu…"
-                    className="w-full rounded-xl border border-charcoal/10 bg-white py-3 pl-11 pr-4 text-sm outline-none transition focus:border-terracotta"
+                    className="w-full rounded-xl border border-charcoal/10 bg-white py-3.5 pl-11 pr-4 text-base outline-none transition focus:border-terracotta sm:text-sm"
                   />
                 </div>
-                <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+                <div className="-mx-1 mt-2.5 flex snap-x gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-3">
                   <button
                     type="button"
                     onClick={() => setCategory("all")}
                     className={
-                      "whitespace-nowrap rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] transition " +
+                      "snap-start whitespace-nowrap rounded-full px-3.5 py-2 text-[11px] font-bold uppercase tracking-[0.08em] transition sm:px-4 sm:text-xs sm:tracking-[0.1em] " +
                       (category === "all" ? "bg-charcoal text-soft" : "border border-charcoal/10 bg-white text-walnut hover:border-terracotta")
                     }
                   >
@@ -372,7 +387,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
                       type="button"
                       onClick={() => setCategory(cat.slug)}
                       className={
-                        "whitespace-nowrap rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] transition " +
+                        "snap-start whitespace-nowrap rounded-full px-3.5 py-2 text-[11px] font-bold uppercase tracking-[0.08em] transition sm:px-4 sm:text-xs sm:tracking-[0.1em] " +
                         (category === cat.slug ? "bg-charcoal text-soft" : "border border-charcoal/10 bg-white text-walnut hover:border-terracotta")
                       }
                     >
@@ -382,30 +397,30 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
                 </div>
               </div>
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="mt-4 grid gap-3 sm:mt-6 sm:grid-cols-2 sm:gap-4">
                 {visibleItems.map((item) => {
                   const options = getPriceOptions(item);
                   return (
-                    <article key={item.id || item.slug || item.name} className="overflow-hidden rounded-[1.35rem] border border-sand bg-white shadow-[0_18px_50px_-38px_rgba(64,36,20,.45)]">
+                    <article key={item.id || item.slug || item.name} className="grid min-h-[142px] grid-cols-[104px_minmax(0,1fr)] overflow-hidden rounded-[1.15rem] border border-sand bg-white shadow-[0_14px_38px_-34px_rgba(64,36,20,.5)] sm:block sm:min-h-0 sm:rounded-[1.35rem] sm:shadow-[0_18px_50px_-38px_rgba(64,36,20,.45)]">
                       {item.image && (
-                        <div className="aspect-[16/10] overflow-hidden bg-sand/30">
+                        <div className="h-full min-h-[142px] overflow-hidden bg-sand/30 sm:aspect-[16/10] sm:min-h-0">
                           <img src={item.image} alt={item.name} className="h-full w-full object-cover" loading="lazy" />
                         </div>
                       )}
-                      <div className="p-4 sm:p-5">
-                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-terracotta">
+                      <div className="min-w-0 p-3.5 sm:p-5">
+                        <p className="truncate text-[8px] font-bold uppercase tracking-[0.16em] text-terracotta sm:text-[9px] sm:tracking-[0.2em]">
                           {item.cuisine || "Vegetarian"}
                         </p>
-                        <h2 className="mt-1.5 font-display text-2xl leading-tight text-charcoal">{item.name}</h2>
-                        {item.description && <p className="mt-2 line-clamp-2 text-sm leading-6 text-walnut/75">{item.description}</p>}
+                        <h2 className="mt-1 font-display text-[1.22rem] leading-[1.08] text-charcoal sm:mt-1.5 sm:text-2xl sm:leading-tight">{item.name}</h2>
+                        {item.description && <p className="mt-2 hidden line-clamp-2 text-sm leading-6 text-walnut/75 sm:block">{item.description}</p>}
 
-                        <div className="mt-4 flex flex-wrap gap-2">
+                        <div className="mt-3 flex flex-wrap gap-1.5 sm:mt-4 sm:gap-2">
                           {options.map((option) => (
                             <button
                               key={(option.label || "standard") + option.price}
                               type="button"
                               onClick={() => addItem(item, option)}
-                              className="inline-flex items-center gap-1.5 rounded-full border border-terracotta/25 bg-terracotta/5 px-3.5 py-2 text-xs font-bold text-terracotta transition hover:border-terracotta hover:bg-terracotta hover:text-soft"
+                              className="inline-flex min-h-9 items-center gap-1 rounded-full border border-terracotta/25 bg-terracotta/5 px-2.5 py-1.5 text-[11px] font-bold text-terracotta transition active:scale-[.98] active:bg-terracotta active:text-soft sm:min-h-0 sm:gap-1.5 sm:px-3.5 sm:py-2 sm:text-xs sm:hover:border-terracotta sm:hover:bg-terracotta sm:hover:text-soft"
                             >
                               <Plus className="h-3.5 w-3.5" />
                               {option.label ? option.label + " · " : ""}
@@ -433,7 +448,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
             </aside>
           </div>
 
-          <div className="mt-10 rounded-[1.4rem] border border-sand bg-white/60 p-5 sm:p-6">
+          <div className="mt-7 rounded-[1.2rem] border border-sand bg-white/60 p-4 sm:mt-10 sm:rounded-[1.4rem] sm:p-6">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="flex gap-3">
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-terracotta" />
@@ -459,9 +474,9 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
       <button
         type="button"
         onClick={() => setCartOpen(true)}
-        className="fixed bottom-[76px] left-4 right-4 z-40 flex items-center justify-between rounded-2xl bg-terracotta px-5 py-4 text-soft shadow-[0_16px_45px_rgba(60,27,12,.32)] lg:hidden"
+        className="fixed bottom-[76px] left-3 right-3 z-40 flex min-h-14 items-center justify-between rounded-2xl border border-white/10 bg-terracotta px-4 py-3.5 text-soft shadow-[0_16px_45px_rgba(60,27,12,.34)] active:scale-[.995] md:bottom-4 md:left-5 md:right-5 lg:hidden"
       >
-        <span className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.08em]">
+        <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.07em] sm:text-sm">
           <ShoppingBag className="h-4 w-4" /> Pickup Cart ({itemCount})
         </span>
         <span className="font-display text-lg">{money(subtotal)}</span>
@@ -475,7 +490,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
             aria-label="Close takeaway cart"
             onClick={() => setCartOpen(false)}
           />
-          <div className="absolute inset-x-0 bottom-0 rounded-t-[1.75rem] bg-[#fffaf0] p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] shadow-2xl">
+          <div className="absolute inset-x-0 bottom-0 max-h-[calc(100dvh-0.75rem)] rounded-t-[1.5rem] bg-[#fffaf0] p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] shadow-2xl sm:p-5 sm:pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
             <OrderPanel mobile />
           </div>
         </div>
