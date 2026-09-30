@@ -200,19 +200,29 @@ function resultScore(result, item) {
   let score = 0;
 
   for (const token of nameTokens) {
-    if (haystack.includes(token)) score += 8;
+    if (haystack.includes(token)) score += 10;
   }
   for (const token of queryTokens) {
-    if (haystack.includes(token)) score += 3;
+    if (haystack.includes(token)) score += 4;
   }
 
-  if (/food|dish|curry|paneer|dosa|rice|bread|drink|soup|pizza|pasta|dessert|noodle|kebab|chaap/.test(haystack)) {
-    score += 2;
+  if (/food|dish|curry|paneer|dosa|rice|bread|drink|soup|pizza|pasta|dessert|noodle|kebab|chaap|biryani|dal|idli|uttapam/.test(haystack)) {
+    score += 3;
   }
 
-  if (/person|people|restaurant interior|building|menu|logo|poster|packaging/.test(haystack)) {
-    score -= 10;
+  if (/person|people|restaurant interior|building|menu|logo|poster|packaging|storefront|signboard/.test(haystack)) {
+    score -= 16;
   }
+
+  const width = Number(result?.width || 0);
+  const height = Number(result?.height || 0);
+  const longEdge = Math.max(width, height);
+  const shortEdge = Math.min(width, height);
+
+  if (longEdge >= 1800 && shortEdge >= 1000) score += 8;
+  else if (longEdge >= 1400 && shortEdge >= 800) score += 5;
+  else if (longEdge >= 1200 && shortEdge >= 700) score += 2;
+  else if (width && height) score -= 8;
 
   return score;
 }
@@ -242,12 +252,21 @@ async function openverseSearch(query, pageSize = 40) {
     if (!res.ok) return [];
     const data = await res.json();
     return (data?.results || [])
-      .filter((result) => !result?.watermarked && (result?.thumbnail || result?.url))
+      .filter((result) => {
+        if (result?.watermarked || !(result?.thumbnail || result?.url)) return false;
+        const width = Number(result?.width || 0);
+        const height = Number(result?.height || 0);
+        if (width && height && (Math.max(width, height) < 1200 || Math.min(width, height) < 700)) return false;
+        return true;
+      })
       .map((result) => ({
         id: result.id || result.url,
-        url: result.thumbnail || result.url,
+        url: result.url || result.thumbnail,
+        backupUrl: result.thumbnail || "",
         title: result.title || "",
         tags: result.tags || [],
+        width: Number(result.width || 0),
+        height: Number(result.height || 0),
       }));
   });
 
@@ -267,8 +286,8 @@ async function commonsSearch(query, limit = 40) {
       gsrnamespace: "6",
       gsrlimit: String(limit),
       prop: "imageinfo",
-      iiprop: "url",
-      iiurlwidth: "900",
+      iiprop: "url|size",
+      iiurlwidth: "1600",
       format: "json",
       origin: "*",
     });
@@ -277,29 +296,42 @@ async function commonsSearch(query, limit = 40) {
     if (!res.ok) return [];
     const data = await res.json();
 
-    return Object.values(data?.query?.pages || {}).map((page) => ({
-      id: `commons:${page.pageid}`,
-      url: page?.imageinfo?.[0]?.thumburl || page?.imageinfo?.[0]?.url || "",
-      title: page?.title || "",
-      tags: [],
-    })).filter((result) => result.url);
+    return Object.values(data?.query?.pages || {}).map((page) => {
+      const info = page?.imageinfo?.[0] || {};
+      return {
+        id: `commons:${page.pageid}`,
+        url: info.thumburl || info.url || "",
+        backupUrl: info.url || "",
+        title: page?.title || "",
+        tags: [],
+        width: Number(info.thumbwidth || info.width || 0),
+        height: Number(info.thumbheight || info.height || 0),
+      };
+    }).filter((result) => {
+      if (!result.url) return false;
+      if (result.width && result.height && (Math.max(result.width, result.height) < 1200 || Math.min(result.width, result.height) < 700)) return false;
+      return true;
+    });
   });
 
   SEARCH_CACHE.set(key, promise);
   return promise;
 }
 
-function pickUnique(results, item) {
-  const sorted = [...results].sort((a, b) => resultScore(b, item) - resultScore(a, item));
+function pickUnique(results, item, minScore = 10) {
+  const sorted = [...results]
+    .map((result) => ({ ...result, _score: resultScore(result, item) }))
+    .filter((result) => result._score >= minScore)
+    .sort((a, b) => b._score - a._score);
 
   for (const result of sorted) {
     const key = result.id || result.url;
     if (!key || USED_MEDIA_IDS.has(key)) continue;
     USED_MEDIA_IDS.add(key);
-    return result.url;
+    return { src: result.url, fallback: result.backupUrl || "" };
   }
 
-  return "";
+  return null;
 }
 
 async function resolveDishPhoto(item) {
@@ -309,30 +341,30 @@ async function resolveDishPhoto(item) {
   const task = (async () => {
     const exactQuery = canonicalDishQuery(item);
     const exactOpenverse = await openverseSearch(exactQuery, 40);
-    let photo = pickUnique(exactOpenverse, item);
+    let photo = pickUnique(exactOpenverse, item, 14);
     if (photo) return photo;
 
     const exactCommons = await commonsSearch(exactQuery, 40);
-    photo = pickUnique(exactCommons, item);
+    photo = pickUnique(exactCommons, item, 14);
     if (photo) return photo;
 
     const rawName = cleanDishName(item?.name);
     if (rawName && rawName.toLowerCase() !== exactQuery.toLowerCase()) {
       const rawOpenverse = await openverseSearch(rawName, 40);
-      photo = pickUnique(rawOpenverse, item);
+      photo = pickUnique(rawOpenverse, item, 12);
       if (photo) return photo;
     }
 
     const categoryQuery = CATEGORY_QUERY[item?.category] || "Indian vegetarian restaurant food";
     const categoryOpenverse = await openverseSearch(categoryQuery, 80);
-    photo = pickUnique(categoryOpenverse, item);
+    photo = pickUnique(categoryOpenverse, item, 8);
     if (photo) return photo;
 
     const categoryCommons = await commonsSearch(categoryQuery, 80);
-    photo = pickUnique(categoryCommons, item);
+    photo = pickUnique(categoryCommons, item, 8);
     if (photo) return photo;
 
-    return "";
+    return null;
   })();
 
   ITEM_PHOTO_CACHE.set(cacheKey, task);
@@ -341,7 +373,7 @@ async function resolveDishPhoto(item) {
 
 function DishPhoto({ item, emoji }) {
   const holderRef = useRef(null);
-  const [src, setSrc] = useState("");
+  const [photo, setPhoto] = useState(null);
   const [failed, setFailed] = useState(false);
   const itemKey = useMemo(
     () => `${item?.id || ""}|${item?.name || ""}|${item?.category || ""}`,
@@ -359,7 +391,7 @@ function DishPhoto({ item, emoji }) {
       const resolved = await resolveDishPhoto(item);
       if (!cancelled) {
         setFailed(false);
-        setSrc(resolved);
+        setPhoto(resolved);
       }
     };
 
@@ -386,16 +418,22 @@ function DishPhoto({ item, emoji }) {
 
   return (
     <div ref={holderRef} className="h-full w-full">
-      {src && !failed ? (
+      {photo?.src && !failed ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={src}
+          src={photo.src}
           alt={item.name}
           loading="lazy"
           decoding="async"
           referrerPolicy="no-referrer"
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-          onError={() => setFailed(true)}
+          onError={(event) => {
+            if (photo.fallback && event.currentTarget.src !== photo.fallback) {
+              event.currentTarget.src = photo.fallback;
+              return;
+            }
+            setFailed(true);
+          }}
         />
       ) : (
         <div className="pattern-jaali-light flex h-full w-full items-center justify-center bg-espresso text-4xl">
