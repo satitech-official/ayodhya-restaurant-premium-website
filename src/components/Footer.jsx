@@ -122,9 +122,7 @@ export default function Footer({ settings }) {
               <li className="flex gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-burnt" />
                 <span>
-                  In front of Lashkare Hospital
-                  <br />
-                  Main Road / Housing Board Colony
+                  Civil Lines, Near Lashkare Hospital
                   <br />
                   Ganj, Betul, Madhya Pradesh 460001
                 </span>
