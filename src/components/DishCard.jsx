@@ -182,6 +182,86 @@ function canonicalDishQuery(item) {
   return matched ? matched[1] : `${name} ${CATEGORY_QUERY[item?.category] || "Indian vegetarian restaurant food"}`;
 }
 
+function visualFamilyQuery(item) {
+  const name = cleanDishName(item?.name);
+  const n = name.toLowerCase();
+
+  const specialFamilies = [
+    [/paneer hyderabadi/, "paneer hyderabadi green gravy spinach coriander"],
+    [/paneer maharani/, "rich creamy paneer curry Indian restaurant"],
+    [/paneer hungama/, "rich paneer masala curry Indian restaurant"],
+    [/paneer tufani|paneer toofani/, "spicy red paneer curry Indian restaurant"],
+    [/paneer angara/, "smoky spicy paneer angara curry"],
+    [/paneer long lata/, "premium paneer curry Indian restaurant"],
+    [/paneer rajwari|paneer rajwadi/, "rich paneer rajwadi curry"],
+    [/afghani paneer/, "creamy white gravy paneer curry"],
+    [/lasooni palak paneer/, "garlic palak paneer green curry"],
+    [/firangi soya chaap/, "creamy soya chaap Indian restaurant"],
+    [/bhuna soya chaap/, "bhuna soya chaap spicy curry"],
+    [/soya tikka masala/, "soya tikka masala curry"],
+    [/veg keema rara/, "vegetarian soya keema curry"],
+    [/paneer kaju masala/, "cashew paneer curry"],
+    [/palak stuffed paneer/, "stuffed paneer spinach curry"],
+    [/amritsari paneer bhurji/, "paneer bhurji Indian restaurant"],
+    [/chinese sizzler platter/, "vegetarian Chinese sizzler platter"],
+    [/tandoor platter/, "vegetarian tandoori platter paneer mushroom"],
+    [/mushroom spanish fried rice/, "mushroom fried rice restaurant"],
+    [/veg coin in hot garlic sauce/, "vegetable balls hot garlic sauce Indo Chinese"],
+    [/veg kothe/, "veg kothe Indo Chinese dumplings"],
+    [/veg lollipop/, "vegetable lollipop Indo Chinese"],
+    [/bahubali dosa/, "giant long South Indian dosa"],
+    [/ak 47 dosa/, "giant long South Indian dosa"],
+    [/burj khalifa dosa/, "giant tower dosa South Indian"],
+    [/maharaja dosa/, "giant stuffed dosa South Indian"],
+    [/matka dosa/, "matka dosa South Indian"],
+    [/mumbai special dosa/, "Mumbai street style dosa"],
+    [/open cheese mysore dosa/, "open cheese Mysore masala dosa"],
+    [/sizzler dosa/, "dosa sizzler South Indian"],
+    [/chilli paneer dosa/, "chilli paneer dosa fusion"],
+    [/american chopsuey dosa/, "fusion dosa South Indian"],
+    [/spring roll dosa/, "spring roll dosa South Indian"],
+    [/jini paneer dosa/, "Jini dosa paneer cheese"],
+    [/jini dosa/, "Jini dosa cheese vegetables"],
+    [/pizza dosa/, "pizza dosa South Indian"],
+    [/cheese burst dosa/, "cheese dosa South Indian"],
+    [/chocolate dosa/, "chocolate dosa dessert"],
+    [/mumbai special uttapam/, "vegetable uttapam South Indian"],
+  ];
+
+  const special = specialFamilies.find(([rx]) => rx.test(n));
+  if (special) return special[1];
+
+  const families = [
+    [/paneer/, "premium Indian paneer curry restaurant food"],
+    [/soya.*chaap|chaap/, "Indian soya chaap restaurant food"],
+    [/dosa/, "South Indian dosa restaurant food"],
+    [/idli/, "South Indian idli sambar restaurant food"],
+    [/uttapam/, "South Indian uttapam restaurant food"],
+    [/biryani/, "vegetarian biryani Indian restaurant food"],
+    [/pulao|rice|khichdi/, "Indian rice pulao restaurant food"],
+    [/dal/, "Indian dal tadka restaurant food"],
+    [/naan|roti|paratha|kulcha/, "Indian bread naan paratha restaurant food"],
+    [/pizza/, "vegetarian pizza restaurant food"],
+    [/pasta/, "vegetarian pasta restaurant food"],
+    [/soup/, "vegetarian soup restaurant food"],
+    [/sandwich/, "vegetarian sandwich restaurant food"],
+    [/fries|potato/, "crispy potato fries restaurant food"],
+    [/coffee/, "premium cold coffee cafe drink"],
+    [/shake/, "premium milkshake cafe drink"],
+    [/mojito|lagoon|soda|lassi|butter milk|buttermilk|green apple|jamun|pan shot/, "premium cold mocktail beverage"],
+    [/kebab|tikka|tandoor/, "Indian vegetarian tandoori starter restaurant food"],
+    [/manchurian|noodles|chowmein|schezwan|chilli/, "Indo Chinese vegetarian restaurant food"],
+    [/pav bhaji|chole bhature|pakode|pakora|chaat/, "Indian street food restaurant"],
+    [/kofta/, "Indian kofta curry restaurant food"],
+    [/mushroom/, "Indian mushroom curry restaurant food"],
+    [/salad|raita/, "Indian salad raita restaurant food"],
+    [/gulab jamun|rasgulla|ice cream/, "Indian dessert restaurant food"],
+  ];
+
+  const matched = families.find(([rx]) => rx.test(n));
+  return matched ? matched[1] : (CATEGORY_QUERY[item?.category] || "Indian vegetarian restaurant food");
+}
+
 function tokenise(value = "") {
   return cleanDishName(value)
     .toLowerCase()
@@ -326,8 +406,12 @@ function pickUnique(results, item, minScore = 10) {
 
   for (const result of sorted) {
     const key = result.id || result.url;
-    if (!key || USED_MEDIA_IDS.has(key)) continue;
+    const urlKey = String(result.url || "")
+      .replace(/([?&])(width|w|height|h)=\d+/gi, "$1")
+      .replace(/[?&]+$/g, "");
+    if (!key || !urlKey || USED_MEDIA_IDS.has(key) || USED_MEDIA_IDS.has(urlKey)) continue;
     USED_MEDIA_IDS.add(key);
+    USED_MEDIA_IDS.add(urlKey);
     return { src: result.url, fallback: result.backupUrl || "" };
   }
 
@@ -355,13 +439,22 @@ async function resolveDishPhoto(item) {
       if (photo) return photo;
     }
 
-    const categoryQuery = CATEGORY_QUERY[item?.category] || "Indian vegetarian restaurant food";
-    const categoryOpenverse = await openverseSearch(categoryQuery, 80);
-    photo = pickUnique(categoryOpenverse, item, 8);
+    const familyQuery = visualFamilyQuery(item);
+    const familyOpenverse = await openverseSearch(familyQuery, 90);
+    photo = pickUnique(familyOpenverse, item, 6);
     if (photo) return photo;
 
-    const categoryCommons = await commonsSearch(categoryQuery, 80);
-    photo = pickUnique(categoryCommons, item, 8);
+    const familyCommons = await commonsSearch(familyQuery, 90);
+    photo = pickUnique(familyCommons, item, 6);
+    if (photo) return photo;
+
+    const categoryQuery = CATEGORY_QUERY[item?.category] || "Indian vegetarian restaurant food";
+    const categoryOpenverse = await openverseSearch(categoryQuery, 100);
+    photo = pickUnique(categoryOpenverse, item, 5);
+    if (photo) return photo;
+
+    const categoryCommons = await commonsSearch(categoryQuery, 100);
+    photo = pickUnique(categoryCommons, item, 5);
     if (photo) return photo;
 
     return null;
