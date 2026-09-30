@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { ArrowUpRight, BookOpenText, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpenText,
+  Clock3,
+  ShoppingBag,
+  Sparkles,
+  UtensilsCrossed,
+} from "lucide-react";
 import MenuExplorer from "@/components/MenuExplorer";
 import { getMenuItems, getCategories } from "@/lib/data";
 
@@ -28,58 +35,82 @@ export default async function MenuPage({ searchParams }) {
   const initialCategory = validCategories.has(requestedCategory) ? requestedCategory : "recommended";
 
   return (
-    <div className="bg-cream pb-24 pt-28 lg:pb-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl">
-          <p className="mb-4 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.28em] text-terracotta">
-            <span className="h-px w-8 bg-current opacity-60" /> The Digital Menu
-          </p>
-          <h1 className="text-balance font-display text-5xl font-semibold leading-[1.02] text-charcoal sm:text-6xl">
-            One Table. Many Cravings.
-          </h1>
-          <p className="mt-4 text-base leading-relaxed text-walnut">
-            Search, filter and explore everything we cook — from crispy dosas and creamy curries to
-            stone-baked pizzas and chilled shakes.
-          </p>
-        </div>
+    <div className="bg-cream pb-28 lg:pb-20">
+      <section className="relative overflow-hidden bg-charcoal pb-10 pt-24 text-soft sm:pb-14 sm:pt-28 lg:pb-16">
+        <div className="pattern-jaali-light absolute inset-0 opacity-[0.12]" aria-hidden="true" />
+        <div className="absolute -right-28 top-10 h-80 w-80 rounded-full bg-brass/10 blur-3xl" />
+        <div className="absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-terracotta/10 blur-3xl" />
 
-        <Link
-          href="/menu-book"
-          className="group relative mt-9 block overflow-hidden rounded-[1.8rem] border border-[#9b652f]/25 bg-[#2e140b] p-1 shadow-[0_24px_60px_-35px_rgba(68,30,14,.72)] transition duration-500 hover:-translate-y-0.5 hover:shadow-[0_30px_70px_-34px_rgba(68,30,14,.88)]"
-        >
-          <div className="pointer-events-none absolute -right-16 -top-20 h-52 w-52 rounded-full bg-[#d7a44b]/12 blur-3xl transition duration-700 group-hover:scale-125" />
-          <div className="pointer-events-none absolute inset-y-0 left-[44%] hidden w-px bg-gradient-to-b from-transparent via-[#d7a44b]/20 to-transparent md:block" />
-          <div className="relative grid gap-5 rounded-[1.55rem] border border-[#d7a44b]/15 bg-[linear-gradient(135deg,rgba(255,255,255,.035),transparent_50%)] px-5 py-6 sm:px-7 md:grid-cols-[1fr_auto] md:items-center md:py-7">
-            <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#d7a44b]/25 bg-[#d7a44b]/10 text-[#e0b560]">
-                <BookOpenText className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.26em] text-[#d7a44b]">
-                  <Sparkles className="h-3 w-3" /> Original Menu Book
-                </p>
-                <h2 className="mt-1.5 font-display text-2xl text-[#fff7e7] sm:text-3xl">
-                  Open the original menu — now interactive.
-                </h2>
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-[#eadbc7]/55">
-                  Turn through the restaurant menu like a digital book, tap dishes to build your order,
-                  then send it directly to Ayodhya on WhatsApp.
-                </p>
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+            <div className="max-w-3xl">
+              <p className="flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.24em] text-brass sm:text-[11px] sm:tracking-[0.28em]">
+                <span className="h-px w-8 bg-current opacity-60" /> Ayodhya Digital Menu
+              </p>
+              <h1 className="mt-4 max-w-[14ch] font-display text-[2.7rem] font-semibold leading-[0.95] tracking-[-0.025em] sm:text-6xl lg:text-7xl">
+                One Table. Many Cravings.
+              </h1>
+              <p className="mt-4 max-w-2xl text-sm leading-6 text-cream/68 sm:text-base sm:leading-7">
+                Browse favourites from crispy dosas and creamy curries to pizzas, street food, desserts and chilled beverages — all in one easy menu.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2.5">
+                <Link
+                  href="/takeaway"
+                  className="inline-flex items-center gap-2 rounded-full bg-terracotta px-5 py-3 text-xs font-bold uppercase tracking-[0.1em] text-soft transition hover:bg-burnt hover:text-charcoal"
+                >
+                  <ShoppingBag className="h-4 w-4" /> Order Takeaway
+                </Link>
+                <Link
+                  href="/menu-book"
+                  className="inline-flex items-center gap-2 rounded-full border border-brass/35 bg-white/[0.035] px-5 py-3 text-xs font-bold uppercase tracking-[0.1em] text-cream transition hover:border-brass/70"
+                >
+                  <BookOpenText className="h-4 w-4 text-brass" /> Original Menu Book
+                </Link>
               </div>
             </div>
 
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#d7a44b]/30 bg-[#d7a44b]/10 px-5 py-3 text-xs font-bold uppercase tracking-[0.12em] text-[#fff7e7] transition group-hover:border-[#d7a44b]/60 group-hover:bg-[#d7a44b]/18">
-              Enter Menu Vault <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </span>
+            <div className="grid grid-cols-3 gap-2 text-center sm:max-w-xl lg:w-[330px]">
+              <div className="rounded-2xl border border-brass/15 bg-white/[0.035] px-3 py-4">
+                <UtensilsCrossed className="mx-auto h-4 w-4 text-brass" />
+                <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.1em] text-cream/65">Pure Veg</p>
+              </div>
+              <div className="rounded-2xl border border-brass/15 bg-white/[0.035] px-3 py-4">
+                <Sparkles className="mx-auto h-4 w-4 text-brass" />
+                <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.1em] text-cream/65">Chef Picks</p>
+              </div>
+              <div className="rounded-2xl border border-brass/15 bg-white/[0.035] px-3 py-4">
+                <Clock3 className="mx-auto h-4 w-4 text-brass" />
+                <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.1em] text-cream/65">Freshly Made</p>
+              </div>
+            </div>
           </div>
-        </Link>
+        </div>
+      </section>
 
-        <div className="mt-10">
-          <MenuExplorer key={initialCategory} items={items} categories={categories} initialCategory={initialCategory} />
+      <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 sm:pt-8 lg:px-8 lg:pt-10">
+        <MenuExplorer
+          key={initialCategory}
+          items={items}
+          categories={categories}
+          initialCategory={initialCategory}
+        />
+
+        <div className="mt-10 rounded-[1.35rem] border border-sand/70 bg-soft px-5 py-5 sm:flex sm:items-center sm:justify-between sm:gap-5 sm:px-6">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-terracotta">Prefer pickup?</p>
+            <p className="mt-1 font-display text-2xl text-charcoal">Build your takeaway order online.</p>
+          </div>
+          <Link
+            href="/takeaway"
+            className="mt-4 inline-flex items-center gap-2 rounded-full bg-charcoal px-5 py-3 text-xs font-bold uppercase tracking-[0.1em] text-soft sm:mt-0"
+          >
+            Start Takeaway <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
 
-        <p className="mt-10 text-center text-xs text-walnut/70">
-          Prices shown match the restaurant menu provided to us. Taxes are not included; availability may vary.
+        <p className="mt-8 text-center text-[11px] leading-5 text-walnut/65">
+          Prices shown match the restaurant menu provided to us. Taxes, parcel charges and availability may vary.
         </p>
       </div>
     </div>
