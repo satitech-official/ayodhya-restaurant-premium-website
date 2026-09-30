@@ -6,7 +6,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowLeft,
   ArrowRight,
-  BookOpenText,
   MessageCircle,
   Minus,
   Plus,
@@ -337,10 +336,12 @@ export default function RoyalMenuBook() {
                         className="relative"
                       >
                         <div className="absolute inset-0 rounded-full bg-[#c9933d]/18 blur-3xl" />
-                        <BookOpenText className="relative mx-auto h-12 w-12 text-[#9d6127]" />
-                        <p className="mt-8 font-display text-6xl tracking-[-0.05em] text-[#2c1d15] sm:text-8xl">AYODHYA</p>
+                        <img
+                          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/brand/ayodhya-hero-logo.webp`}
+                          alt="Ayodhya Restaurant"
+                          className="relative mx-auto w-[285px] max-w-[78vw] object-contain sm:w-[360px]"
+                        />
                         <div className="mx-auto mt-5 h-px w-48 bg-gradient-to-r from-transparent via-[#9d6127] to-transparent" />
-                        <p className="mt-5 text-[11px] font-bold uppercase tracking-[0.38em] text-[#6f3d20]/70">Redefining Fine Dining</p>
                       </motion.div>
                       <p className="mt-14 max-w-md text-sm leading-7 text-[#6f5140]/70">
                         Swipe through the original menu. On any page, tap the + beside a dish to add it to your order.
