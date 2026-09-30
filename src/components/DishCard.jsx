@@ -6,30 +6,31 @@ import { MENU_CATEGORIES } from "@/lib/constants";
 import { formatPrice } from "@/lib/utils";
 
 const CAT_EMOJI = Object.fromEntries(MENU_CATEGORIES.map((c) => [c.slug, c.icon]));
-const USED_PHOTOS = new Set();
-const PHOTO_RESULT_CACHE = new Map();
+const USED_MEDIA_IDS = new Set();
 const ITEM_PHOTO_CACHE = new Map();
+const SEARCH_CACHE = new Map();
+let searchChain = Promise.resolve();
 
-const CATEGORY_SEARCH = {
-  beverages: "Indian beverage drink",
-  "signature-starters": "Indian vegetarian starter",
-  chinese: "Indo Chinese vegetarian food",
+const CATEGORY_QUERY = {
+  beverages: "Indian beverage drink restaurant",
+  "signature-starters": "Indian vegetarian starter restaurant food",
+  chinese: "Indo Chinese vegetarian restaurant food",
   "street-food": "Indian street food vegetarian",
-  pasta: "vegetarian pasta",
-  soups: "vegetarian soup",
-  tandoor: "Indian tandoori vegetarian food",
-  pizza: "vegetarian pizza",
-  raita: "Indian raita",
-  "north-indian": "North Indian vegetarian curry",
+  pasta: "vegetarian pasta restaurant",
+  soups: "vegetarian soup restaurant",
+  tandoor: "Indian tandoori vegetarian starter",
+  pizza: "vegetarian pizza restaurant",
+  raita: "Indian raita food",
+  "north-indian": "North Indian vegetarian curry restaurant",
   "signature-main": "Indian paneer curry restaurant",
-  "papad-salad": "Indian salad papad",
-  "paneer-specials": "Indian paneer curry",
+  "papad-salad": "Indian salad papad food",
+  "paneer-specials": "Indian paneer curry restaurant",
   dal: "Indian dal lentil curry",
   "rice-biryani": "Indian vegetarian rice biryani",
   desserts: "Indian dessert sweet",
   breads: "Indian naan roti paratha",
-  "dosa-specials": "South Indian dosa",
-  "south-indian": "South Indian idli uttapam",
+  "dosa-specials": "South Indian dosa restaurant",
+  "south-indian": "South Indian idli uttapam restaurant",
 };
 
 function hashValue(value = "") {
@@ -50,93 +51,252 @@ function cleanDishName(value = "") {
     .trim();
 }
 
-function searchPhrase(item) {
+function canonicalDishQuery(item) {
   const name = cleanDishName(item?.name);
   const n = name.toLowerCase();
 
-  const rules = [
-    [/paneer butter masala/, "paneer butter masala Indian food"],
-    [/palak paneer|lasooni palak paneer/, "palak paneer Indian food"],
-    [/kadai paneer/, "kadai paneer Indian food"],
-    [/shahi paneer/, "shahi paneer Indian food"],
-    [/matar paneer/, "matar paneer Indian food"],
-    [/paneer tikka/, "paneer tikka Indian food"],
-    [/paneer/, `${name} paneer Indian food`],
-    [/dosa/, `${name} dosa South Indian food`],
-    [/idli/, `${name} idli South Indian food`],
-    [/uttapam/, `${name} uttapam South Indian food`],
-    [/biryani/, `${name} vegetarian biryani`],
-    [/pulao|rice|khichdi/, `${name} Indian rice dish`],
-    [/dal/, `${name} Indian dal`],
-    [/naan|roti|paratha|kulcha/, `${name} Indian bread`],
-    [/pizza/, `${name} vegetarian pizza`],
-    [/pasta/, `${name} vegetarian pasta`],
-    [/soup/, `${name} vegetarian soup`],
+  const aliases = [
+    [/paneer hyderabadi/, "Hyderabadi paneer curry"],
+    [/soya tikka masala/, "soya chaap tikka masala"],
+    [/bhuna soya chaap/, "bhuna soya chaap curry"],
+    [/firangi soya chaap/, "soya chaap curry"],
+    [/lasooni palak paneer/, "lasooni palak paneer"],
+    [/paneer maharani/, "paneer maharani curry"],
+    [/paneer hungama/, "paneer hungama curry"],
+    [/paneer tufani|paneer toofani/, "paneer toofani curry"],
+    [/paneer angara/, "paneer angara curry"],
+    [/afghani paneer/, "afghani paneer white gravy"],
+    [/paneer long lata/, "paneer curry Indian restaurant"],
+    [/paneer rajwari/, "paneer rajwadi curry"],
+    [/paneer lababdar/, "paneer lababdar"],
+    [/paneer kolhapuri/, "paneer kolhapuri"],
+    [/paneer pasanda/, "paneer pasanda"],
+    [/paneer amritsari/, "amritsari paneer curry"],
+    [/paneer patiyala|paneer patiala/, "paneer patiala curry"],
+    [/paneer kaju masala/, "kaju paneer masala"],
+    [/paneer bhuna masala/, "bhuna paneer masala"],
+    [/paneer do pyaza/, "paneer do pyaza"],
+    [/matar paneer/, "matar paneer"],
+    [/palak stuffed paneer/, "stuffed paneer spinach"],
+    [/amritsari paneer bhurji/, "paneer bhurji"],
+    [/paneer butter masala/, "paneer butter masala"],
+    [/paneer tikka masala/, "paneer tikka masala"],
+    [/kadai paneer/, "kadai paneer"],
+    [/shahi paneer/, "shahi paneer"],
+    [/palak paneer/, "palak paneer"],
+    [/paneer 65/, "paneer 65"],
+    [/paneer chilli|chilli paneer/, "chilli paneer"],
+    [/paneer finger/, "paneer fingers starter"],
+    [/paneer sizzler/, "paneer sizzler"],
+    [/paneer corn seekh kebab/, "paneer corn seekh kebab"],
+    [/mushroom spanish fried rice/, "mushroom fried rice"],
+    [/pan fried noodles/, "pan fried noodles"],
+    [/veg coin in hot garlic sauce/, "vegetable balls hot garlic sauce"],
+    [/hara bhara kebab/, "hara bhara kebab"],
+    [/cheese corn kebab/, "corn cheese kebab"],
+    [/crispy corn/, "crispy corn salt pepper"],
+    [/veg manchurian/, "veg manchurian"],
+    [/veg kothe/, "veg kothe"],
+    [/veg lollipop/, "vegetable lollipop"],
+    [/honey chilli potato/, "honey chilli potato"],
+    [/chilli potato/, "chilli potato"],
+    [/chana chilli/, "chilli chana"],
+    [/corn chaat/, "corn chaat"],
+    [/crispy veg/, "crispy vegetables Indo Chinese"],
+    [/chinese sizzler platter/, "Chinese vegetarian sizzler platter"],
+    [/hakka noodles/, "veg hakka noodles"],
+    [/schezwan noodles/, "veg schezwan noodles"],
+    [/chowmein/, "veg chow mein"],
+    [/chilli garlic noodles/, "chilli garlic noodles"],
+    [/fried rice/, `${name} fried rice`],
+    [/pav bhaji/, `${name} pav bhaji`],
+    [/chole bhature/, "chole bhature"],
+    [/pakode|pakora/, `${name} pakora Indian snack`],
     [/sandwich/, `${name} vegetarian sandwich`],
-    [/fries|potato/, `${name} food`],
-    [/coffee/, `${name} coffee drink`],
-    [/shake/, `${name} milkshake`],
-    [/mojito|lagoon|soda|lassi|butter milk|buttermilk/, `${name} drink`],
-    [/kebab|tikka|chaap|tandoor/, `${name} Indian vegetarian starter`],
-    [/manchurian|noodles|chowmein|schezwan|chilli/, `${name} Indo Chinese vegetarian food`],
-    [/pav bhaji/, `${name} Indian street food`],
-    [/pakode|pakora/, `${name} Indian snack`],
-    [/kofta/, `${name} Indian kofta curry`],
-    [/mushroom/, `${name} mushroom Indian food`],
-    [/salad/, `${name} salad`],
+    [/white sauce pasta/, "white sauce pasta"],
+    [/red sauce pasta/, "red sauce pasta"],
+    [/pink sauce pasta/, "pink sauce pasta"],
+    [/manchow soup/, "veg manchow soup"],
+    [/lemon coriander soup/, "lemon coriander soup"],
+    [/hot and sour soup/, "vegetable hot and sour soup"],
+    [/tomato soup/, "tomato soup"],
+    [/sweet corn soup/, "sweet corn soup"],
+    [/veg seekh kebab/, "vegetable seekh kebab"],
+    [/paneer tikka/, `${name} paneer tikka`],
+    [/soya.*chaap/, `${name} soya chaap`],
+    [/tandoor platter/, "vegetarian tandoori platter"],
+    [/pizza/, `${name} vegetarian pizza`],
     [/raita/, `${name} Indian raita`],
-    [/gulab jamun|rasgulla/, `${name} Indian dessert`],
+    [/dum aloo/, "dum aloo Punjabi"],
+    [/aloo gobi matar/, "aloo gobi matar"],
+    [/sev tamatar/, "sev tamatar sabzi"],
+    [/bhindi masala/, "bhindi masala"],
+    [/bhindi kurkuri/, "kurkuri bhindi"],
+    [/veg kolhapuri/, "veg kolhapuri curry"],
+    [/veg patiala/, "veg patiala curry"],
+    [/veg keema rara/, "vegetarian keema curry"],
+    [/matar mushroom/, "matar mushroom curry"],
+    [/methi matar malai/, "methi matar malai"],
+    [/kaju curry/, "cashew curry Indian"],
+    [/veg kofta curry/, "vegetable kofta curry"],
+    [/paneer kofta/, "paneer kofta curry"],
+    [/angoori kofta/, "angoori kofta curry"],
+    [/malai kofta/, "malai kofta"],
+    [/dal tadka/, "dal tadka"],
+    [/dal fry/, "dal fry"],
+    [/jeera dal/, "jeera dal"],
+    [/dal dhaba/, "dhaba dal"],
+    [/dal roast/, "Indian dal curry"],
+    [/chilli garlic dal/, "garlic dal tadka"],
+    [/steamed rice/, "steamed basmati rice"],
+    [/jeera rice/, "jeera rice"],
+    [/pulao/, `${name} Indian pulao`],
+    [/biryani/, `${name} vegetarian biryani`],
+    [/khichdi/, `${name} khichdi`],
+    [/rasgulla/, "rasgulla Indian sweet"],
+    [/gulab jamun/, "gulab jamun"],
     [/ice cream/, `${name} ice cream`],
+    [/naan/, `${name} naan Indian bread`],
+    [/roti/, `${name} roti Indian bread`],
+    [/paratha/, `${name} paratha Indian bread`],
+    [/kulcha/, `${name} kulcha Indian bread`],
+    [/dosa/, `${name} South Indian dosa`],
+    [/uttapam/, `${name} South Indian uttapam`],
+    [/idli/, `${name} South Indian idli`],
+    [/cold coffee/, `${name} cold coffee`],
+    [/shake/, `${name} milkshake`],
+    [/mojito/, `${name} mojito drink`],
+    [/lassi/, `${name} lassi Indian drink`],
+    [/butter milk|buttermilk/, "Indian buttermilk chaas"],
+    [/lime soda|masala soda/, `${name} Indian soda drink`],
+    [/blue lagoon/, "blue lagoon mocktail"],
+    [/green apple/, "green apple mocktail"],
+    [/jamun shot/, "jamun drink shot"],
+    [/pan shot/, "paan shot drink"],
+    [/salad/, `${name} Indian salad`],
+    [/papad/, `${name} Indian papad`],
+    [/fries/, `${name} french fries`],
   ];
 
-  const matched = rules.find(([rx]) => rx.test(n));
-  return matched ? matched[1] : `${name} ${CATEGORY_SEARCH[item?.category] || "Indian vegetarian food"}`;
+  const matched = aliases.find(([rx]) => rx.test(n));
+  return matched ? matched[1] : `${name} ${CATEGORY_QUERY[item?.category] || "Indian vegetarian restaurant food"}`;
 }
 
-async function commonsSearch(query, limit = 36) {
-  const key = `${query}|${limit}`;
-  if (PHOTO_RESULT_CACHE.has(key)) return PHOTO_RESULT_CACHE.get(key);
+function tokenise(value = "") {
+  return cleanDishName(value)
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((x) => x.length > 2 && !["with", "and", "the", "veg", "special", "plain", "extra"].includes(x));
+}
 
-  const params = new URLSearchParams({
-    action: "query",
-    generator: "search",
-    gsrsearch: query,
-    gsrnamespace: "6",
-    gsrlimit: String(limit),
-    prop: "imageinfo",
-    iiprop: "url",
-    iiurlwidth: "900",
-    format: "json",
-    origin: "*",
+function resultScore(result, item) {
+  const haystack = [
+    result?.title || "",
+    ...(result?.tags || []).map((tag) => tag?.name || ""),
+  ].join(" ").toLowerCase();
+
+  const nameTokens = tokenise(item?.name);
+  const queryTokens = tokenise(canonicalDishQuery(item));
+  let score = 0;
+
+  for (const token of nameTokens) {
+    if (haystack.includes(token)) score += 8;
+  }
+  for (const token of queryTokens) {
+    if (haystack.includes(token)) score += 3;
+  }
+
+  if (/food|dish|curry|paneer|dosa|rice|bread|drink|soup|pizza|pasta|dessert|noodle|kebab|chaap/.test(haystack)) {
+    score += 2;
+  }
+
+  if (/person|people|restaurant interior|building|menu|logo|poster|packaging/.test(haystack)) {
+    score -= 10;
+  }
+
+  return score;
+}
+
+function queueSearch(task) {
+  const run = () => new Promise((resolve) => {
+    window.setTimeout(() => task().then(resolve).catch(() => resolve([])), 75);
+  });
+  searchChain = searchChain.then(run, run);
+  return searchChain;
+}
+
+async function openverseSearch(query, pageSize = 40) {
+  const key = `ov:${query}:${pageSize}`;
+  if (SEARCH_CACHE.has(key)) return SEARCH_CACHE.get(key);
+
+  const promise = queueSearch(async () => {
+    const params = new URLSearchParams({
+      q: query,
+      page_size: String(pageSize),
+      mature: "false",
+    });
+
+    const res = await fetch(`https://api.openverse.org/v1/images/?${params.toString()}`, {
+      headers: { Accept: "application/json" },
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return (data?.results || [])
+      .filter((result) => !result?.watermarked && (result?.thumbnail || result?.url))
+      .map((result) => ({
+        id: result.id || result.url,
+        url: result.thumbnail || result.url,
+        title: result.title || "",
+        tags: result.tags || [],
+      }));
   });
 
-  const promise = fetch(`https://commons.wikimedia.org/w/api.php?${params.toString()}`)
-    .then((res) => {
-      if (!res.ok) throw new Error("Commons image search failed");
-      return res.json();
-    })
-    .then((data) =>
-      Object.values(data?.query?.pages || {})
-        .sort((a, b) => (a.index || 0) - (b.index || 0))
-        .map((page) => page?.imageinfo?.[0]?.thumburl || page?.imageinfo?.[0]?.url)
-        .filter((url) => /^https:\/\//i.test(url || "")),
-    )
-    .catch(() => []);
-
-  PHOTO_RESULT_CACHE.set(key, promise);
+  SEARCH_CACHE.set(key, promise);
   return promise;
 }
 
-function chooseUnique(urls, seed) {
-  if (!urls?.length) return "";
-  const start = seed % urls.length;
+async function commonsSearch(query, limit = 40) {
+  const key = `wc:${query}:${limit}`;
+  if (SEARCH_CACHE.has(key)) return SEARCH_CACHE.get(key);
 
-  for (let i = 0; i < urls.length; i += 1) {
-    const url = urls[(start + i) % urls.length];
-    if (!USED_PHOTOS.has(url)) {
-      USED_PHOTOS.add(url);
-      return url;
-    }
+  const promise = queueSearch(async () => {
+    const params = new URLSearchParams({
+      action: "query",
+      generator: "search",
+      gsrsearch: query,
+      gsrnamespace: "6",
+      gsrlimit: String(limit),
+      prop: "imageinfo",
+      iiprop: "url",
+      iiurlwidth: "900",
+      format: "json",
+      origin: "*",
+    });
+
+    const res = await fetch(`https://commons.wikimedia.org/w/api.php?${params.toString()}`);
+    if (!res.ok) return [];
+    const data = await res.json();
+
+    return Object.values(data?.query?.pages || {}).map((page) => ({
+      id: `commons:${page.pageid}`,
+      url: page?.imageinfo?.[0]?.thumburl || page?.imageinfo?.[0]?.url || "",
+      title: page?.title || "",
+      tags: [],
+    })).filter((result) => result.url);
+  });
+
+  SEARCH_CACHE.set(key, promise);
+  return promise;
+}
+
+function pickUnique(results, item) {
+  const sorted = [...results].sort((a, b) => resultScore(b, item) - resultScore(a, item));
+
+  for (const result of sorted) {
+    const key = result.id || result.url;
+    if (!key || USED_MEDIA_IDS.has(key)) continue;
+    USED_MEDIA_IDS.add(key);
+    return result.url;
   }
 
   return "";
@@ -147,21 +307,32 @@ async function resolveDishPhoto(item) {
   if (ITEM_PHOTO_CACHE.has(cacheKey)) return ITEM_PHOTO_CACHE.get(cacheKey);
 
   const task = (async () => {
-    const seed = hashValue(cacheKey);
+    const exactQuery = canonicalDishQuery(item);
+    const exactOpenverse = await openverseSearch(exactQuery, 40);
+    let photo = pickUnique(exactOpenverse, item);
+    if (photo) return photo;
 
-    const exact = await commonsSearch(searchPhrase(item), 24);
-    let picked = chooseUnique(exact, seed);
-    if (picked) return picked;
+    const exactCommons = await commonsSearch(exactQuery, 40);
+    photo = pickUnique(exactCommons, item);
+    if (photo) return photo;
 
-    const category = await commonsSearch(CATEGORY_SEARCH[item?.category] || "Indian vegetarian food", 64);
-    picked = chooseUnique(category, seed + 17);
-    if (picked) return picked;
+    const rawName = cleanDishName(item?.name);
+    if (rawName && rawName.toLowerCase() !== exactQuery.toLowerCase()) {
+      const rawOpenverse = await openverseSearch(rawName, 40);
+      photo = pickUnique(rawOpenverse, item);
+      if (photo) return photo;
+    }
 
-    const general = await commonsSearch("Indian vegetarian restaurant food", 100);
-    picked = chooseUnique(general, seed + 37);
-    if (picked) return picked;
+    const categoryQuery = CATEGORY_QUERY[item?.category] || "Indian vegetarian restaurant food";
+    const categoryOpenverse = await openverseSearch(categoryQuery, 80);
+    photo = pickUnique(categoryOpenverse, item);
+    if (photo) return photo;
 
-    return item?.image || "";
+    const categoryCommons = await commonsSearch(categoryQuery, 80);
+    photo = pickUnique(categoryCommons, item);
+    if (photo) return photo;
+
+    return "";
   })();
 
   ITEM_PHOTO_CACHE.set(cacheKey, task);
@@ -186,7 +357,10 @@ function DishPhoto({ item, emoji }) {
 
     const load = async () => {
       const resolved = await resolveDishPhoto(item);
-      if (!cancelled) setSrc(resolved);
+      if (!cancelled) {
+        setFailed(false);
+        setSrc(resolved);
+      }
     };
 
     if ("IntersectionObserver" in window) {
@@ -197,7 +371,7 @@ function DishPhoto({ item, emoji }) {
             load();
           }
         },
-        { rootMargin: "500px 0px" },
+        { rootMargin: "650px 0px" },
       );
       observer.observe(node);
     } else {
