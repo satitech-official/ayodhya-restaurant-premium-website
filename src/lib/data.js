@@ -58,25 +58,14 @@ export async function getSettings() {
 }
 
 export async function getMenuItems() {
-  if (!db) return FALLBACK_MENU_ITEMS;
-  try {
-    const rows = await db.select().from(menuItems).orderBy(asc(menuItems.name));
-    return rows.length ? rows : FALLBACK_MENU_ITEMS;
-  } catch (error) {
-    reportDataFallback("menu", error);
-    return FALLBACK_MENU_ITEMS;
-  }
+  // The restaurant supplied an official menu PDF. Keep the public menu locked
+  // to that audited source so stale database rows can never reintroduce dishes
+  // or prices that are not on the current restaurant menu.
+  return FALLBACK_MENU_ITEMS;
 }
 
 export async function getCategories() {
-  if (!db) return normalizeCategories(FALLBACK_CATEGORIES);
-  try {
-    const rows = await db.select().from(menuCategories).orderBy(asc(menuCategories.sortOrder));
-    return normalizeCategories(rows.length ? rows : FALLBACK_CATEGORIES);
-  } catch (error) {
-    reportDataFallback("category", error);
-    return normalizeCategories(FALLBACK_CATEGORIES);
-  }
+  return normalizeCategories(FALLBACK_CATEGORIES);
 }
 
 export async function getActiveOffers() {
