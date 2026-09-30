@@ -1,6 +1,6 @@
 export default function robots() {
   return {
     rules: [{ userAgent: "*", allow: "/", disallow: ["/admin"] }],
-    sitemap: "https://ayodhyarestaurant.in/sitemap.xml",
+    sitemap: "https://ayodhyarestaurant.com/sitemap.xml",
   };
 }
