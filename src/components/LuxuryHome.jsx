@@ -52,7 +52,6 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const heroPoster = `${basePath}/images/hero-restaurant.webp`;
   const heroLogo = `${basePath}/brand/ayodhya-hero-logo.webp`;
-  const heroSubmark = `${basePath}/brand/ayodhya-submark-loader.webp`;
 
   return (
     <div className="bg-charcoal text-soft">
@@ -175,60 +174,48 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
           </div>
 
           <motion.div
-            className="pointer-events-none absolute right-[4.5%] top-[51%] hidden w-[25vw] max-w-[390px] -translate-y-1/2 lg:flex xl:right-[5.5%]"
-            initial="hidden"
-            animate="show"
-            variants={{
-              hidden: { opacity: 0, x: 54 },
-              show: { opacity: 1, x: 0, transition: { delay: 0.72, duration: 0.9, ease: EASE } },
-            }}
+            className="pointer-events-none absolute right-[4.5%] top-[53%] hidden w-[30vw] max-w-[500px] -translate-y-1/2 lg:block xl:right-[5.5%]"
+            initial={{ opacity: 0, x: 52 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.72, duration: 0.9, ease: EASE }}
             aria-hidden="true"
           >
-            <div className="relative flex w-full flex-col items-center">
+            <div className="relative">
               <motion.div
-                className="absolute top-[4%] h-[56%] w-[78%] rounded-full bg-brass/10 blur-[72px]"
-                animate={{ opacity: [0.12, 0.34, 0.12], scale: [0.94, 1.05, 0.94] }}
-                transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-[14%] rounded-full bg-brass/10 blur-[70px]"
+                animate={{ opacity: [0.12, 0.32, 0.12], scale: [0.95, 1.05, 0.95] }}
+                transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
               />
 
               <motion.div
-                className="relative z-10 h-[150px] w-[150px] overflow-hidden rounded-full border border-brass/25 bg-[#3b160a]/70 shadow-[0_18px_46px_rgba(0,0,0,.38)] xl:h-[172px] xl:w-[172px]"
-                variants={{
-                  hidden: { opacity: 0, scale: 0.72, rotate: -10 },
-                  show: { opacity: 1, scale: 1, rotate: 0, transition: { delay: 0.82, duration: 0.75, ease: EASE } },
-                }}
-                animate={{ y: [0, -5, 0] }}
-                transition={{ y: { duration: 4.8, repeat: Infinity, ease: "easeInOut" } }}
+                className="relative z-10 overflow-hidden"
+                initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
+                animate={{ clipPath: "inset(0 0% 0 0)", opacity: 0.88 }}
+                transition={{ delay: 0.88, duration: 1.15, ease: EASE }}
               >
-                <img src={heroSubmark} alt="" className="h-full w-full object-cover" draggable={false} />
-                <motion.span
-                  className="absolute -inset-y-8 left-[-35%] w-[20%] rotate-[16deg] bg-gradient-to-r from-transparent via-[#fff1b8]/40 to-transparent blur-md"
-                  animate={{ x: ["0%", "720%"] }}
-                  transition={{ delay: 1.6, duration: 2.2, repeat: Infinity, repeatDelay: 3.6, ease: "easeInOut" }}
-                />
-              </motion.div>
-
-              <motion.div
-                className="relative z-10 -mt-3 w-full"
-                variants={{
-                  hidden: { opacity: 0, y: 22, scale: 0.94 },
-                  show: { opacity: 0.86, y: 0, scale: 1, transition: { delay: 1.12, duration: 0.78, ease: EASE } },
-                }}
-                animate={{ y: [0, -3, 0] }}
-                transition={{ y: { duration: 5.2, repeat: Infinity, ease: "easeInOut" } }}
-              >
-                <img
+                <motion.img
                   src={heroLogo}
                   alt=""
-                  className="w-full object-contain mix-blend-screen drop-shadow-[0_12px_28px_rgba(0,0,0,.32)]"
+                  className="block w-full object-contain mix-blend-screen drop-shadow-[0_12px_28px_rgba(0,0,0,.34)]"
+                  animate={{ y: [0, -4, 0], scale: [1, 1.008, 1] }}
+                  transition={{
+                    y: { duration: 5.2, repeat: Infinity, ease: "easeInOut" },
+                    scale: { duration: 5.2, repeat: Infinity, ease: "easeInOut" },
+                  }}
                   draggable={false}
+                />
+
+                <motion.span
+                  className="pointer-events-none absolute -inset-y-10 left-[-22%] w-[15%] rotate-[15deg] bg-gradient-to-r from-transparent via-[#fff1b8]/42 to-transparent blur-md"
+                  animate={{ x: ["0%", "840%"] }}
+                  transition={{ delay: 1.7, duration: 2.15, repeat: Infinity, repeatDelay: 3.8, ease: "easeInOut" }}
                 />
               </motion.div>
 
               <motion.div
-                className="mt-1 h-px w-[68%] bg-gradient-to-r from-transparent via-brass/45 to-transparent"
+                className="mx-auto mt-1 h-px w-[72%] bg-gradient-to-r from-transparent via-brass/42 to-transparent"
                 initial={{ opacity: 0, scaleX: 0 }}
-                animate={{ opacity: [0.15, 0.5, 0.15], scaleX: [0.7, 1, 0.85] }}
+                animate={{ opacity: [0.12, 0.46, 0.12], scaleX: [0.72, 1, 0.84] }}
                 transition={{ delay: 1.35, duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
               />
             </div>
