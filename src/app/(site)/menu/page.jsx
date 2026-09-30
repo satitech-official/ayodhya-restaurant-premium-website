@@ -6,9 +6,18 @@ import { getMenuItems, getCategories } from "@/lib/data";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Menu",
+  title: "Menu | Vegetarian Restaurant in Betul",
   description:
-    "Explore the full Ayodhya Restaurant menu — North Indian, South Indian, Indo-Chinese, pizzas, dosas, pasta, desserts, shakes and more in Ganj, Betul.",
+    "Explore Ayodhya Restaurant Betul's menu with North Indian, South Indian, Indo-Chinese, dosa, pizza, pasta, desserts, shakes and beverages near Lashkare Hospital, Ganj.",
+  alternates: {
+    canonical: "/menu/",
+  },
+  openGraph: {
+    title: "Ayodhya Restaurant Betul Menu",
+    description:
+      "Browse the vegetarian menu at Ayodhya Restaurant near Lashkare Hospital, Ganj, Betul.",
+    url: "/menu/",
+  },
 };
 
 export default async function MenuPage({ searchParams }) {
