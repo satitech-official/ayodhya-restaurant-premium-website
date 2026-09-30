@@ -92,6 +92,7 @@ export default function Footer({ settings }) {
             <ul className="mt-5 space-y-3 text-sm">
               {[
                 ["Reservations", "/reserve"],
+                ["Takeaway Pickup", "/takeaway"],
                 ["Get Directions", RESTAURANT.mapsDirectionsUrl],
                 ["Order Online", "/#order"],
                 ["Reviews", "/#reviews"],
@@ -162,7 +163,18 @@ export default function Footer({ settings }) {
             </Link>
           </div>
         </div>
-        <p className="mt-6 text-center text-[11px] text-cream/35">
+        <p className="mt-6 text-center text-[11px] text-cream/45">
+          Designed &amp; Developed by{" "}
+          <a
+            href="https://www.satitechnologies.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="font-semibold text-cream/70 transition hover:text-brass"
+          >
+            Sati Technologies
+          </a>
+        </p>
+        <p className="mt-2 text-center text-[11px] text-cream/35">
           Menu prices are indicative — please confirm current rates and availability with the restaurant.
         </p>
       </div>

@@ -50,6 +50,7 @@ export const CUISINES = [
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Menu", href: "/menu" },
+  { label: "Takeaway", href: "/takeaway" },
   { label: "Experience", href: "/#experience" },
   { label: "Gallery", href: "/gallery" },
   { label: "About", href: "/about" },

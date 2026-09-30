@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Phone, UtensilsCrossed, CalendarDays, Navigation } from "lucide-react";
+import { Home, Phone, UtensilsCrossed, CalendarDays, ShoppingBag } from "lucide-react";
 import { RESTAURANT } from "@/lib/constants";
 
 export default function MobileBar() {
@@ -15,8 +15,8 @@ export default function MobileBar() {
   const items = [
     firstItem,
     { label: "Menu", href: "/menu", icon: UtensilsCrossed },
+    { label: "Takeaway", href: "/takeaway", icon: ShoppingBag },
     { label: "Reserve", href: "/reserve", icon: CalendarDays },
-    { label: "Directions", href: RESTAURANT.mapsDirectionsUrl, icon: Navigation, external: true },
   ];
 
   return (

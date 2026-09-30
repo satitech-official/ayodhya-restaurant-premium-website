@@ -112,6 +112,7 @@ export default function Navbar({ settings }) {
               {[
                 { label: "Home", href: "/" },
                 { label: "Menu", href: "/menu" },
+                { label: "Takeaway", href: "/takeaway" },
                 { label: "Gallery", href: "/gallery" },
                 { label: "About", href: "/about" },
                 { label: "Contact", href: "/contact" },
