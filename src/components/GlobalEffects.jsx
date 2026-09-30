@@ -10,6 +10,7 @@ export function StartupIntro() {
   const [visible, setVisible] = useState(true);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const submarkSrc = `${basePath}/brand/ayodhya-submark-loader.webp`;
+  const wordmarkSrc = `${basePath}/brand/ayodhya-hero-logo.webp`;
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -18,7 +19,7 @@ export function StartupIntro() {
     const timer = window.setTimeout(() => {
       setVisible(false);
       document.body.style.overflow = previousOverflow;
-    }, 4800);
+    }, 3200);
 
     return () => {
       window.clearTimeout(timer);
@@ -197,11 +198,24 @@ export function StartupIntro() {
           </div>
 
           <motion.div
-            className="absolute bottom-[10%] h-px w-40 bg-gradient-to-r from-transparent via-[#d6a84b] to-transparent sm:w-56"
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={{ opacity: [0, 0.9, 0.25], scaleX: [0, 1, 1.22] }}
-            transition={{ delay: 1.55, duration: 1.5, ease: EASE }}
-          />
+            className="absolute bottom-[8%] flex flex-col items-center"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.05, duration: 0.65, ease: EASE }}
+          >
+            <img
+              src={wordmarkSrc}
+              alt="Ayodhya Restaurant"
+              className="h-12 w-auto object-contain opacity-90 sm:h-14"
+              draggable={false}
+            />
+            <motion.div
+              className="mt-3 h-px w-40 bg-gradient-to-r from-transparent via-[#d6a84b] to-transparent sm:w-56"
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: [0, 0.9, 0.35], scaleX: [0, 1, 1.12] }}
+              transition={{ delay: 1.25, duration: 1.05, ease: EASE }}
+            />
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
@@ -210,6 +224,7 @@ export function StartupIntro() {
 export function RouteLoader() {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const submarkSrc = `${basePath}/brand/ayodhya-submark-loader.webp`;
+  const wordmarkSrc = `${basePath}/brand/ayodhya-hero-logo.webp`;
 
   return (
     <div
@@ -242,6 +257,15 @@ export function RouteLoader() {
         >
           <img src={submarkSrc} alt="Ayodhya Restaurant submark" className="h-full w-full object-cover" draggable={false} />
         </motion.div>
+        <motion.img
+          src={wordmarkSrc}
+          alt="Ayodhya Restaurant"
+          className="absolute -bottom-12 h-10 w-auto object-contain opacity-90 sm:-bottom-14 sm:h-12"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 0.9, y: 0 }}
+          transition={{ delay: 0.28, duration: 0.5, ease: EASE }}
+          draggable={false}
+        />
       </div>
     </div>
   );
