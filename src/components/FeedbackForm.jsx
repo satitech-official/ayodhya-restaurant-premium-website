@@ -49,11 +49,16 @@ export default function FeedbackForm() {
         body: JSON.stringify(form),
       });
       const data = await res.json();
+      if (data?.fallback === "whatsapp") {
+        window.location.assign(feedbackWhatsAppUrl(form));
+        setStatus("idle");
+        return;
+      }
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
       setStatus("success");
-    } catch (err) {
-      setStatus("error");
-      setError(err.message || "Could not send your message.");
+    } catch {
+      window.location.assign(feedbackWhatsAppUrl(form));
+      setStatus("idle");
     }
   };
 

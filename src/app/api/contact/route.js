@@ -7,7 +7,6 @@ export const dynamic = "force-dynamic";
 
 // Honeypot + minimum time are lightweight spam guards.
 export async function POST(request) {
-  if (!db) return Response.json({ error: "Database is not configured. Add DATABASE_URL to enable this feature." }, { status: 503 });
   let body;
   try {
     body = await request.json();
@@ -31,19 +30,27 @@ export async function POST(request) {
   if (!message || message.length < 5)
     return Response.json({ error: "Please write a short message." }, { status: 400 });
 
-  const [row] = await db
-    .insert(contactMessages)
-    .values({
-      name,
-      phone: (body.phone || "").trim(),
-      email,
-      subject: (body.subject || "").trim() || "General enquiry",
-      message,
-      read: false,
-    })
-    .returning();
+  if (!db) {
+    return Response.json({ fallback: "whatsapp", reason: "database_unavailable" });
+  }
 
-  return Response.json({ message: row }, { status: 201 });
+  try {
+    const [row] = await db
+      .insert(contactMessages)
+      .values({
+        name,
+        phone: (body.phone || "").trim(),
+        email,
+        subject: (body.subject || "").trim() || "General enquiry",
+        message,
+        read: false,
+      })
+      .returning();
+
+    return Response.json({ message: row }, { status: 201 });
+  } catch {
+    return Response.json({ fallback: "whatsapp", reason: "database_unavailable" });
+  }
 }
 
 export async function GET(request) {

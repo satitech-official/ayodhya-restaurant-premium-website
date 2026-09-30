@@ -69,12 +69,17 @@ export default function ReservationForm({ compact = false }) {
         body: JSON.stringify(form),
       });
       const data = await res.json();
+      if (data?.fallback === "whatsapp") {
+        window.location.assign(reservationWhatsAppUrl(form));
+        setStatus("idle");
+        return;
+      }
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
       setRef(data.reservation);
       setStatus("success");
-    } catch (err) {
-      setStatus("error");
-      setError(err.message || "Could not submit your request.");
+    } catch {
+      window.location.assign(reservationWhatsAppUrl(form));
+      setStatus("idle");
     }
   };
 

@@ -30,7 +30,6 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  if (!db) return Response.json({ error: "Database is not configured. Add DATABASE_URL to enable this feature." }, { status: 503 });
   let body;
   try {
     body = await request.json();
@@ -53,20 +52,28 @@ export async function POST(request) {
   if (!guests || guests < 1 || guests > 30)
     return Response.json({ error: "Please select a valid number of guests." }, { status: 400 });
 
-  const [row] = await db
-    .insert(reservations)
-    .values({
-      name,
-      phone,
-      date,
-      time,
-      guests,
-      occasion: body.occasion || "Regular Dining",
-      seating: body.seating || "No preference",
-      specialRequest: (body.specialRequest || "").trim(),
-      status: "new",
-    })
-    .returning();
+  if (!db) {
+    return Response.json({ fallback: "whatsapp", reason: "database_unavailable" });
+  }
 
-  return Response.json({ reservation: row }, { status: 201 });
+  try {
+    const [row] = await db
+      .insert(reservations)
+      .values({
+        name,
+        phone,
+        date,
+        time,
+        guests,
+        occasion: body.occasion || "Regular Dining",
+        seating: body.seating || "No preference",
+        specialRequest: (body.specialRequest || "").trim(),
+        status: "new",
+      })
+      .returning();
+
+    return Response.json({ reservation: row }, { status: 201 });
+  } catch {
+    return Response.json({ fallback: "whatsapp", reason: "database_unavailable" });
+  }
 }
