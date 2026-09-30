@@ -6,6 +6,49 @@ import { formatPrice } from "@/lib/utils";
 
 const CAT_EMOJI = Object.fromEntries(MENU_CATEGORIES.map((c) => [c.slug, c.icon]));
 
+const CATEGORY_PHOTO_HINT = {
+  beverages: "drink beverage",
+  "signature-starters": "indian starter",
+  chinese: "indo chinese food",
+  "street-food": "indian street food",
+  pasta: "pasta",
+  soups: "soup",
+  tandoor: "tandoori indian food",
+  pizza: "pizza",
+  raita: "indian raita",
+  "north-indian": "north indian curry",
+  "signature-main": "indian curry",
+  "papad-salad": "indian salad",
+  "paneer-specials": "paneer indian food",
+  dal: "indian dal",
+  "rice-biryani": "indian rice biryani",
+  desserts: "indian dessert",
+  breads: "indian naan bread",
+  "dosa-specials": "south indian dosa",
+  "south-indian": "south indian food",
+};
+
+function stableLock(value = "") {
+  let hash = 2166136261;
+  for (const ch of String(value)) {
+    hash ^= ch.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (Math.abs(hash >>> 0) % 900000) + 10000;
+}
+
+function realFoodImage(item) {
+  const cleanName = String(item?.name || "indian food")
+    .replace(/\([^)]*\)/g, " ")
+    .replace(/\bhalf\b|\bfull\b/gi, " ")
+    .replace(/[^a-zA-Z0-9\s&-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const hint = CATEGORY_PHOTO_HINT[item?.category] || "indian food";
+  const query = encodeURIComponent(`${cleanName} ${hint}`);
+  return `https://loremflickr.com/900/650/${query}?lock=${stableLock(item?.id || item?.name)}`;
+}
+
 export default function DishCard({ item }) {
   const emoji = CAT_EMOJI[item.category] || "🍽️";
   const soldOut = item.available === false;
@@ -15,7 +58,8 @@ export default function DishCard({ item }) {
       <div className="relative h-40 overflow-hidden bg-espresso">
         {item.image ? (
           <Img
-            src={item.image}
+            src={realFoodImage(item)}
+            fallbackSrc={item.image}
             alt={item.name}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             sizes="(min-width:1024px) 25vw, (min-width:640px) 45vw, 50vw"
