@@ -170,13 +170,13 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
       .filter(Boolean)
       .join("\n");
 
-    window.open(RESTAURANT.whatsappHref + "?text=" + encodeURIComponent(message), "_blank", "noopener,noreferrer");
+    window.location.assign(RESTAURANT.whatsappHref + "?text=" + encodeURIComponent(message));
     setError("");
   };
 
   const OrderPanel = ({ mobile = false }) => (
-    <div className={mobile ? "flex max-h-[calc(100dvh-1.25rem)] flex-col" : ""}>
-      <div className="flex items-start justify-between gap-3 border-b border-brass/15 pb-4">
+    <div className={mobile ? "flex h-full min-h-0 flex-col" : ""}>
+      <div className={mobile ? "flex shrink-0 items-start justify-between gap-3 border-b border-brass/15 pb-4" : "flex items-start justify-between gap-3 border-b border-brass/15 pb-4"}>
         <div>
           <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-terracotta">Your Pickup Order</p>
           <h2 className="mt-1 font-display text-2xl text-charcoal sm:text-3xl">Takeaway Cart</h2>
@@ -193,7 +193,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
         )}
       </div>
 
-      <div className={mobile ? "min-h-0 flex-1 overflow-y-auto overscroll-contain py-4 pr-1" : "py-5"}>
+      <div className={mobile ? "min-h-0 flex-1 overflow-y-auto overscroll-contain py-4 pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" : "py-5"}>
         {!cartItems.length ? (
           <div className="rounded-2xl border border-dashed border-charcoal/15 bg-white/45 p-6 text-center">
             <ShoppingBag className="mx-auto h-7 w-7 text-terracotta" />
@@ -252,10 +252,13 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
             </label>
             <input
               id={mobile ? "pickup-name-mobile" : "pickup-name"}
+              type="text"
+              autoComplete="name"
+              enterKeyHint="next"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name"
-              className="mt-2 w-full rounded-xl border border-charcoal/10 bg-white px-4 py-3.5 text-base text-charcoal outline-none transition focus:border-terracotta sm:text-sm"
+              className="mt-2 w-full rounded-xl border border-charcoal/10 bg-white px-4 py-3.5 text-[16px] text-charcoal outline-none transition focus:border-terracotta sm:text-sm"
             />
           </div>
 
@@ -265,11 +268,15 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
             </label>
             <input
               id={mobile ? "pickup-phone-mobile" : "pickup-phone"}
+              type="tel"
+              autoComplete="tel"
+              inputMode="numeric"
+              enterKeyHint="next"
+              maxLength={15}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              inputMode="tel"
               placeholder="10-digit mobile number"
-              className="mt-2 w-full rounded-xl border border-charcoal/10 bg-white px-4 py-3.5 text-base text-charcoal outline-none transition focus:border-terracotta sm:text-sm"
+              className="mt-2 w-full rounded-xl border border-charcoal/10 bg-white px-4 py-3.5 text-[16px] text-charcoal outline-none transition focus:border-terracotta sm:text-sm"
             />
           </div>
 
@@ -281,7 +288,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
               id={mobile ? "pickup-time-mobile" : "pickup-time"}
               value={pickupTime}
               onChange={(e) => setPickupTime(e.target.value)}
-              className="mt-2 w-full rounded-xl border border-charcoal/10 bg-white px-4 py-3.5 text-base text-charcoal outline-none transition focus:border-terracotta sm:text-sm"
+              className="mt-2 w-full rounded-xl border border-charcoal/10 bg-white px-4 py-3.5 text-[16px] text-charcoal outline-none transition focus:border-terracotta sm:text-sm"
             >
               <option>ASAP — restaurant to confirm</option>
               <option>In about 30 minutes</option>
@@ -301,7 +308,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
               onChange={(e) => setNote(e.target.value)}
               rows={3}
               placeholder="Less spicy, no onion, packing note…"
-              className="mt-2 w-full resize-none rounded-xl border border-charcoal/10 bg-white px-4 py-3.5 text-base text-charcoal outline-none transition focus:border-terracotta sm:text-sm"
+              className="mt-2 w-full resize-none rounded-xl border border-charcoal/10 bg-white px-4 py-3.5 text-[16px] text-charcoal outline-none transition focus:border-terracotta sm:text-sm"
             />
           </div>
         </div>
@@ -401,13 +408,13 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
                 {visibleItems.map((item) => {
                   const options = getPriceOptions(item);
                   return (
-                    <article key={item.id || item.slug || item.name} className="grid min-h-[142px] grid-cols-[104px_minmax(0,1fr)] overflow-hidden rounded-[1.15rem] border border-sand bg-white shadow-[0_14px_38px_-34px_rgba(64,36,20,.5)] sm:block sm:min-h-0 sm:rounded-[1.35rem] sm:shadow-[0_18px_50px_-38px_rgba(64,36,20,.45)]">
+                    <article key={item.id || item.slug || item.name} className="flex min-h-[138px] overflow-hidden rounded-[1.15rem] border border-sand bg-white shadow-[0_14px_38px_-34px_rgba(64,36,20,.5)] sm:block sm:min-h-0 sm:rounded-[1.35rem] sm:shadow-[0_18px_50px_-38px_rgba(64,36,20,.45)]">
                       {item.image && (
-                        <div className="h-full min-h-[142px] overflow-hidden bg-sand/30 sm:aspect-[16/10] sm:min-h-0">
-                          <img src={item.image} alt={item.name} className="h-full w-full object-cover" loading="lazy" />
+                        <div className="w-28 shrink-0 self-stretch overflow-hidden bg-sand/30 sm:aspect-[16/10] sm:w-full">
+                          <img src={item.image} alt={item.name} className="h-full min-h-[138px] w-full object-cover sm:min-h-0" loading="lazy" />
                         </div>
                       )}
-                      <div className="min-w-0 p-3.5 sm:p-5">
+                      <div className="min-w-0 flex-1 p-3.5 sm:p-5">
                         <p className="truncate text-[8px] font-bold uppercase tracking-[0.16em] text-terracotta sm:text-[9px] sm:tracking-[0.2em]">
                           {item.cuisine || "Vegetarian"}
                         </p>
@@ -483,14 +490,8 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
       </button>
 
       {cartOpen && (
-        <div className="fixed inset-0 z-[90] lg:hidden">
-          <button
-            type="button"
-            className="absolute inset-0 bg-charcoal/70 backdrop-blur-sm"
-            aria-label="Close takeaway cart"
-            onClick={() => setCartOpen(false)}
-          />
-          <div className="absolute inset-x-0 bottom-0 max-h-[calc(100dvh-0.75rem)] rounded-t-[1.5rem] bg-[#fffaf0] p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] shadow-2xl sm:p-5 sm:pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
+        <div className="fixed inset-0 z-[120] bg-[#fffaf0] lg:hidden">
+          <div className="mx-auto flex h-[100dvh] max-w-lg flex-col px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-[calc(0.75rem+env(safe-area-inset-top))] sm:px-5">
             <OrderPanel mobile />
           </div>
         </div>
