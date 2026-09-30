@@ -1,5 +1,5 @@
 export default function sitemap() {
-  const base = "https://ayodhyarestaurant.in";
+  const base = "https://ayodhyarestaurant.com";
   const routes = [
     { path: "", priority: 1 },
     { path: "/menu", priority: 0.9 },
