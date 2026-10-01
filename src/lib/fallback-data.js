@@ -6,7 +6,7 @@ const RAW_MENU_ITEMS = [
     "beverages",
     "Beverages",
     "50",
-    5370563,
+    8489749,
     0,
     0,
     0,
@@ -18,7 +18,7 @@ const RAW_MENU_ITEMS = [
     "beverages",
     "Beverages",
     "60",
-    5005919,
+    18142603,
     0,
     0,
     0,
@@ -30,7 +30,7 @@ const RAW_MENU_ITEMS = [
     "beverages",
     "Beverages",
     "80",
-    4869289,
+    5472299,
     0,
     0,
     0,
@@ -210,7 +210,7 @@ const RAW_MENU_ITEMS = [
     "beverages",
     "Beverages",
     "120",
-    12540663,
+    22222976,
     0,
     0,
     0,
@@ -2678,9 +2678,31 @@ const RAW_MENU_ITEMS = [
     ""
   ]
 ];
+const EXACT_MENU_IMAGE_OVERRIDES = {
+  "Masala Soda": "https://cdn.indiaphile.info/wp-content/uploads/2023/02/stp-masala-soda-6468.jpg?format=webp&width=900",
+  "Pan Shot (2 Shots)": "https://cdn.prod.website-files.com/64931d2aee18510b47f4bb1f/64d2673076626729bfbc076e_Paan-Shots-1024x641.jpeg",
+  "Jamun Shot (2 Shots)": "https://static.wixstatic.com/media/1fd3f4_f1a6b78e73334227a5c05f26741be3a9~mv2.jpg/v1/fill/w_900,h_700,al_c,q_90/1fd3f4_f1a6b78e73334227a5c05f26741be3a9~mv2.jpg",
+  "Punjabi Salad": "https://cdn.zyrosite.com/cdn-cgi/image/format=auto,w=900,fit=crop/cdn-ecommerce/store_01HYTMH206FDK0696A4880Q7A9/assets/1716907267886-0c58f55a-9788-44d6-8f0a-9cced170335c.jpg",
+};
+
 export const FALLBACK_MENU_ITEMS = RAW_MENU_ITEMS.map((it, index) => {
   const [name, category, cuisine, price, imageId, spicyLevel, recommended, bestseller, signature, description] = it;
-  return { id: index + 1, name, slug: slugify(name), description, category, cuisine, price: String(price), image: img(imageId), vegetarian: true, spicyLevel, recommended: Boolean(recommended), bestseller: Boolean(bestseller), signature: Boolean(signature), available: true };
+  return {
+    id: index + 1,
+    name,
+    slug: slugify(name),
+    description,
+    category,
+    cuisine,
+    price: String(price),
+    image: EXACT_MENU_IMAGE_OVERRIDES[name] || img(imageId),
+    vegetarian: true,
+    spicyLevel,
+    recommended: Boolean(recommended),
+    bestseller: Boolean(bestseller),
+    signature: Boolean(signature),
+    available: true,
+  };
 });
 export const FALLBACK_CATEGORIES = [
   {

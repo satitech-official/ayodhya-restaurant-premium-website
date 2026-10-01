@@ -332,6 +332,8 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
       const order = { ...data.order, persisted: Boolean(data.order.persisted ?? data.trackingAvailable) };
       persistHistory([order, ...historyRef.current.filter((item) => item.orderCode !== order.orderCode)]);
       setCart({});
+      setName("");
+      setPhone("");
       setNote("");
       setPickupTime("ASAP — restaurant to confirm");
       setCartOpen(false);
@@ -395,20 +397,6 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
 
       <section className="overflow-x-clip bg-cream pb-40 pt-5 text-charcoal sm:pt-8 md:pb-20 lg:pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {notice && (
-            <div className="mb-5 flex items-start justify-between gap-4 rounded-[1.25rem] border border-brass/25 bg-soft p-4 shadow-soft sm:p-5">
-              <div className="flex gap-3">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-terracotta" />
-                <div>
-                  <p className="font-semibold text-charcoal">
-                    {notice.status === "confirmed" ? "Your order is confirmed." : notice.status === "ready" ? "Your order is ready for pickup." : "Order request saved successfully."}
-                  </p>
-                  <p className="mt-1 text-sm text-walnut">{notice.orderCode}{notice.readyTime ? " · " + notice.readyTime : " · Awaiting restaurant confirmation"}</p>
-                </div>
-              </div>
-              <button type="button" onClick={() => setNotice(null)} className="text-walnut/60"><X className="h-4 w-4" /></button>
-            </div>
-          )}
 
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_390px]">
             <div>
@@ -463,7 +451,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
           </div>
 
           {history.length > 0 && (
-            <section className="mt-10 rounded-[1.5rem] border border-sand bg-soft p-4 sm:p-6">
+            <section id="takeaway-order-history" className="mt-10 scroll-mt-28 rounded-[1.5rem] border border-sand bg-soft p-4 sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-terracotta"><History className="h-4 w-4" /> Your order history</p>
@@ -519,6 +507,83 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
         <div className="fixed inset-0 z-[120] bg-[#fffaf0] lg:hidden">
           <div className="mx-auto flex h-[100dvh] max-w-lg flex-col px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-[calc(0.75rem+env(safe-area-inset-top))] sm:px-5">
             <OrderPanel mobile cartItems={cartItems} subtotal={subtotal} name={name} setName={setName} phone={phone} setPhone={setPhone} pickupTime={pickupTime} setPickupTime={setPickupTime} note={note} setNote={setNote} error={error} submitting={submitting} onSubmit={submitOrder} onClose={() => setCartOpen(false)} onChangeQty={changeQty} />
+          </div>
+        </div>
+      )}
+
+      {notice && (
+        <div className="fixed inset-0 z-[150] flex items-center justify-center bg-charcoal/55 px-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Takeaway order confirmation">
+          <div className="w-full max-w-md overflow-hidden rounded-[1.75rem] border border-brass/25 bg-[#fffaf0] shadow-[0_28px_90px_rgba(30,17,9,.38)]">
+            <div className="bg-charcoal px-5 py-5 text-soft sm:px-6">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-terracotta text-soft">
+                    {notice.status === "ready" ? <PackageCheck className="h-5 w-5" /> : <CheckCircle2 className="h-5 w-5" />}
+                  </span>
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-brass">Ayodhya Takeaway</p>
+                    <h3 className="mt-1 font-display text-2xl">
+                      {notice.status === "confirmed"
+                        ? "Order Confirmed"
+                        : notice.status === "ready"
+                          ? "Ready for Pickup"
+                          : notice.status === "cancelled"
+                            ? "Order Cancelled"
+                            : "Order Placed Successfully"}
+                    </h3>
+                  </div>
+                </div>
+                <button type="button" onClick={() => setNotice(null)} className="flex h-9 w-9 items-center justify-center rounded-full border border-cream/15 text-cream/70" aria-label="Close confirmation">
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-5 sm:p-6">
+              <div className="rounded-2xl border border-sand bg-white/70 p-4">
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-walnut">Order ID</p>
+                <p className="mt-1 font-display text-2xl font-semibold text-charcoal">{notice.orderCode}</p>
+                <p className="mt-2 text-sm leading-6 text-walnut">
+                  {notice.status === "confirmed"
+                    ? "The restaurant has confirmed your pickup order."
+                    : notice.status === "ready"
+                      ? "Your order is prepared and ready to collect."
+                      : notice.status === "cancelled"
+                        ? "The restaurant could not accept this order."
+                        : "Your order request has been saved. The restaurant will confirm availability and pickup time shortly."}
+                </p>
+                {notice.readyTime && <p className="mt-2 text-sm font-semibold text-terracotta">{notice.readyTime}</p>}
+              </div>
+
+              <div className="mt-4 flex items-center justify-between gap-3 rounded-xl bg-cream px-4 py-3">
+                <span className="text-xs font-semibold text-walnut">Order subtotal</span>
+                <span className="font-display text-xl text-charcoal">{money(notice.subtotal)}</span>
+              </div>
+
+              <p className="mt-4 text-center text-xs leading-5 text-walnut/70">
+                Your previous order is saved in Order History and your bag is ready for a new order.
+              </p>
+
+              <div className="mt-5 grid gap-2 sm:grid-cols-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setNotice(null);
+                    window.setTimeout(() => document.getElementById("takeaway-order-history")?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+                  }}
+                  className="rounded-xl border border-charcoal/10 bg-white px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] text-charcoal"
+                >
+                  View Order History
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setNotice(null)}
+                  className="rounded-xl bg-terracotta px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] text-soft"
+                >
+                  Start New Order
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
