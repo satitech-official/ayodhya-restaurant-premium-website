@@ -51,7 +51,6 @@ function Rating({ value = 5 }) {
 export default function LuxuryHome({ settings, signatures = [], gallery = [], reviews = [] }) {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const heroPoster = `${basePath}/images/hero-restaurant.webp`;
-  const heroLogo = `${basePath}/brand/ayodhya-hero-logo.webp`;
 
   return (
     <div className="bg-charcoal text-soft">
@@ -173,53 +172,6 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
             </motion.div>
           </div>
 
-          <motion.div
-            className="pointer-events-none absolute right-[4.5%] top-[53%] hidden w-[30vw] max-w-[500px] -translate-y-1/2 lg:block xl:right-[5.5%]"
-            initial={{ opacity: 0, x: 52 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.72, duration: 0.9, ease: EASE }}
-            aria-hidden="true"
-          >
-            <div className="relative">
-              <motion.div
-                className="absolute inset-[14%] rounded-full bg-brass/10 blur-[70px]"
-                animate={{ opacity: [0.12, 0.32, 0.12], scale: [0.95, 1.05, 0.95] }}
-                transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
-              />
-
-              <motion.div
-                className="relative z-10 overflow-hidden"
-                initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
-                animate={{ clipPath: "inset(0 0% 0 0)", opacity: 0.88 }}
-                transition={{ delay: 0.88, duration: 1.15, ease: EASE }}
-              >
-                <motion.img
-                  src={heroLogo}
-                  alt=""
-                  className="block w-full object-contain mix-blend-screen drop-shadow-[0_12px_28px_rgba(0,0,0,.34)]"
-                  animate={{ y: [0, -4, 0], scale: [1, 1.008, 1] }}
-                  transition={{
-                    y: { duration: 5.2, repeat: Infinity, ease: "easeInOut" },
-                    scale: { duration: 5.2, repeat: Infinity, ease: "easeInOut" },
-                  }}
-                  draggable={false}
-                />
-
-                <motion.span
-                  className="pointer-events-none absolute -inset-y-10 left-[-22%] w-[15%] rotate-[15deg] bg-gradient-to-r from-transparent via-[#fff1b8]/42 to-transparent blur-md"
-                  animate={{ x: ["0%", "840%"] }}
-                  transition={{ delay: 1.7, duration: 2.15, repeat: Infinity, repeatDelay: 3.8, ease: "easeInOut" }}
-                />
-              </motion.div>
-
-              <motion.div
-                className="mx-auto mt-1 h-px w-[72%] bg-gradient-to-r from-transparent via-brass/42 to-transparent"
-                initial={{ opacity: 0, scaleX: 0 }}
-                animate={{ opacity: [0.12, 0.46, 0.12], scaleX: [0.72, 1, 0.84] }}
-                transition={{ delay: 1.35, duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </div>
-          </motion.div>
         </div>
 
         <div className="relative border-y border-brass/15 bg-charcoal/88 backdrop-blur-xl">

@@ -1,6 +1,7 @@
 import { Phone, MapPin, Clock, Sparkles } from "lucide-react";
 import ReservationForm from "@/components/ReservationForm";
 import OpenStatus from "@/components/OpenStatus";
+import { Img } from "@/components/primitives";
 import { getSettings } from "@/lib/data";
 import { RESTAURANT } from "@/lib/constants";
 
@@ -8,66 +9,58 @@ export const revalidate = 300;
 
 export const metadata = {
   title: "Reserve a Table",
-  description:
-    "Reserve a table at Ayodhya Restaurant, Ganj Betul — book online for family dinners, birthdays and group meals.",
+  description: "Reserve a table at Ayodhya Restaurant, Ganj Betul — book online for family dinners, birthdays and group meals.",
 };
 
 export default async function ReservePage() {
   const settings = await getSettings();
 
   return (
-    <div className="bg-cream pb-24 pt-28 lg:pb-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-5">
-          <div className="lg:col-span-3">
-            <p className="mb-4 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.28em] text-terracotta">
-              <span className="h-px w-8 bg-current opacity-60" /> Reservations
-            </p>
-            <h1 className="text-balance font-display text-5xl font-semibold leading-[1.02] text-charcoal sm:text-6xl">
-              Reserve a Table.
-            </h1>
-            <p className="mt-4 max-w-lg text-base leading-relaxed text-walnut">
-              Tell us when you're coming and we'll keep a table ready. Perfect for family dinners,
-              birthdays and group meals.
-            </p>
+    <div className="bg-cream pb-24 lg:pb-16">
+      <section className="relative overflow-hidden bg-charcoal pb-10 pt-24 text-soft sm:pb-14 sm:pt-28">
+        <Img
+          src="https://images.pexels.com/photos/3184184/pexels-photo-3184184.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1900&h=1050"
+          alt="Family dining table at a restaurant"
+          fallbackSrc="/images/hero-restaurant.webp"
+          className="absolute inset-0 h-full w-full object-cover opacity-34"
+          eager
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/98 via-charcoal/86 to-charcoal/52" />
+        <div className="pattern-jaali-light absolute inset-0 opacity-[0.1]" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-brass sm:text-[11px]">
+            <span className="h-px w-8 bg-current opacity-60" /> Reservations
+          </p>
+          <h1 className="mt-4 max-w-xl font-display text-[2.7rem] font-semibold leading-[0.95] sm:text-6xl lg:text-7xl">
+            Your Table, Ready for the Moment.
+          </h1>
+          <p className="mt-4 max-w-xl text-sm leading-6 text-cream/72 sm:text-base sm:leading-7">
+            Family dinner, birthday or a relaxed evening — tell us when you're coming and we'll take care of the table.
+          </p>
+        </div>
+      </section>
 
-            <div className="mt-8">
-              <ReservationForm />
-            </div>
+      <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8 lg:pt-10">
+        <div className="grid gap-8 lg:grid-cols-5 lg:gap-12">
+          <div className="lg:col-span-3">
+            <h2 className="font-display text-3xl text-charcoal sm:text-4xl">Reservation details</h2>
+            <div className="mt-6"><ReservationForm /></div>
           </div>
 
           <div className="space-y-5 lg:col-span-2">
-            <div className="rounded-[2rem] bg-soft p-7 ring-1 ring-sand/60">
+            <div className="rounded-[1.5rem] bg-soft p-6 ring-1 ring-sand/60 sm:p-7">
               <h2 className="font-display text-2xl font-semibold text-charcoal">Good to know</h2>
               <ul className="mt-4 space-y-4 text-sm text-walnut">
-                <li className="flex gap-3">
-                  <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-terracotta" />
-                  We confirm every request by phone or WhatsApp.
-                </li>
-                <li className="flex gap-3">
-                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-terracotta" />
-                  <OpenStatus hours={settings.hours} className="border-0 p-0" />
-                </li>
-                <li className="flex gap-3">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-terracotta" />
-                  In front of Lashkare Hospital, Main Road, Ganj, Betul.
-                </li>
-                <li className="flex gap-3">
-                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-terracotta" />
-                  <a href={RESTAURANT.phoneHref} className="font-semibold text-terracotta">
-                    {settings.phone || RESTAURANT.phoneDisplay}
-                  </a>
-                </li>
+                <li className="flex gap-3"><Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-terracotta" />We confirm every request by phone or WhatsApp.</li>
+                <li className="flex gap-3"><Clock className="mt-0.5 h-4 w-4 shrink-0 text-terracotta" /><OpenStatus hours={settings.hours} className="border-0 p-0" /></li>
+                <li className="flex gap-3"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-terracotta" />In front of Lashkare Hospital, Main Road, Ganj, Betul.</li>
+                <li className="flex gap-3"><Phone className="mt-0.5 h-4 w-4 shrink-0 text-terracotta" /><a href={RESTAURANT.phoneHref} className="font-semibold text-terracotta">{settings.phone || RESTAURANT.phoneDisplay}</a></li>
               </ul>
             </div>
 
-            <div className="rounded-[2rem] bg-charcoal p-7 text-soft">
-              <p className="font-display text-2xl italic leading-snug text-cream/85">
-                “Great food deserves great memories — start with a table that's ready for you.”
-              </p>
-              <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.2em] text-brass">
-                Ayodhya Restaurant · Betul
-              </p>
+            <div className="rounded-[1.5rem] bg-charcoal p-6 text-soft sm:p-7">
+              <p className="font-display text-2xl italic leading-snug text-cream/85">“Great food deserves great memories — start with a table that's ready for you.”</p>
+              <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.2em] text-brass">Ayodhya Restaurant · Betul</p>
             </div>
           </div>
         </div>

@@ -80,8 +80,8 @@ export function SectionHeading({
 
 function fallbackForAlt(alt = "") {
   return /restaurant|interior|dining|ambience|table|guest|family|room/i.test(String(alt))
-    ? "/images/fallback-restaurant.svg"
-    : "/images/fallback-food.svg";
+    ? "/images/hero-restaurant.webp"
+    : "/images/hero-food.webp";
 }
 
 export function Img({ src, alt, className, width, height, eager = false, sizes, fallbackSrc }) {

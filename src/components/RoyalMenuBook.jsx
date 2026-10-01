@@ -256,20 +256,20 @@ export default function RoyalMenuBook() {
       "",
       "Please confirm availability and final total.",
     ].filter(Boolean).join("\n");
-    window.open(`${RESTAURANT.whatsappHref}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    window.location.assign(`${RESTAURANT.whatsappHref}?text=${encodeURIComponent(message)}`);
   };
 
   return (
-    <div className="min-h-screen bg-[#1e0d07] pb-32 pt-28 text-[#fff7e7]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1e0d07] pb-32 pt-24 text-[#fff7e7] sm:pt-28">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(197,139,55,.14),transparent_30%),radial-gradient(circle_at_16%_64%,rgba(123,65,29,.2),transparent_34%)]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-5 border-b border-[#c9933d]/20 pb-7 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-4 border-b border-[#c9933d]/20 pb-5 sm:gap-5 sm:pb-7 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-[#d7a44b]">
               <Sparkles className="h-3.5 w-3.5" /> The Royal Menu Vault
             </p>
-            <h1 className="mt-3 font-display text-4xl text-[#fff7e7] sm:text-5xl">Original Menu. Reimagined.</h1>
+            <h1 className="mt-2 max-w-[12ch] font-display text-[2.35rem] leading-[0.98] text-[#fff7e7] sm:mt-3 sm:max-w-none sm:text-5xl">Original Menu. Reimagined.</h1>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-[#eadbc7]/60">
               Browse the restaurant's original menu as a digital book. Tap + beside any dish to build an order instantly.
             </p>
@@ -282,8 +282,8 @@ export default function RoyalMenuBook() {
           </Link>
         </div>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-[150px_minmax(0,1fr)]">
-          <aside className="order-2 lg:order-1">
+        <div className="mt-5 grid gap-4 sm:mt-8 sm:gap-6 lg:grid-cols-[150px_minmax(0,1fr)]">
+          <aside className="order-1 lg:order-1">
             <div className="flex gap-2 overflow-x-auto pb-2 lg:sticky lg:top-24 lg:flex-col lg:overflow-visible">
               {PAGES.map((p, i) => (
                 <button
@@ -303,7 +303,7 @@ export default function RoyalMenuBook() {
             </div>
           </aside>
 
-          <main className="order-1 lg:order-2">
+          <main className="order-2 min-w-0 lg:order-2">
             <div className="relative mx-auto max-w-4xl [perspective:1600px]">
               <div className="absolute -inset-4 rounded-[2.4rem] bg-[#c9933d]/8 blur-3xl" />
 
@@ -315,7 +315,7 @@ export default function RoyalMenuBook() {
                   animate={{ opacity: 1, rotateY: 0, x: 0 }}
                   exit={{ opacity: 0, rotateY: direction > 0 ? -10 : 10, x: direction > 0 ? -25 : 25 }}
                   transition={{ duration: 0.45, ease: EASE }}
-                  className="relative min-h-[70vh] overflow-hidden rounded-[2rem] border border-[#c9933d]/30 bg-[#f7f0e5] text-[#3c291e] shadow-[0_40px_100px_-40px_rgba(0,0,0,.85)]"
+                  className="relative min-h-[58vh] overflow-hidden rounded-[1.35rem] border border-[#c9933d]/30 bg-[#f7f0e5] text-[#3c291e] shadow-[0_34px_80px_-42px_rgba(0,0,0,.85)] sm:min-h-[70vh] sm:rounded-[2rem]"
                   style={{
                     backgroundImage:
                       "radial-gradient(circle at 20% 10%,rgba(255,255,255,.85),transparent 25%),linear-gradient(135deg,rgba(255,255,255,.5),transparent 50%)",
@@ -328,7 +328,8 @@ export default function RoyalMenuBook() {
                   </div>
 
                   {current.cover ? (
-                    <div className="flex min-h-[70vh] flex-col items-center justify-center px-8 text-center">
+                    <div className="relative flex min-h-[58vh] flex-col items-center justify-center overflow-hidden px-5 text-center sm:min-h-[70vh] sm:px-8">
+                      <img src="/images/hero-food.webp" alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.08]" aria-hidden="true" />
                       <motion.div
                         initial={{ opacity: 0, scale: 0.88 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -348,13 +349,13 @@ export default function RoyalMenuBook() {
                       </p>
                     </div>
                   ) : (
-                    <div className="p-6 sm:p-9 lg:p-12">
+                    <div className="p-4 sm:p-9 lg:p-12">
                       <div className="border-b border-[#8f5b28]/15 pb-5">
                         <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#9d6127]">Ayodhya Restaurant · Betul</p>
                         <h2 className="mt-2 font-display text-4xl text-[#2c1d15] sm:text-5xl">{current.title}</h2>
                       </div>
 
-                      <div className="mt-7 grid gap-x-10 gap-y-8 md:grid-cols-2">
+                      <div className="mt-5 grid gap-x-7 gap-y-6 sm:mt-7 md:grid-cols-2 md:gap-x-10 md:gap-y-8">
                         {current.sections.map((section) => (
                           <section key={section.title} className="break-inside-avoid">
                             <h3 className="font-display text-2xl italic text-[#6f3d20]">{section.title}</h3>
@@ -378,12 +379,12 @@ export default function RoyalMenuBook() {
                 </motion.article>
               </AnimatePresence>
 
-              <div className="mt-5 flex items-center justify-between">
+              <div className="mt-4 grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:mt-5">
                 <button
                   type="button"
                   onClick={() => go(page - 1)}
                   disabled={page === 0}
-                  className="inline-flex items-center gap-2 rounded-full border border-[#c9933d]/25 px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[#eadbc7] transition enabled:hover:border-[#d7a44b] disabled:opacity-25"
+                  className="inline-flex w-fit items-center gap-1.5 rounded-full border border-[#c9933d]/25 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.08em] text-[#eadbc7] transition enabled:hover:border-[#d7a44b] disabled:opacity-25 sm:gap-2 sm:px-4 sm:text-xs sm:tracking-[0.1em]"
                 >
                   <ArrowLeft className="h-4 w-4" /> Previous
                 </button>
@@ -392,7 +393,7 @@ export default function RoyalMenuBook() {
                   type="button"
                   onClick={() => go(page + 1)}
                   disabled={page === PAGES.length - 1}
-                  className="inline-flex items-center gap-2 rounded-full border border-[#c9933d]/25 px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[#eadbc7] transition enabled:hover:border-[#d7a44b] disabled:opacity-25"
+                  className="ml-auto inline-flex w-fit items-center gap-1.5 rounded-full border border-[#c9933d]/25 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.08em] text-[#eadbc7] transition enabled:hover:border-[#d7a44b] disabled:opacity-25 sm:gap-2 sm:px-4 sm:text-xs sm:tracking-[0.1em]"
                 >
                   Next <ArrowRight className="h-4 w-4" />
                 </button>
