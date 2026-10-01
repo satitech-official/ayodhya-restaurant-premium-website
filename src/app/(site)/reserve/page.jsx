@@ -3,7 +3,7 @@ import ReservationForm from "@/components/ReservationForm";
 import OpenStatus from "@/components/OpenStatus";
 import { Img } from "@/components/primitives";
 import { getSettings } from "@/lib/data";
-import { IMAGES, RESTAURANT, img } from "@/lib/constants";
+import { RESTAURANT } from "@/lib/constants";
 
 export const revalidate = 300;
 
@@ -19,13 +19,13 @@ export default async function ReservePage() {
     <div className="bg-cream pb-24 lg:pb-16">
       <section className="relative overflow-hidden bg-charcoal pb-10 pt-24 text-soft sm:pb-14 sm:pt-28">
         <Img
-          src={img(IMAGES.family3, 1500, 1000)}
+          src="https://images.pexels.com/photos/3184184/pexels-photo-3184184.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1900&h=1050"
           alt="Family dining table at a restaurant"
-          fallbackSrc={img(IMAGES.interior4, 1500, 1000)}
-          className="absolute inset-0 h-full w-full object-cover opacity-48"
+          fallbackSrc="/images/hero-restaurant.webp"
+          className="absolute inset-0 h-full w-full object-cover opacity-34"
           eager
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/92 via-charcoal/70 to-charcoal/28" />
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/98 via-charcoal/86 to-charcoal/52" />
         <div className="pattern-jaali-light absolute inset-0 opacity-[0.1]" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <p className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-brass sm:text-[11px]">
