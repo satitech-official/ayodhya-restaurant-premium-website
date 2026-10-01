@@ -232,7 +232,7 @@ export default function MenuExplorer({ items, categories, initialCategory = "rec
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.18 }}
-              className="mt-5 grid gap-3 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3"
+              className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3"
             >
               {visible.map((item) => (
                 <DishCard key={item.id || item.slug || item.name} item={item} />
