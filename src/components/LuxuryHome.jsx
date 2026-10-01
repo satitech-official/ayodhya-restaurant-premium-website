@@ -249,12 +249,12 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
             </Link>
           </div>
 
-          <div className="mt-12 grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid auto-rows-fr items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {signatures.slice(0, 8).map((item, i) => (
               <Reveal key={item.id || item.name} delay={(i % 4) * 0.05} className="h-full">
                 <Link
                   href="/menu"
-                  className="group flex h-full flex-col overflow-hidden rounded-[1.4rem] border border-brass/15 bg-espresso/50 shadow-[0_24px_70px_-40px_rgba(0,0,0,.9)] transition duration-500 hover:-translate-y-1 hover:border-brass/45"
+                  className="group flex h-full min-h-[100%] flex-col overflow-hidden rounded-[1.4rem] border border-brass/15 bg-espresso/50 shadow-[0_24px_70px_-40px_rgba(0,0,0,.9)] transition duration-500 hover:-translate-y-1 hover:border-brass/45"
                 >
                   <div className="relative aspect-[5/4] overflow-hidden">
                     <Img
@@ -269,8 +269,8 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
                   </div>
                   <div className="flex flex-1 flex-col p-4 sm:p-5">
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brass">{item.cuisine || "House Favourite"}</p>
-                    <div className="mt-2 grid min-h-[4.25rem] grid-cols-[minmax(0,1fr)_auto] items-start gap-3 sm:min-h-[4.6rem]">
-                      <h3 className="font-display text-xl leading-tight text-soft sm:text-2xl">{item.name}</h3>
+                    <div className="mt-2 grid min-h-[5.35rem] grid-cols-[minmax(0,1fr)_auto] items-start gap-3 sm:min-h-[5.75rem]">
+                      <h3 className="line-clamp-3 font-display text-xl leading-tight text-soft sm:text-2xl">{item.name}</h3>
                       <span className="whitespace-nowrap font-display text-lg text-burnt sm:text-xl">{formatPrice(item.price)}</span>
                     </div>
                     <p className="mt-auto line-clamp-2 pt-2 text-sm leading-6 text-cream/55">{item.description}</p>
