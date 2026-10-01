@@ -12,18 +12,18 @@ export const RESTAURANT = {
   phoneHref: "tel:+917024242488",
   whatsappHref: "https://wa.me/917024242488",
   addressLines: [
-    "Civil Lines, Near Lashkare Hospital",
+    "In front of Lashkare Hospital, Main Road, Housing Board Colony",
     "Ganj, Betul, Madhya Pradesh 460001",
   ],
-  addressShort: "Civil Lines, Near Lashkare Hospital, Ganj, Betul, Madhya Pradesh 460001",
+  addressShort: "In front of Lashkare Hospital, Main Road, Housing Board Colony, Ganj, Betul, Madhya Pradesh 460001",
   city: "Betul",
   instagramHandle: "@ayodhyarestaurantt",
   instagramUrl: "https://instagram.com/ayodhyarestaurantt",
   facebookUrl: "https://www.facebook.com/search/top?q=Ayodhya%20Restaurant%20Betul",
-  mapsQuery: "Ayodhya Restaurant, Civil Lines, Near Lashkare Hospital, Ganj, Betul, Madhya Pradesh 460001",
+  mapsQuery: "Ayodhya Restaurant, In front of Lashkare Hospital, Main Road, Housing Board Colony, Ganj, Betul, Madhya Pradesh 460001",
   googleReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJf0OCHBcJ1jsRfx8E9DDfavw",
   mapsDirectionsUrl:
-    "https://www.google.com/maps/dir/?api=1&destination=Ayodhya%20Restaurant%2C%20Civil%20Lines%2C%20Near%20Lashkare%20Hospital%2C%20Ganj%2C%20Betul%2C%20Madhya%20Pradesh%20460001",
+    "https://www.google.com/maps/dir/?api=1&destination=Ayodhya%20Restaurant%2C%20Ganj%2C%20Betul%2C%20Madhya%20Pradesh%20460001",
   mapsEmbedUrl:
     "https://maps.google.com/maps?q=" +
     encodeURIComponent("Ayodhya Restaurant, Ganj, Betul, Madhya Pradesh 460001") +
