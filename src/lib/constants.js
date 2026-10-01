@@ -317,6 +317,55 @@ export function img(id, w = 1200, h = 800) {
   return `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=${w}&h=${h}`;
 }
 
+const MENU_IMAGE_POOLS = {
+  beverages: [IMAGES.mojito1, IMAGES.mojito2, IMAGES.mojito4, IMAGES.shake1, IMAGES.shake2, IMAGES.shake3],
+  "signature-starters": [IMAGES.tikka1, IMAGES.tikka2, IMAGES.noodle1, IMAGES.manch1, IMAGES.manch2],
+  chinese: [IMAGES.noodle1, IMAGES.noodle2, IMAGES.noodle3, IMAGES.manch1, IMAGES.manch2, IMAGES.manch3],
+  "street-food": [IMAGES.pav1, IMAGES.pav2, IMAGES.sand1, IMAGES.sand2, IMAGES.samosa1, IMAGES.samosa2],
+  pasta: [IMAGES.pasta1, IMAGES.pasta2, IMAGES.pasta3, IMAGES.pasta4],
+  soups: [IMAGES.pasta1, IMAGES.manch1, IMAGES.salad2],
+  tandoor: [IMAGES.tikka1, IMAGES.tikka2, IMAGES.tikka3, IMAGES.paneer1],
+  pizza: [IMAGES.pizza1, IMAGES.pizza2, IMAGES.pizza3],
+  raita: [IMAGES.salad1, IMAGES.salad2, IMAGES.salad3],
+  "north-indian": [IMAGES.paneer1, IMAGES.paneer2, IMAGES.paneer3, IMAGES.paneer4],
+  "signature-main": [IMAGES.paneer1, IMAGES.paneer2, IMAGES.paneer3, IMAGES.paneer4],
+  "papad-salad": [IMAGES.salad1, IMAGES.salad2, IMAGES.salad3],
+  "paneer-specials": [IMAGES.paneer1, IMAGES.paneer2, IMAGES.paneer3, IMAGES.paneer4],
+  dal: [IMAGES.paneer2, IMAGES.biryani1, IMAGES.biryani2, IMAGES.biryani4],
+  "rice-biryani": [IMAGES.biryani1, IMAGES.biryani2, IMAGES.biryani3, IMAGES.biryani4],
+  desserts: [IMAGES.dessert1, IMAGES.dessert2, IMAGES.dessert3, IMAGES.shake1],
+  breads: [IMAGES.naan1, IMAGES.naan2, IMAGES.naan3],
+  "dosa-specials": [IMAGES.dosa1, IMAGES.dosa2, IMAGES.dosa3, IMAGES.dosa4, IMAGES.dosa5],
+  "south-indian": [IMAGES.idli1, IMAGES.idli2, IMAGES.idli3, IMAGES.dosa1],
+};
+
+function stableIndex(value, length) {
+  const text = String(value || "");
+  let hash = 0;
+  for (let i = 0; i < text.length; i += 1) hash = (hash * 31 + text.charCodeAt(i)) >>> 0;
+  return length ? hash % length : 0;
+}
+
+export function menuItemImage(item, offset = 0, w = 900, h = 650) {
+  const name = String(item?.name || "").trim().toLowerCase();
+  if (offset === 0) {
+    if (name === "cold coffee with icecream" || name === "cold coffee") return img(IMAGES.mojito4, w, h);
+    if (name === "punjabi salad") return img(IMAGES.salad1, w, h);
+    if (name.includes("khichdi")) return img(IMAGES.biryani4, w, h);
+    if (name.includes("pulao") || name.includes("biryani") || name.includes("rice")) return img(IMAGES.biryani1, w, h);
+  }
+
+  const pool = MENU_IMAGE_POOLS[item?.category] || [
+    IMAGES.paneer2,
+    IMAGES.dosa1,
+    IMAGES.pizza1,
+    IMAGES.pav2,
+    IMAGES.biryani2,
+  ];
+  const index = (stableIndex(item?.id || item?.name, pool.length) + offset) % pool.length;
+  return img(pool[index], w, h);
+}
+
 export const DEFAULT_HOURS = {
   monday: { open: "11:00", close: "23:00", closed: false },
   tuesday: { open: "11:00", close: "23:00", closed: false },

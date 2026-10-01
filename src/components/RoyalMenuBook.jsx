@@ -13,7 +13,7 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
-import { RESTAURANT } from "@/lib/constants";
+import { IMAGES, RESTAURANT, img } from "@/lib/constants";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -329,7 +329,7 @@ export default function RoyalMenuBook() {
 
                   {current.cover ? (
                     <div className="relative flex min-h-[58vh] flex-col items-center justify-center overflow-hidden px-5 text-center sm:min-h-[70vh] sm:px-8">
-                      <img src="/images/hero-food.webp" alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.08]" aria-hidden="true" />
+                      <img src={img(IMAGES.pizza2, 1200, 900)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.1]" aria-hidden="true" />
                       <motion.div
                         initial={{ opacity: 0, scale: 0.88 }}
                         animate={{ opacity: 1, scale: 1 }}

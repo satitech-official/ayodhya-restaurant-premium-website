@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import MenuExplorer from "@/components/MenuExplorer";
 import { Img } from "@/components/primitives";
+import { IMAGES, img } from "@/lib/constants";
 import { getMenuItems, getCategories } from "@/lib/data";
 
 export const revalidate = 300;
@@ -34,52 +35,52 @@ export default async function MenuPage({ searchParams }) {
 
   return (
     <div className="bg-cream pb-28 lg:pb-20">
-      <section className="relative overflow-hidden bg-charcoal pb-10 pt-24 text-soft sm:pb-14 sm:pt-28 lg:pb-16">
-        <Img
-          src="https://images.pexels.com/photos/12737816/pexels-photo-12737816.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1900&h=1050"
-          alt="Ayodhya vegetarian menu spread"
-          fallbackSrc="/images/hero-food.webp"
-          className="absolute inset-0 h-full w-full object-cover opacity-36"
-          eager
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/98 via-charcoal/87 to-charcoal/48" />
-        <div className="pattern-jaali-light absolute inset-0 opacity-[0.1]" aria-hidden="true" />
+      <section className="relative overflow-hidden bg-charcoal pb-10 pt-24 text-soft sm:pb-12 sm:pt-28">
+        <div className="pattern-jaali-light absolute inset-0 opacity-[0.08]" aria-hidden="true" />
+        <div className="relative mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_470px] lg:items-center lg:gap-12 lg:px-8">
+          <div>
+            <p className="flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.24em] text-brass sm:text-[11px] sm:tracking-[0.28em]">
+              <span className="h-px w-8 bg-current opacity-60" /> Ayodhya Digital Menu
+            </p>
+            <h1 className="mt-4 max-w-[14ch] font-display text-[2.7rem] font-semibold leading-[0.95] tracking-[-0.025em] sm:text-6xl lg:text-7xl">
+              One Table. Many Cravings.
+            </h1>
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-cream/72 sm:text-base sm:leading-7">
+              Dosas, North Indian favourites, Indo-Chinese, pizzas, street food, desserts and chilled beverages — browse everything without the clutter.
+            </p>
 
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-            <div className="max-w-3xl">
-              <p className="flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.24em] text-brass sm:text-[11px] sm:tracking-[0.28em]">
-                <span className="h-px w-8 bg-current opacity-60" /> Ayodhya Digital Menu
-              </p>
-              <h1 className="mt-4 max-w-[14ch] font-display text-[2.7rem] font-semibold leading-[0.95] tracking-[-0.025em] sm:text-6xl lg:text-7xl">
-                One Table. Many Cravings.
-              </h1>
-              <p className="mt-4 max-w-2xl text-sm leading-6 text-cream/72 sm:text-base sm:leading-7">
-                Browse favourites from crispy dosas and creamy curries to pizzas, street food, desserts and chilled beverages.
-              </p>
-
-              <div className="mt-6 flex flex-wrap gap-2.5">
-                <Link href="/takeaway" className="inline-flex items-center gap-2 rounded-full bg-terracotta px-5 py-3 text-xs font-bold uppercase tracking-[0.1em] text-soft transition hover:bg-burnt hover:text-charcoal">
-                  <ShoppingBag className="h-4 w-4" /> Order Takeaway
-                </Link>
-                <Link href="/menu-book" className="inline-flex items-center gap-2 rounded-full border border-brass/35 bg-charcoal/35 px-5 py-3 text-xs font-bold uppercase tracking-[0.1em] text-cream backdrop-blur-md transition hover:border-brass/70">
-                  <BookOpenText className="h-4 w-4 text-brass" /> Original Menu Book
-                </Link>
-              </div>
+            <div className="mt-6 flex flex-wrap gap-2.5">
+              <Link href="/takeaway" className="inline-flex items-center gap-2 rounded-full bg-terracotta px-5 py-3 text-xs font-bold uppercase tracking-[0.1em] text-soft transition hover:bg-burnt hover:text-charcoal">
+                <ShoppingBag className="h-4 w-4" /> Order Takeaway
+              </Link>
+              <Link href="/menu-book" className="inline-flex items-center gap-2 rounded-full border border-brass/35 bg-white/[0.035] px-5 py-3 text-xs font-bold uppercase tracking-[0.1em] text-cream transition hover:border-brass/70">
+                <BookOpenText className="h-4 w-4 text-brass" /> Original Menu Book
+              </Link>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 text-center sm:max-w-xl lg:w-[330px]">
+            <div className="mt-5 grid max-w-xl grid-cols-3 gap-2 text-center">
               {[
                 [UtensilsCrossed, "Pure Veg"],
                 [Sparkles, "Chef Picks"],
                 [Clock3, "Freshly Made"],
               ].map(([Icon, label]) => (
-                <div key={label} className="rounded-2xl border border-brass/20 bg-charcoal/38 px-3 py-4 backdrop-blur-md">
+                <div key={label} className="rounded-xl border border-brass/15 bg-white/[0.03] px-2 py-3">
                   <Icon className="mx-auto h-4 w-4 text-brass" />
-                  <p className="mt-2 text-[9px] font-bold uppercase tracking-[0.08em] text-cream/75 sm:text-[10px]">{label}</p>
+                  <p className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.08em] text-cream/70">{label}</p>
                 </div>
               ))}
             </div>
+          </div>
+
+          <div className="relative overflow-hidden rounded-[1.55rem] border border-brass/20 bg-espresso shadow-[0_28px_75px_-36px_rgba(0,0,0,.85)]">
+            <Img
+              src={img(IMAGES.dosa1, 1200, 900)}
+              alt="Signature dosa from the Ayodhya menu"
+              fallbackSrc={img(IMAGES.paneer2, 1200, 900)}
+              className="aspect-[16/10] w-full object-cover lg:aspect-[4/3]"
+              eager
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal/22 via-transparent to-transparent" />
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Img, VegDot, Spicy } from "@/components/primitives";
-import { MENU_CATEGORIES } from "@/lib/constants";
+import { MENU_CATEGORIES, menuItemImage } from "@/lib/constants";
 import { formatPrice } from "@/lib/utils";
 
 const CATEGORY_META = Object.fromEntries(
@@ -17,7 +17,8 @@ export default function DishCard({ item }) {
       <div className="relative w-[112px] shrink-0 self-stretch overflow-hidden bg-espresso sm:aspect-[4/3] sm:w-full">
         {item.image ? (
           <Img
-            src={item.image}
+            src={menuItemImage(item, 0)}
+            fallbackSrc={menuItemImage(item, 1)}
             alt={item.name}
             className="h-full min-h-[132px] w-full object-cover transition-transform duration-700 sm:min-h-0 sm:group-hover:scale-105"
             sizes="(min-width:1280px) 25vw, (min-width:640px) 45vw, 112px"

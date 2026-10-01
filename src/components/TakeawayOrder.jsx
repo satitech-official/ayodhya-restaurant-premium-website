@@ -12,7 +12,7 @@ import {
   ShoppingBag,
   X,
 } from "lucide-react";
-import { RESTAURANT } from "@/lib/constants";
+import { IMAGES, RESTAURANT, img, menuItemImage } from "@/lib/constants";
 import { Img } from "@/components/primitives";
 
 function getPriceOptions(item) {
@@ -56,6 +56,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
   const [pickupTime, setPickupTime] = useState("ASAP — restaurant to confirm");
   const [note, setNote] = useState("");
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (!cartOpen) return undefined;
@@ -119,7 +120,9 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
     });
   };
 
-  const submitOrder = () => {
+  const submitOrder = (event) => {
+    event?.preventDefault?.();
+    if (submitting) return;
     const cleanPhone = phone.replace(/\D/g, "");
     if (!cartItems.length) {
       setError("Please add at least one item to your takeaway order.");
@@ -171,8 +174,11 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
       .filter(Boolean)
       .join("\n");
 
-    window.location.assign(RESTAURANT.whatsappHref + "?text=" + encodeURIComponent(message));
+    const orderUrl = RESTAURANT.whatsappHref + "?text=" + encodeURIComponent(message);
     setError("");
+    setSubmitting(true);
+    window.location.href = orderUrl;
+    window.setTimeout(() => setSubmitting(false), 1500);
   };
 
   const OrderPanel = ({ mobile = false }) => (
@@ -194,7 +200,10 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
         )}
       </div>
 
-      <div className={mobile ? "min-h-0 flex-1 overflow-y-auto overscroll-contain py-4 pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" : "py-5"}>
+      <form
+        onSubmit={submitOrder}
+        className={mobile ? "min-h-0 flex-1 overflow-y-auto overscroll-contain py-4 pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" : "py-5"}
+      >
         {!cartItems.length ? (
           <div className="rounded-2xl border border-dashed border-charcoal/15 bg-white/45 p-6 text-center">
             <ShoppingBag className="mx-auto h-7 w-7 text-terracotta" />
@@ -253,6 +262,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
             </label>
             <input
               id={mobile ? "pickup-name-mobile" : "pickup-name"}
+              required
               type="text"
               autoComplete="name"
               enterKeyHint="next"
@@ -269,6 +279,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
             </label>
             <input
               id={mobile ? "pickup-phone-mobile" : "pickup-phone"}
+              required
               type="tel"
               autoComplete="tel"
               inputMode="numeric"
@@ -317,57 +328,50 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
         {error && <p className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</p>}
 
         <button
-          type="button"
-          onClick={submitOrder}
-          className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-terracotta px-5 py-4 text-sm font-bold uppercase tracking-[0.1em] text-soft transition hover:bg-burnt"
+          type="submit"
+          disabled={submitting}
+          className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-terracotta px-5 py-4 text-sm font-bold uppercase tracking-[0.1em] text-soft transition hover:bg-burnt disabled:cursor-wait disabled:opacity-60"
         >
-          <MessageCircle className="h-4 w-4" /> Send Takeaway Order
+          <MessageCircle className="h-4 w-4" /> {submitting ? "Opening WhatsApp…" : "Send Takeaway Order"}
         </button>
 
         <p className="mt-3 text-center text-[11px] leading-5 text-walnut/70">
           Your order opens in WhatsApp for restaurant confirmation. Final amount and pickup-ready time are confirmed by Ayodhya.
         </p>
-      </div>
+      </form>
     </div>
   );
 
   return (
     <>
-      <section className="relative overflow-hidden bg-charcoal pb-9 pt-24 text-soft sm:pb-14 sm:pt-28">
-        <Img
-          src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1800&h=1000"
-          alt="Fresh Indian takeaway dishes"
-          fallbackSrc="/images/hero-food.webp"
-          className="absolute inset-0 h-full w-full object-cover opacity-30"
-          eager
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/98 via-charcoal/86 to-charcoal/52" />
-        <div className="pattern-jaali-light absolute inset-0 opacity-[0.1]" aria-hidden="true" />
-        <div className="absolute -right-20 top-10 h-72 w-72 rounded-full bg-brass/10 blur-3xl" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.22em] text-brass sm:text-[11px] sm:tracking-[0.28em]">
-            <span className="h-px w-8 bg-current opacity-60" /> Takeaway · Self Pickup
-          </p>
-          <div className="mt-4 grid gap-6 sm:mt-5 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-8">
-            <div className="max-w-3xl">
-              <h1 className="max-w-[18ch] font-display text-[2.55rem] font-semibold leading-[0.95] tracking-[-0.025em] sm:text-6xl lg:text-7xl">
-                Order Ahead. Pick Up Fresh.
-              </h1>
-              <p className="mt-4 max-w-2xl text-sm leading-6 text-cream/68 sm:mt-5 sm:text-lg sm:leading-7">
-                Choose your favourites, send your pickup order to Ayodhya, and collect it yourself from the restaurant once the team confirms it is ready.
-              </p>
+      <section className="relative overflow-hidden bg-charcoal pb-9 pt-24 text-soft sm:pb-12 sm:pt-28">
+        <div className="pattern-jaali-light absolute inset-0 opacity-[0.08]" aria-hidden="true" />
+        <div className="relative mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_430px] lg:items-center lg:gap-10 lg:px-8">
+          <div>
+            <p className="flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.22em] text-brass sm:text-[11px] sm:tracking-[0.28em]">
+              <span className="h-px w-8 bg-current opacity-60" /> Takeaway · Self Pickup
+            </p>
+            <h1 className="mt-4 max-w-[18ch] font-display text-[2.55rem] font-semibold leading-[0.95] tracking-[-0.025em] sm:text-6xl lg:text-7xl">
+              Order Ahead. Pick Up Fresh.
+            </h1>
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-cream/72 sm:text-base sm:leading-7">
+              Choose your favourites, send the order on WhatsApp, and collect it from Ayodhya after the team confirms the pickup time.
+            </p>
+            <div className="mt-5 grid grid-cols-3 gap-2 text-[9px] font-semibold uppercase tracking-[0.07em] text-cream/70 sm:max-w-xl sm:text-[10px]">
+              <span className="flex flex-col items-center gap-1.5 rounded-xl border border-brass/15 bg-white/[0.035] px-2 py-3 text-center"><CheckCircle2 className="h-4 w-4 text-brass" /> Choose dishes</span>
+              <span className="flex flex-col items-center gap-1.5 rounded-xl border border-brass/15 bg-white/[0.035] px-2 py-3 text-center"><Clock3 className="h-4 w-4 text-brass" /> Pick a time</span>
+              <span className="flex flex-col items-center gap-1.5 rounded-xl border border-brass/15 bg-white/[0.035] px-2 py-3 text-center"><MapPin className="h-4 w-4 text-brass" /> Self pickup</span>
             </div>
-            <div className="grid grid-cols-3 gap-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-cream/65 sm:text-sm sm:normal-case sm:tracking-normal lg:grid-cols-1">
-              <span className="flex min-w-0 flex-col items-center gap-1.5 rounded-xl border border-brass/15 bg-white/[0.035] px-2 py-3 text-center sm:flex-row sm:justify-center lg:justify-start lg:border-0 lg:bg-transparent lg:p-0 lg:text-left">
-                <CheckCircle2 className="h-4 w-4 shrink-0 text-brass" /> Choose dishes
-              </span>
-              <span className="flex min-w-0 flex-col items-center gap-1.5 rounded-xl border border-brass/15 bg-white/[0.035] px-2 py-3 text-center sm:flex-row sm:justify-center lg:justify-start lg:border-0 lg:bg-transparent lg:p-0 lg:text-left">
-                <Clock3 className="h-4 w-4 shrink-0 text-brass" /> Pick a time
-              </span>
-              <span className="flex min-w-0 flex-col items-center gap-1.5 rounded-xl border border-brass/15 bg-white/[0.035] px-2 py-3 text-center sm:flex-row sm:justify-center lg:justify-start lg:border-0 lg:bg-transparent lg:p-0 lg:text-left">
-                <MapPin className="h-4 w-4 shrink-0 text-brass" /> Self pickup
-              </span>
-            </div>
+          </div>
+          <div className="relative overflow-hidden rounded-[1.5rem] border border-brass/20 bg-espresso shadow-[0_26px_70px_-34px_rgba(0,0,0,.85)]">
+            <Img
+              src={img(IMAGES.pav2, 1100, 820)}
+              alt="Fresh takeaway meal"
+              fallbackSrc={img(IMAGES.paneer2, 1100, 820)}
+              className="aspect-[16/10] w-full object-cover lg:aspect-[4/3]"
+              eager
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal/34 via-transparent to-transparent" />
           </div>
         </div>
       </section>
@@ -421,9 +425,9 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
                       {item.image && (
                         <div className="w-28 shrink-0 self-stretch overflow-hidden bg-sand/30 sm:aspect-[16/10] sm:w-full">
                           <Img
-                            src={item.image}
+                            src={menuItemImage(item, 0)}
                             alt={item.name}
-                            fallbackSrc="/images/hero-food.webp"
+                            fallbackSrc={menuItemImage(item, 1)}
                             className="h-full min-h-[138px] w-full object-cover sm:min-h-0"
                           />
                         </div>
@@ -463,7 +467,7 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
             </div>
 
             <aside className="hidden lg:block">
-              <div className="sticky top-24 rounded-[1.5rem] border border-sand bg-[#fffaf0] p-5 shadow-[0_24px_70px_-42px_rgba(64,36,20,.55)]">
+              <div className="sticky top-24 max-h-[calc(100dvh-7rem)] overflow-y-auto rounded-[1.5rem] border border-sand bg-[#fffaf0] p-5 shadow-[0_24px_70px_-42px_rgba(64,36,20,.55)] [scrollbar-width:thin]">
                 <OrderPanel />
               </div>
             </aside>
