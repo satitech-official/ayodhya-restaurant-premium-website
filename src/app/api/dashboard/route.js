@@ -1,4 +1,5 @@
-import { db } from "@/db";
+import { db, pool } from "@/db";
+import { ensureTakeawayOrdersTable } from "@/lib/takeaway-orders";
 import {
   menuItems,
   reservations,
@@ -32,12 +33,30 @@ export async function GET(request) {
   const unreadMessages = messages.filter((m) => !m.read).length;
   const pendingReservations = allResvs.filter((r) => r.status === "new" || r.status === "confirmed");
 
+  let takeawayOrdersToday = 0;
+  let pendingTakeawayOrders = 0;
+  if (pool) {
+    try {
+      await ensureTakeawayOrdersTable();
+      const result = await pool.query(
+        `SELECT
+          COUNT(*) FILTER (WHERE created_at::date = CURRENT_DATE) AS today,
+          COUNT(*) FILTER (WHERE status IN ('submitted','confirmed','ready')) AS pending
+         FROM takeaway_orders`,
+      );
+      takeawayOrdersToday = Number(result.rows[0]?.today || 0);
+      pendingTakeawayOrders = Number(result.rows[0]?.pending || 0);
+    } catch {}
+  }
+
   return Response.json({
     stats: {
       menuItemCount: items.length,
       availableDishes: items.filter((i) => i.available).length,
       unavailableDishes: items.filter((i) => !i.available).length,
       reservationsToday: resvs.length,
+      takeawayOrdersToday,
+      pendingTakeawayOrders,
       upcomingReservations: pendingReservations.length,
       galleryImages: galleryRows.length,
       activeOffers: activeOffers.length,
