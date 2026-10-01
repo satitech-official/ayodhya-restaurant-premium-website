@@ -13,7 +13,6 @@ import {
   X,
 } from "lucide-react";
 import { RESTAURANT } from "@/lib/constants";
-import { Img } from "@/components/primitives";
 
 function getPriceOptions(item) {
   const values = String(item.price || "")
@@ -345,14 +344,6 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
   return (
     <>
       <section className="relative overflow-hidden bg-charcoal pb-9 pt-24 text-soft sm:pb-14 sm:pt-28">
-        <Img
-          src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1800&h=1000"
-          alt="Fresh Indian takeaway dishes"
-          fallbackSrc="/images/hero-food.webp"
-          className="absolute inset-0 h-full w-full object-cover opacity-30"
-          eager
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/98 via-charcoal/86 to-charcoal/52" />
         <div className="pattern-jaali-light absolute inset-0 opacity-[0.1]" aria-hidden="true" />
         <div className="absolute -right-20 top-10 h-72 w-72 rounded-full bg-brass/10 blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -431,11 +422,11 @@ export default function TakeawayOrder({ items = [], categories = [] }) {
                     <article key={item.id || item.slug || item.name} className="flex min-h-[138px] overflow-hidden rounded-[1.15rem] border border-sand bg-white shadow-[0_14px_38px_-34px_rgba(64,36,20,.5)] sm:block sm:min-h-0 sm:rounded-[1.35rem] sm:shadow-[0_18px_50px_-38px_rgba(64,36,20,.45)]">
                       {item.image && (
                         <div className="w-28 shrink-0 self-stretch overflow-hidden bg-sand/30 sm:aspect-[16/10] sm:w-full">
-                          <Img
+                          <img
                             src={item.image}
                             alt={item.name}
-                            fallbackSrc="/images/hero-food.webp"
                             className="h-full min-h-[138px] w-full object-cover sm:min-h-0"
+                            loading="lazy"
                           />
                         </div>
                       )}

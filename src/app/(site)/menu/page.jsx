@@ -8,7 +8,6 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import MenuExplorer from "@/components/MenuExplorer";
-import { Img } from "@/components/primitives";
 import { getMenuItems, getCategories } from "@/lib/data";
 
 export const revalidate = 300;
@@ -35,15 +34,9 @@ export default async function MenuPage({ searchParams }) {
   return (
     <div className="bg-cream pb-28 lg:pb-20">
       <section className="relative overflow-hidden bg-charcoal pb-10 pt-24 text-soft sm:pb-14 sm:pt-28 lg:pb-16">
-        <Img
-          src="https://images.pexels.com/photos/12737816/pexels-photo-12737816.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1900&h=1050"
-          alt="Ayodhya vegetarian menu spread"
-          fallbackSrc="/images/hero-food.webp"
-          className="absolute inset-0 h-full w-full object-cover opacity-36"
-          eager
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/98 via-charcoal/87 to-charcoal/48" />
-        <div className="pattern-jaali-light absolute inset-0 opacity-[0.1]" aria-hidden="true" />
+        <div className="pattern-jaali-light absolute inset-0 opacity-[0.12]" aria-hidden="true" />
+        <div className="absolute -right-28 top-10 h-80 w-80 rounded-full bg-brass/10 blur-3xl" />
+        <div className="absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-terracotta/10 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">

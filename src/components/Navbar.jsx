@@ -122,15 +122,6 @@ export default function Navbar({ settings }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.32 }}
           >
-            <motion.img
-              src="/images/hero-restaurant.webp"
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 h-full w-full object-cover opacity-[0.16]"
-              initial={{ scale: 1.08 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 1.2 }}
-            />
             <div className="absolute inset-0 bg-[linear-gradient(150deg,rgba(22,15,10,.96),rgba(43,25,14,.91)_55%,rgba(22,15,10,.98))]" />
             <div className="pattern-jaali-light absolute inset-0 opacity-[0.16]" />
             <motion.div
