@@ -9,7 +9,7 @@ export const metadata = {
     template: "%s | Ayodhya Restaurant Betul",
   },
   description:
-    "Discover Ayodhya Restaurant in Ganj, Betul — serving North Indian, South Indian, Indo-Chinese, pizzas, dosas, beverages and much more. Explore the menu, reserve a table and find us easily.",
+    "Ayodhya Restaurant in Ganj, Betul, Madhya Pradesh — a family vegetarian restaurant near Lashkare Hospital serving North Indian, South Indian, Indo-Chinese, dosas, pizzas, pasta, desserts and beverages. Browse the menu, order takeaway or reserve a table.",
   keywords: [
     "Ayodhya Restaurant Betul",
     "restaurant in Betul",
@@ -28,6 +28,19 @@ export const metadata = {
   ],
   alternates: {
     canonical: "/",
+  },
+  applicationName: "Ayodhya Restaurant Betul",
+  authors: [{ name: "Ayodhya Restaurant" }],
+  creator: "Ayodhya Restaurant",
+  publisher: "Ayodhya Restaurant",
+  category: "Restaurant",
+  other: {
+    "geo.region": "IN-MP",
+    "geo.placename": "Betul, Madhya Pradesh",
+    "business:contact_data:locality": "Betul",
+    "business:contact_data:region": "Madhya Pradesh",
+    "business:contact_data:postal_code": "460001",
+    "business:contact_data:country_name": "India",
   },
   openGraph: {
     title: "Ayodhya Restaurant Betul | Great Food, Great Moments",
