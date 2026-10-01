@@ -9,6 +9,8 @@ export default function JsonLd() {
       "Family vegetarian restaurant in Civil Lines, Ganj, Betul serving North Indian, South Indian, Indo-Chinese, pizza, pasta, desserts, shakes and beverages.",
     url: "https://ayodhyarestaurant.com/",
     menu: "https://ayodhyarestaurant.com/menu/",
+    image: "https://ayodhyarestaurant.com/og.png",
+    logo: "https://ayodhyarestaurant.com/brand/ayodhya-hero-logo.webp",
     telephone: "+917024242488",
     priceRange: "₹₹",
     currenciesAccepted: "INR",
@@ -24,7 +26,7 @@ export default function JsonLd() {
     ],
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Civil Lines, Near Lashkare Hospital, Ganj",
+      streetAddress: "In front of Lashkare Hospital, Main Road, Housing Board Colony, Ganj",
       addressLocality: "Betul",
       addressRegion: "Madhya Pradesh",
       postalCode: "460001",
@@ -55,7 +57,23 @@ export default function JsonLd() {
       "https://www.zomato.com/betul/ayodhya-restaurant-betul-locality",
       "https://www.swiggy.com/city/betul/ayodhya-restaurant-betul-town-rest951062"
     ],
-    hasMap: "https://www.google.com/maps/search/?api=1&query=Ayodhya%20Restaurant%20Civil%20Lines%20Ganj%20Betul",
+    hasMap: "https://www.google.com/maps/search/?api=1&query=Ayodhya%20Restaurant%20Ganj%20Betul%20Madhya%20Pradesh",
+    identifier: {
+      "@type": "PropertyValue",
+      name: "Google Place ID",
+      value: "ChIJf0OCHBcJ1jsRfx8E9DDfavw",
+    },
+    potentialAction: [
+      {
+        "@type": "ReserveAction",
+        target: "https://ayodhyarestaurant.com/reserve/",
+        result: { "@type": "FoodEstablishmentReservation" },
+      },
+      {
+        "@type": "OrderAction",
+        target: "https://ayodhyarestaurant.com/takeaway/",
+      },
+    ],
   };
 
   return (
