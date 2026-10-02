@@ -112,10 +112,10 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.12, ease: EASE }}
-              className="text-balance font-display text-[clamp(3.2rem,8.5vw,7.6rem)] font-semibold uppercase leading-[0.82] tracking-[-0.035em] text-soft"
+              className="text-balance font-display text-[clamp(2.65rem,10.5vw,7.1rem)] font-semibold uppercase leading-[0.84] tracking-[-0.035em] text-soft"
             >
-              A Royal Dining
-              <span className="mt-2 block text-brass">Experience</span>
+              Where Taste Meets
+              <span className="mt-2 block text-brass">Tradition</span>
             </motion.h1>
 
             <motion.p
@@ -124,7 +124,7 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
               transition={{ duration: 0.8, delay: 0.22, ease: EASE }}
               className="mt-7 max-w-2xl font-display text-xl leading-relaxed text-cream/85 sm:text-2xl"
             >
-              Where authentic taste meets warm Ayodhya hospitality.
+              Welcome to Ayodhya Restaurant
             </motion.p>
 
             <motion.p
@@ -133,8 +133,7 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
               transition={{ duration: 0.8, delay: 0.32 }}
               className="mt-4 max-w-xl text-sm leading-7 text-cream/65 sm:text-base"
             >
-              From signature dosas and rich North Indian classics to Indo-Chinese favourites, pizzas,
-              shakes and more — discover a family dining experience in the heart of Betul.
+              Great food is not just about taste — it is about the traditions, emotions, and moments that come with it.
             </motion.p>
 
             <motion.div
@@ -183,6 +182,35 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
                 <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-cream/45">{text}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden bg-[#f6ead3] py-16 text-charcoal sm:py-20 lg:py-24">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(201,147,60,.12),transparent_30%)]" />
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-start lg:px-8">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-terracotta sm:text-xs">
+              Where Taste Meets Tradition
+            </p>
+            <h2 className="mt-3 max-w-[10ch] font-display text-4xl leading-[0.98] text-charcoal sm:text-5xl lg:text-6xl">
+              Welcome to Ayodhya Restaurant
+            </h2>
+          </div>
+
+          <div className="max-w-3xl space-y-5 text-[15px] leading-7 text-walnut sm:text-base sm:leading-8">
+            <p>
+              At Ayodhya Restaurant, we believe that great food is not just about taste — it is about the traditions, emotions, and moments that come with it.
+            </p>
+            <p>
+              Rooted in Ganj, Betul, Ayodhya brings together the comfort of familiar flavours with a contemporary fine-dining experience. Every dish is prepared with care, using quality ingredients and flavours that feel both authentic and memorable.
+            </p>
+            <p>
+              From family celebrations and special occasions to a simple meal with the people you love, we strive to make every visit more than just dining. It is an experience built around good food, warm hospitality, and timeless traditions.
+            </p>
+            <p className="font-display text-xl font-semibold text-terracotta sm:text-2xl">
+              Ayodhya Restaurant — Where Taste Meets Tradition.
+            </p>
           </div>
         </div>
       </section>
