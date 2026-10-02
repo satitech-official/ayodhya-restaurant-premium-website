@@ -260,10 +260,10 @@ export default function RoyalMenuBook() {
   };
 
   return (
-    <div className="min-h-screen w-full max-w-full overflow-x-clip bg-[#1e0d07] pb-40 pt-20 text-[#fff7e7] sm:pb-32 sm:pt-28">
+    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-[#1e0d07] pb-48 pt-20 text-[#fff7e7] sm:pb-32 sm:pt-28">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(197,139,55,.14),transparent_30%),radial-gradient(circle_at_16%_64%,rgba(123,65,29,.2),transparent_34%)]" />
 
-      <div className="relative mx-auto w-full max-w-7xl min-w-0 px-3.5 sm:px-6 lg:px-8">
+      <div className="relative mx-auto w-full max-w-[100vw] min-w-0 px-3.5 sm:max-w-7xl sm:px-6 lg:px-8">
         <div className="flex flex-col gap-4 border-b border-[#c9933d]/20 pb-5 sm:gap-5 sm:pb-7 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-[#d7a44b]">
@@ -282,15 +282,15 @@ export default function RoyalMenuBook() {
           </Link>
         </div>
 
-        <div className="mt-4 grid min-w-0 gap-4 sm:mt-8 sm:gap-6 lg:grid-cols-[150px_minmax(0,1fr)]">
-          <aside className="order-1 lg:order-1">
-            <div className="flex max-w-full snap-x snap-mandatory gap-2 overflow-x-auto overscroll-x-contain pb-2 pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:sticky lg:top-24 lg:flex-col lg:overflow-visible lg:pr-0">
+        <div className="mt-4 grid w-full min-w-0 max-w-full gap-4 sm:mt-8 sm:gap-6 lg:grid-cols-[150px_minmax(0,1fr)]">
+          <aside className="order-1 w-full min-w-0 max-w-full overflow-hidden lg:order-1">
+            <div className="flex w-full max-w-[calc(100vw-28px)] snap-x snap-mandatory gap-2 overflow-x-auto overscroll-x-contain pb-2 pr-1 [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden sm:max-w-full lg:sticky lg:top-24 lg:flex-col lg:overflow-visible lg:pr-0">
               {PAGES.map((p, i) => (
                 <button
                   key={p.title + i}
                   type="button"
                   onClick={() => go(i)}
-                  className={`w-[132px] shrink-0 snap-start rounded-2xl border px-3 py-3 text-left transition sm:w-[150px] lg:w-full ${
+                  className={`w-[124px] shrink-0 snap-start rounded-2xl border px-3 py-3 text-left transition sm:w-[150px] lg:w-full ${
                     page === i
                       ? "border-[#d7a44b]/60 bg-[#d7a44b]/12 text-white"
                       : "border-white/8 bg-white/[0.025] text-[#eadbc7]/55 hover:border-[#d7a44b]/30 hover:text-[#eadbc7]"
@@ -303,8 +303,8 @@ export default function RoyalMenuBook() {
             </div>
           </aside>
 
-          <main className="order-2 min-w-0 lg:order-2">
-            <div className="relative mx-auto w-full max-w-4xl min-w-0 sm:[perspective:1600px]">
+          <main className="order-2 w-full min-w-0 max-w-full overflow-hidden lg:order-2">
+            <div className="relative mx-auto w-full min-w-0 max-w-[calc(100vw-28px)] sm:max-w-4xl sm:[perspective:1600px]">
               <div className="absolute -inset-4 rounded-[2.4rem] bg-[#c9933d]/8 blur-3xl" />
 
               <AnimatePresence mode="wait" custom={direction}>
@@ -315,11 +315,10 @@ export default function RoyalMenuBook() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.45, ease: EASE }}
-                  className="relative w-full max-w-full min-w-0 min-h-[440px] overflow-hidden rounded-[1.2rem] border border-[#c9933d]/30 bg-[#f7f0e5] text-[#3c291e] shadow-[0_28px_68px_-42px_rgba(0,0,0,.85)] sm:min-h-[70vh] sm:rounded-[2rem] sm:shadow-[0_34px_80px_-42px_rgba(0,0,0,.85)]"
+                  className="relative box-border w-full min-w-0 max-w-full min-h-[440px] overflow-hidden rounded-[1.2rem] border border-[#c9933d]/30 bg-[#f7f0e5] text-[#3c291e] shadow-[0_28px_68px_-42px_rgba(0,0,0,.85)] sm:min-h-[70vh] sm:rounded-[2rem] sm:shadow-[0_34px_80px_-42px_rgba(0,0,0,.85)]"
                   style={{
                     backgroundImage:
                       "radial-gradient(circle at 20% 10%,rgba(255,255,255,.85),transparent 25%),linear-gradient(135deg,rgba(255,255,255,.5),transparent 50%)",
-                    transformStyle: "preserve-3d",
                   }}
                 >
                   <div className="absolute inset-y-0 left-0 w-2 bg-gradient-to-r from-[#6f3d20]/20 to-transparent" />
@@ -328,27 +327,27 @@ export default function RoyalMenuBook() {
                   </div>
 
                   {current.cover ? (
-                    <div className="relative flex min-h-[440px] w-full min-w-0 flex-col items-center justify-center overflow-hidden px-4 py-8 text-center sm:min-h-[70vh] sm:px-8 sm:py-10">
+                    <div className="relative flex min-h-[440px] w-full min-w-0 max-w-full flex-col items-center justify-center overflow-hidden px-4 py-8 text-center sm:min-h-[70vh] sm:px-8 sm:py-10">
                       <motion.div
                         initial={{ opacity: 0, scale: 0.88 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.7, ease: EASE }}
-                        className="relative w-full max-w-full"
+                        className="relative mx-auto w-full min-w-0 max-w-full overflow-hidden"
                       >
                         <div className="absolute inset-0 rounded-full bg-[#c9933d]/18 blur-3xl" />
                         <img
                           src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/brand/ayodhya-hero-logo.webp`}
                           alt="Ayodhya Restaurant"
-                          className="relative mx-auto h-auto w-[205px] max-w-[68%] object-contain sm:w-[360px] sm:max-w-[78vw]"
+                          className="relative mx-auto block h-auto w-[52vw] max-w-[170px] object-contain object-center sm:w-[360px] sm:max-w-[78vw]"
                         />
                         <div className="mx-auto mt-5 h-px w-48 bg-gradient-to-r from-transparent via-[#9d6127] to-transparent" />
                       </motion.div>
-                      <p className="mt-8 max-w-[19rem] px-2 text-xs leading-6 text-[#6f5140]/70 sm:mt-14 sm:max-w-md sm:px-0 sm:text-sm sm:leading-7">
+                      <p className="mt-8 w-full max-w-[270px] break-words px-1 text-xs leading-6 text-[#6f5140]/70 sm:mt-14 sm:max-w-md sm:px-0 sm:text-sm sm:leading-7">
                         Swipe through the original menu. On any page, tap the + beside a dish to add it to your order.
                       </p>
                     </div>
                   ) : (
-                    <div className="min-w-0 p-4 sm:p-9 lg:p-12">
+                    <div className="box-border w-full min-w-0 max-w-full overflow-hidden p-4 sm:p-9 lg:p-12">
                       <div className="border-b border-[#8f5b28]/15 pb-5">
                         <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#9d6127]">Ayodhya Restaurant · Betul</p>
                         <h2 className="mt-2 break-words font-display text-[2rem] leading-[1.05] text-[#2c1d15] sm:text-5xl">{current.title}</h2>
@@ -356,7 +355,7 @@ export default function RoyalMenuBook() {
 
                       <div className="mt-5 grid gap-x-7 gap-y-6 sm:mt-7 md:grid-cols-2 md:gap-x-10 md:gap-y-8">
                         {current.sections.map((section) => (
-                          <section key={section.title} className="break-inside-avoid">
+                          <section key={section.title} className="min-w-0 max-w-full break-inside-avoid overflow-hidden">
                             <h3 className="break-words font-display text-xl italic leading-tight text-[#6f3d20] sm:text-2xl">{section.title}</h3>
                             {section.hint && <p className="mt-1 text-[11px] italic leading-5 text-[#6f5140]/60">{section.hint}</p>}
                             <div className="mt-3">
@@ -378,7 +377,7 @@ export default function RoyalMenuBook() {
                 </motion.article>
               </AnimatePresence>
 
-              <div className="mt-4 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 sm:mt-5">
+              <div className="mb-20 mt-4 grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 sm:mb-0 sm:mt-5">
                 <button
                   type="button"
                   onClick={() => go(page - 1)}
@@ -405,7 +404,7 @@ export default function RoyalMenuBook() {
       <button
         type="button"
         onClick={() => setCartOpen(true)}
-        className="fixed bottom-[84px] right-3 z-40 flex items-center gap-2 rounded-full border border-[#e2b45b]/35 bg-[#3b1d0f]/96 px-4 py-3 text-xs font-bold text-white shadow-[0_20px_50px_-18px_rgba(0,0,0,.8)] backdrop-blur-xl transition active:scale-[.98] sm:right-4 sm:gap-3 sm:px-5 sm:py-3.5 sm:text-sm md:bottom-6 md:right-6"
+        className="fixed bottom-[calc(78px+env(safe-area-inset-bottom))] right-3 z-40 flex max-w-[calc(100vw-24px)] items-center gap-2 rounded-full border border-[#e2b45b]/35 bg-[#3b1d0f]/96 px-4 py-3 text-xs font-bold text-white shadow-[0_20px_50px_-18px_rgba(0,0,0,.8)] backdrop-blur-xl transition active:scale-[.98] sm:right-4 sm:gap-3 sm:px-5 sm:py-3.5 sm:text-sm md:bottom-6 md:right-6"
       >
         <ShoppingBag className="h-5 w-5 text-[#e2b45b]" />
         Order Bag
