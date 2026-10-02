@@ -10,7 +10,7 @@ export default function JsonLd() {
     url: "https://ayodhyarestaurant.com/",
     menu: "https://ayodhyarestaurant.com/menu/",
     image: "https://ayodhyarestaurant.com/og.png",
-    logo: "https://ayodhyarestaurant.com/brand/ayodhya-hero-logo.webp",
+    logo: "https://ayodhyarestaurant.com/brand/ayodhya-full-logo.jpg",
     telephone: "+917024242488",
     priceRange: "₹₹",
     currenciesAccepted: "INR",

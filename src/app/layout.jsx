@@ -34,6 +34,14 @@ export const metadata = {
   creator: "Ayodhya Restaurant",
   publisher: "Ayodhya Restaurant",
   category: "Restaurant",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/brand/ayodhya-full-logo.jpg", type: "image/jpeg" },
+    ],
+    shortcut: ["/icon.svg"],
+    apple: [{ url: "/brand/ayodhya-submark-loader.webp", type: "image/webp" }],
+  },
   other: {
     "geo.region": "IN-MP",
     "geo.placename": "Betul, Madhya Pradesh",
