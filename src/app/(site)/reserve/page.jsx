@@ -7,8 +7,16 @@ import { RESTAURANT } from "@/lib/constants";
 export const revalidate = 300;
 
 export const metadata = {
-  title: "Reserve a Table",
-  description: "Reserve a table at Ayodhya Restaurant, Ganj Betul — book online for family dinners, birthdays and group meals.",
+  title: "Table Booking at Ayodhya Restaurant Betul | Reserve Online",
+  description:
+    "Reserve a table at Ayodhya Restaurant in Ganj, Betul near Lashkare Hospital for family dinners, birthdays, celebrations and group dining.",
+  alternates: { canonical: "/reserve" },
+  openGraph: {
+    title: "Reserve a Table at Ayodhya Restaurant Betul",
+    description:
+      "Book a table online at Ayodhya Restaurant in Ganj, Betul for family dinners, birthdays and group meals.",
+    url: "/reserve",
+  },
 };
 
 export default async function ReservePage() {

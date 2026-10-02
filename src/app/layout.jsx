@@ -5,11 +5,11 @@ import JsonLd from "@/components/JsonLd";
 export const metadata = {
   metadataBase: new URL("https://ayodhyarestaurant.com"),
   title: {
-    default: "Ayodhya Restaurant Betul | Great Food, Great Moments",
+    default: "Ayodhya Restaurant Betul | Pure Veg Family Restaurant",
     template: "%s | Ayodhya Restaurant Betul",
   },
   description:
-    "Ayodhya Restaurant in Ganj, Betul, Madhya Pradesh — a family vegetarian restaurant near Lashkare Hospital serving North Indian, South Indian, Indo-Chinese, dosas, pizzas, pasta, desserts and beverages. Browse the menu, order takeaway or reserve a table.",
+    "Ayodhya Restaurant in Ganj, Betul is a pure vegetarian family restaurant near Lashkare Hospital serving North Indian, South Indian, Chinese, dosa, pizza and more. View the menu, order takeaway or reserve a table.",
   keywords: [
     "Ayodhya Restaurant Betul",
     "restaurant in Betul",
@@ -48,9 +48,9 @@ export const metadata = {
     "business:contact_data:country_name": "India",
   },
   openGraph: {
-    title: "Ayodhya Restaurant Betul | Great Food, Great Moments",
+    title: "Ayodhya Restaurant Betul | Pure Veg Family Restaurant",
     description:
-      "North Indian, South Indian, Indo-Chinese, pizzas, dosas and beverages — in the heart of Ganj, Betul. Reserve a table or order today.",
+      "Pure vegetarian family dining in Ganj, Betul near Lashkare Hospital. Explore North Indian, South Indian, Chinese, dosa, pizza and more.",
     url: "https://ayodhyarestaurant.com",
     siteName: "Ayodhya Restaurant",
     locale: "en_IN",
@@ -59,9 +59,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ayodhya Restaurant Betul | Great Food, Great Moments",
+    title: "Ayodhya Restaurant Betul | Pure Veg Family Restaurant",
     description:
-      "North Indian, South Indian, Indo-Chinese, pizzas, dosas and beverages — in the heart of Ganj, Betul.",
+      "Pure vegetarian family restaurant in Ganj, Betul near Lashkare Hospital serving North Indian, South Indian, Chinese, dosa, pizza and more.",
     images: ["/og.png"],
   },
   robots: {
@@ -84,7 +84,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en-IN">
       <body className="bg-cream font-sans text-espresso antialiased">
         <JsonLd />
         <StartupIntro />

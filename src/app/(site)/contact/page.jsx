@@ -9,9 +9,16 @@ import { RESTAURANT } from "@/lib/constants";
 export const revalidate = 300;
 
 export const metadata = {
-  title: "Contact",
+  title: "Contact Ayodhya Restaurant Betul | Ganj, Near Lashkare Hospital",
   description:
-    "Contact Ayodhya Restaurant in Ganj, Betul — call us, find us on the map, follow us on Instagram or send a message.",
+    "Contact Ayodhya Restaurant in Ganj, Betul. Get the phone number, address, directions and opening details for our restaurant near Lashkare Hospital.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Contact Ayodhya Restaurant Betul",
+    description:
+      "Call, get directions or contact Ayodhya Restaurant in Ganj, Betul near Lashkare Hospital.",
+    url: "/contact",
+  },
 };
 
 export default async function ContactPage() {

@@ -6,9 +6,16 @@ import { img, IMAGES, RESTAURANT } from "@/lib/constants";
 export const revalidate = 300;
 
 export const metadata = {
-  title: "About",
+  title: "About Ayodhya Restaurant | Pure Veg Family Dining in Betul",
   description:
-    "About Ayodhya Restaurant, Betul — a modern family dining destination serving North Indian, South Indian, Indo-Chinese, pizzas and more under one roof.",
+    "Learn about Ayodhya Restaurant in Ganj, Betul — a pure vegetarian family dining destination near Lashkare Hospital serving North Indian, South Indian, Chinese, dosa, pizza and more.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About Ayodhya Restaurant | Pure Veg Family Dining in Betul",
+    description:
+      "Discover Ayodhya Restaurant in Ganj, Betul — vegetarian family dining, multiple cuisines and warm hospitality near Lashkare Hospital.",
+    url: "/about",
+  },
 };
 
 const PHILOSOPHY = [

@@ -3,6 +3,8 @@ import Link from "next/link";
 export const metadata = {
   title: "Privacy Policy",
   description: "Privacy policy for Ayodhya Restaurant, Betul.",
+  alternates: { canonical: "/privacy" },
+  robots: { index: false, follow: true },
 };
 
 export default function PrivacyPage() {

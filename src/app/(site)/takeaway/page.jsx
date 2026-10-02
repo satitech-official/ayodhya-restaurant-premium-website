@@ -8,13 +8,13 @@ export const metadata = {
   description:
     "Order takeaway from Ayodhya Restaurant Betul. Choose dishes online, send your self-pickup order and collect it fresh from Civil Lines, Ganj, Betul.",
   alternates: {
-    canonical: "/takeaway/",
+    canonical: "/takeaway",
   },
   openGraph: {
     title: "Takeaway & Self Pickup | Ayodhya Restaurant Betul",
     description:
       "Choose your favourites, send a pickup order and collect it fresh from Ayodhya Restaurant in Betul.",
-    url: "/takeaway/",
+    url: "/takeaway",
   },
 };
 

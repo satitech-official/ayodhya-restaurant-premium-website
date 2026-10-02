@@ -3,6 +3,8 @@ import Link from "next/link";
 export const metadata = {
   title: "Terms",
   description: "Terms of use for the Ayodhya Restaurant, Betul website.",
+  alternates: { canonical: "/terms" },
+  robots: { index: false, follow: true },
 };
 
 export default function TermsPage() {

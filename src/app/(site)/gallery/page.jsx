@@ -5,9 +5,16 @@ import { getGallery } from "@/lib/data";
 export const revalidate = 300;
 
 export const metadata = {
-  title: "Gallery",
+  title: "Ayodhya Restaurant Betul Photos | Food, Dining & Celebrations",
   description:
-    "Explore Ayodhya Restaurant in pictures — our dining room, signature dosas, beverages, celebrations and more in Ganj, Betul.",
+    "See photos and videos from Ayodhya Restaurant in Ganj, Betul — dining ambience, signature dishes, celebrations and restaurant experiences.",
+  alternates: { canonical: "/gallery" },
+  openGraph: {
+    title: "Ayodhya Restaurant Betul Photos",
+    description:
+      "Explore Ayodhya Restaurant's dining ambience, food and celebrations in Ganj, Betul.",
+    url: "/gallery",
+  },
 };
 
 export default async function GalleryRoute() {

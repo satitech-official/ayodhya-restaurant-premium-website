@@ -13,14 +13,14 @@ import { getMenuItems, getCategories } from "@/lib/data";
 export const revalidate = 300;
 
 export const metadata = {
-  title: "Menu | Vegetarian Restaurant in Betul",
+  title: "Ayodhya Restaurant Betul Menu | Pure Veg, Dosa, North & South Indian",
   description:
     "Explore Ayodhya Restaurant Betul's menu with North Indian, South Indian, Indo-Chinese, dosa, pizza, pasta, desserts, shakes and beverages near Lashkare Hospital, Ganj.",
-  alternates: { canonical: "/menu/" },
+  alternates: { canonical: "/menu" },
   openGraph: {
     title: "Ayodhya Restaurant Betul Menu",
     description: "Browse the vegetarian menu at Ayodhya Restaurant near Lashkare Hospital, Ganj, Betul.",
-    url: "/menu/",
+    url: "/menu",
   },
 };
 
