@@ -36,10 +36,10 @@ export const metadata = {
   category: "Restaurant",
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/brand/ayodhya-submark-loader.webp", type: "image/webp" },
       { url: "/brand/ayodhya-full-logo.jpg", type: "image/jpeg" },
     ],
-    shortcut: ["/icon.svg"],
+    shortcut: ["/brand/ayodhya-submark-loader.webp"],
     apple: [{ url: "/brand/ayodhya-submark-loader.webp", type: "image/webp" }],
   },
   other: {
