@@ -35,9 +35,9 @@ export const metadata = {
   publisher: "Ayodhya Restaurant",
   category: "Restaurant",
   icons: {
-    icon: [{ url: "/brand/ayodhya-submark.jpg", type: "image/jpeg", sizes: "420x420" }],
-    shortcut: ["/brand/ayodhya-submark.jpg"],
-    apple: [{ url: "/brand/ayodhya-submark.jpg", type: "image/jpeg", sizes: "420x420" }],
+    icon: [{ url: "/brand/ayodhya-favicon.jpg", type: "image/jpeg", sizes: "192x192" }],
+    shortcut: ["/brand/ayodhya-favicon.jpg"],
+    apple: [{ url: "/brand/ayodhya-favicon.jpg", type: "image/jpeg", sizes: "192x192" }],
   },
   other: {
     "geo.region": "IN-MP",
