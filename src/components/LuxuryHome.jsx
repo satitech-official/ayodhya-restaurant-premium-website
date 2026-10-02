@@ -345,9 +345,9 @@ export default function LuxuryHome({ settings, signatures = [], gallery = [], re
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {(reviews.length ? reviews : [
-              { id: 1, name: "Ayodhya Guest", rating: 5, review: "Great food, warm ambience and a memorable family dining experience." },
-              { id: 2, name: "Local Diner", rating: 5, review: "Loved the variety on the menu, especially the dosa and paneer favourites." },
-              { id: 3, name: "Betul Food Lover", rating: 5, review: "A comfortable place for family dinners and celebrations in Betul." },
+              { id: "google-rafi-rafi", name: "Rafi Rafi", rating: 5, review: "Good service.", source: "Google Review" },
+              { id: "google-saidulu-chittimalla", name: "Saidulu Chittimalla", rating: 5, review: "The food was flavorful and authentic — especially the South Indian thali and masala dosa, served fresh and hot.", source: "Google Review" },
+              { id: "google-gajendra-pawar", name: "Gajendra Pawar", rating: 3, review: "Food taste is good, with multiple food options available. The restaurant has plenty of parking and is family-friendly.", source: "Google Review" },
             ]).slice(0, 3).map((r, i) => (
               <Reveal key={r.id || i} delay={i * 0.06}>
                 <figure className="h-full rounded-[1.4rem] border border-brass/15 bg-espresso/45 p-6">

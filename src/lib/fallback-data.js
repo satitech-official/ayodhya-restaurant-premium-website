@@ -2867,7 +2867,31 @@ export const FALLBACK_OFFERS = [
   { id: 3, slug: "dessert-finish", title: "Sweet Finish", description: "End your meal with a warm brownie, ice cream or one of our chilled shakes.", image: img(33312980), badge: "Desserts", ctaLabel: "View Menu", ctaLink: "/menu?cat=desserts", validFrom: "", validUntil: "", active: true },
 ];
 export const FALLBACK_REVIEWS = [
-  { id: 1, name: "Local Diner", rating: 5, review: "A comfortable family dining experience with plenty of variety across Indian and Indo-Chinese favourites.", source: "Guest", date: "", approved: true },
-  { id: 2, name: "Betul Food Lover", rating: 5, review: "The dosa selection and paneer dishes make this an easy choice when everyone at the table wants something different.", source: "Guest", date: "", approved: true },
-  { id: 3, name: "Family Guest", rating: 4, review: "Warm ambience, broad menu and a relaxed setting that works well for family meals and groups.", source: "Guest", date: "", approved: true },
-];
+  {
+    id: "google-rafi-rafi",
+    name: "Rafi Rafi",
+    rating: 5,
+    review: "Good service.",
+    source: "Google Review",
+    date: "3 months ago",
+    approved: true,
+  },
+  {
+    id: "google-saidulu-chittimalla",
+    name: "Saidulu Chittimalla",
+    rating: 5,
+    review: "The food was flavorful and authentic — especially the South Indian thali and masala dosa, served fresh and hot.",
+    source: "Google Review",
+    date: "5 months ago",
+    approved: true,
+  },
+  {
+    id: "google-gajendra-pawar",
+    name: "Gajendra Pawar",
+    rating: 3,
+    review: "Food taste is good, with multiple food options available. The restaurant has plenty of parking and is family-friendly.",
+    source: "Google Review",
+    date: "3 months ago",
+    approved: true,
+  },
+]

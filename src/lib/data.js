@@ -97,13 +97,7 @@ export async function getGallery() {
 }
 
 export async function getApprovedReviews() {
-  if (!db) return FALLBACK_REVIEWS;
-  try {
-    const rows = await db.select().from(reviews).orderBy(desc(reviews.createdAt));
-    const approved = rows.filter((r) => r.approved);
-    return approved.length ? approved : FALLBACK_REVIEWS;
-  } catch (error) {
-    reportDataFallback("review", error);
-    return FALLBACK_REVIEWS;
-  }
+  // Homepage testimonials are locked to a manually verified Google review set.
+  // This prevents old placeholder/demo reviews from resurfacing from the database.
+  return FALLBACK_REVIEWS;
 }
