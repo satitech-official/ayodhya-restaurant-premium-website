@@ -9,7 +9,7 @@ export default function manifest() {
     background_color: "#171515",
     theme_color: "#171515",
     icons: [
-      { src: "/favicon.png", sizes: "512x512", type: "image/png", purpose: "any maskable" },
+      { src: "/brand/ayodhya-submark.jpg", sizes: "420x420", type: "image/jpeg", purpose: "any maskable" },
     ],
   };
 }
