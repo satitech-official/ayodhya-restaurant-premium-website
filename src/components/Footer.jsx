@@ -163,6 +163,9 @@ export default function Footer({ settings }) {
             </Link>
           </div>
         </div>
+        <p className="mt-5 text-center text-xs leading-relaxed text-cream/65">
+          Ayodhya Restaurant is a proprietorship business operated by Rakesh Malviya.
+        </p>
         <p className="mt-6 text-center text-[11px] text-cream/45">
           Designed &amp; Developed by{" "}
           <a
