@@ -42,10 +42,7 @@ export default function JsonLd() {
         ],
         logo: "https://ayodhyarestaurant.com/brand/ayodhya-full-logo.jpg",
         telephone: "+917024242488",
-        publicAccess: true,
-        isAccessibleForFree: true,
         priceRange: "₹₹",
-        paymentAccepted: "Cash, UPI, Cards",
         currenciesAccepted: "INR",
         acceptsReservations: true,
         servesCuisine: [
