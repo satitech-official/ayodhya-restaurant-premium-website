@@ -25,6 +25,9 @@ export const metadata = {
     "pure veg restaurant Betul",
     "best family dining Betul",
     "Ayodhya Restaurant Ganj Betul",
+    "veg restaurant near Lashkare Hospital",
+    "family dinner in Betul",
+    "vegetarian restaurant Civil Lines Betul",
   ],
   alternates: {
     canonical: "/",
@@ -43,6 +46,8 @@ export const metadata = {
     "geo.region": "IN-MP",
     "geo.placename": "Betul, Madhya Pradesh",
     "business:contact_data:locality": "Betul",
+    "business:contact_data:street_address": "Civil Lines, Near Lashkare Hospital, Ganj",
+    "business:contact_data:phone_number": "+917024242488",
     "business:contact_data:region": "Madhya Pradesh",
     "business:contact_data:postal_code": "460001",
     "business:contact_data:country_name": "India",
