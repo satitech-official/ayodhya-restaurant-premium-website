@@ -1,4 +1,4 @@
-import { pool } from "@/db";
+import { qrPool as pool } from "@/db/qr-pool";
 import { requireAdmin } from "@/lib/auth";
 import { pilotEnabled, sameOrigin, ensureQrTables, publicOrder } from "@/lib/qr-dinein";
 export const runtime = "nodejs";
