@@ -7,7 +7,7 @@ const next={new:"accepted",accepted:"preparing",preparing:"ready",ready:"served"
 const labels={new:"New",accepted:"Accepted",preparing:"Cooking",ready:"Ready",served:"Served",completed:"Completed",cancelled:"Cancelled"};
 const money=(n)=>"₹"+Number(n||0).toLocaleString("en-IN");
 const columns=["new","accepted","preparing","ready","served"];
-export default function QRKitchen(){
+export default function QRKitchen({apiPath="/api/admin/qr-orders",qrSetupPath="/admin/qr-setup"}){
   const [orders,setOrders]=useState([]);
   const [requests,setRequests]=useState([]);
   const [error,setError]=useState("");
@@ -18,7 +18,7 @@ export default function QRKitchen(){
   const audio=useRef(null);
   const fetchOrders=useCallback(async()=>{
     try{
-      const r=await fetch("/api/admin/qr-orders",{cache:"no-store"});
+      const r=await fetch(apiPath,{cache:"no-store"});
       const data=await r.json();
       if(!r.ok)throw new Error(data.error||"Could not fetch orders.");
       setOrders(data.orders||[]);setRequests(data.requests||[]);setError("");setReady(true);
@@ -33,7 +33,7 @@ export default function QRKitchen(){
   async function update(action,id,from,to,value){
     const key=String(id)+action;setBusy(key);setError("");
     try{
-      const r=await fetch("/api/admin/qr-orders",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({action,id,from,to,value})});
+      const r=await fetch(apiPath,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({action,id,from,to,value})});
       const d=await r.json();if(!r.ok || !d.ok)throw new Error(d.error||"Order was changed. Refresh and retry.");
       await fetchOrders();
     }catch(e){setError(e.message);}finally{setBusy("");}
@@ -50,7 +50,7 @@ export default function QRKitchen(){
     <div className="flex flex-wrap items-start justify-between gap-4">
       <div><p className="text-xs font-bold uppercase tracking-[0.2em] text-terracotta">Ayodhya Restaurant · Pilot</p><h1 className="mt-2 font-display text-4xl font-bold">Live Kitchen Orders</h1><p className="mt-2 text-sm text-walnut">QR table ordering · refreshed every 3.5 seconds · existing takeaway unaffected.</p></div>
       <div className="flex flex-wrap gap-2">
-        <Link href="/admin/qr-setup" className="inline-flex items-center gap-2 rounded-full bg-charcoal px-4 py-2 text-sm font-bold text-white"><ExternalLink size={16}/> QR setup & print</Link>
+        <Link href={qrSetupPath} className="inline-flex items-center gap-2 rounded-full bg-charcoal px-4 py-2 text-sm font-bold text-white"><ExternalLink size={16}/> QR setup & print</Link>
         <button type="button" onClick={()=>setSound((v)=>!v)} className="inline-flex items-center gap-2 rounded-full border border-sand bg-white px-4 py-2 text-sm font-bold"><Bell size={16}/>{sound?"Sound on":"Enable sound"}</button>
         <button type="button" onClick={fetchOrders} className="inline-flex items-center gap-2 rounded-full border border-sand bg-white px-4 py-2 text-sm font-bold"><RefreshCw size={16}/>Refresh</button>
       </div>
