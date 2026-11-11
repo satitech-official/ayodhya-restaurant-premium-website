@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ArrowLeft, Printer, QrCode, ExternalLink } from "lucide-react";
-export default function QRPrintSetup({enabled,tableCount}) {
+export default function QRPrintSetup({enabled,tableCount,backHref="/admin/qr-orders"}) {
   const [base,setBase]=useState("");
   useEffect(()=>setBase(window.location.origin),[]);
   const codes=Array.from({length:tableCount},(_,i)=>"T"+String(i+1).padStart(2,"0"));
@@ -11,7 +11,7 @@ export default function QRPrintSetup({enabled,tableCount}) {
   return <div className="text-charcoal">
     <style>{`@media print { body { background:white!important } header,nav,aside,button,.no-print { display:none!important } .qr-print-grid { display:grid!important; grid-template-columns:repeat(3,1fr); gap:10mm } .qr-card { break-inside:avoid; border:1px solid #aaa!important; padding:5mm!important } .qr-card img { width:46mm!important; height:46mm!important } }`}</style>
     <div className="no-print flex flex-wrap items-center justify-between gap-3">
-      <div><Link href="/admin/qr-orders" className="inline-flex items-center gap-2 text-sm text-terracotta"><ArrowLeft size={15}/>Back to Kitchen</Link><h1 className="mt-3 font-display text-4xl font-bold">QR Table Cards</h1><p className="mt-2 text-sm text-walnut">Each table has a unique QR that links to the real Ayodhya website and official menu.</p></div>
+      <div><Link href={backHref} className="inline-flex items-center gap-2 text-sm text-terracotta"><ArrowLeft size={15}/>Back to Kitchen</Link><h1 className="mt-3 font-display text-4xl font-bold">QR Table Cards</h1><p className="mt-2 text-sm text-walnut">Each table has a unique QR that links to the real Ayodhya website and official menu.</p></div>
       <button type="button" onClick={()=>window.print()} className="flex items-center gap-2 rounded-full bg-terracotta px-5 py-3 text-sm font-bold text-white"><Printer size={17}/>Print QR cards</button>
     </div>
     {!enabled && <p className="no-print mt-6 rounded-xl border border-amber-300 bg-amber-50 p-4 text-amber-900">Pilot is switched OFF. Set QR_PILOT_ENABLED=true and DATABASE_URL on the Node.js deployment before a restaurant test. Do not print these for customer use until backend connectivity is verified.</p>}
