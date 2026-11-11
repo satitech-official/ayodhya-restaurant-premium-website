@@ -1,4 +1,4 @@
-import { pool } from "@/db";
+import { qrPool as pool } from "@/db/qr-pool";
 import {
   pilotEnabled, validTable, sameOrigin, prepareLines,
   ensureQrTables, createOrderIdentifiers
