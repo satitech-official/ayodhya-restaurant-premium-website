@@ -1,4 +1,4 @@
-import { pool } from "@/db";
+import { qrPool as pool } from "@/db/qr-pool";
 import { pilotEnabled, validTable, sameOrigin, ensureQrTables } from "@/lib/qr-dinein";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
