@@ -8,7 +8,7 @@ export const dynamic="force-dynamic";
 const numerals={ "एक":1,"दो":2,"तीन":3,"चार":4,"पांच":5,"पाँच":5,"छह":6,"सात":7,"आठ":8,"नौ":9,"दस":10,"ek":1,"do":2,"teen":3,"char":4,"paanch":5,"chhe":6,"ekta":1,"one":1,"two":2,"three":3,"four":4,"five":5,"six":6,"seven":7,"eight":8,"nine":9,"ten":10 };
 const replacements=[
 ["पनीर","paneer"],["टिक्का","tikka"],["मसाला","masala"],["डोसा","dosa"],["दोसा","dosa"],["नान","naan"],["बटर","butter"],["लस्सी","lassi"],["कॉफी","coffee"],["कोल्ड","cold"],["चाय","chai"],["दाल","dal"],["चावल","rice"],["बिरयानी","biryani"],["पिज़्ज़ा","pizza"],["पिज्जा","pizza"],["नूडल्स","noodles"],["मंचूरियन","manchurian"],["फ्राइड","fried"],["राइस","rice"],["पाव","pav"],["भाजी","bhaji"],["छोले","chole"],["भटूरे","bhature"],["पास्ता","pasta"],["सूप","soup"],["शेक","shake"],["सैंडविच","sandwich"],["मोजिटो","mojito"],["दही","curd"],["रायता","raita"],["आइसक्रीम","icecream"],["गुलाब","gulab"],["जामुन","jamun"],["इडली","idli"],["उत्तपम","uttapam"],["चीज","cheese"],["फ्रेंच","french"],["फ्राइज","fries"],["जूस","juice"],["कुलचा","kulcha"],["तंदूरी","tandoori"],["पराठा","paratha"],["मलाई","malai"],["रोटी","roti"],["पानी","water"],
-["paneer tikka","paneer tikka"]
+["पनर","paneer"],["टकक","tikka"],["लससी","lassi"],["मसल","masala"],["मसला","masala"],["डस","dosa"],["paneer tikka","paneer tikka"]
 ];
 function norm(value){
   let v=String(value||"").toLowerCase().normalize("NFKC").replace(/[०-९]/g,d=>String("०१२३४५६७८९".indexOf(d)));
@@ -16,15 +16,19 @@ function norm(value){
   return v.replace(/[^\p{L}\p{N} ]/gu," ").replace(/\s+/g," ").trim();
 }
 function readCount(segment){
-  const words=norm(segment).split(" ");
-  let count=1;
-  if(words[0]&&/^\d{1,2}$/.test(words[0]))count=Number(words[0]);
-  else if(words[0]&&numerals[words[0]])count=numerals[words[0]];
-  else {
-    const raw=String(segment||"").trim().split(/\s+/)[0];
-    if(numerals[raw])count=numerals[raw];
+  // Hindi guests often say "मुझे दो प्लेट पनीर टिक्का", not just "दो पनीर टिक्का".
+  const rawWords=String(segment||"").trim().split(/\s+/);
+  const normalized=rawWords.map(norm);
+  let qty=1;
+  for(let i=0;i<normalized.length;i++){
+    const word=normalized[i];
+    const isDigit=/^\d{1,2}$/.test(word);
+    const asWord=numerals[word]??numerals[rawWords[i]];
+    // Final "दो" is usually the imperative "give", not quantity.
+    if(i===normalized.length-1&&!isDigit&&["दो","do"].includes(rawWords[i]))continue;
+    if(isDigit||asWord){qty=isDigit?Number(word):asWord;break;}
   }
-  return Math.min(20,Math.max(1,count));
+  return Math.min(20,Math.max(1,qty));
 }
 function tokenize(v){return norm(v).split(" ").filter(Boolean).filter(t=>!["veg","special","with","in","the","of","and"].includes(t));}
 function scoreCandidate(segment,item){
