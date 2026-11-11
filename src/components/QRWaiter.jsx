@@ -107,6 +107,7 @@ export default function QRWaiter({table,cartDetails,onAdd,onRemove,onConfirmOrde
     }catch{setListening(false);setHint("माइक शुरू नहीं हो सका। लिखकर बताइए।");}
   }
   return <>
+    {!open&&!started&&<button type="button" onClick={openChat} className="fixed bottom-[180px] right-4 z-[54] max-w-[235px] rounded-2xl border border-sand bg-white px-4 py-3 text-left text-sm font-semibold text-charcoal shadow-lg sm:bottom-[105px] sm:right-8" aria-label="AI वेटर से बात करें">🙏 नमस्ते! क्या खाना पसंद करेंगे? <ChevronRight size={15} className="ml-1 inline text-terracotta"/></button>}
     {!open&&<button type="button" onClick={openChat} className="fixed bottom-[108px] right-4 z-[55] flex items-center gap-3 rounded-full border border-white/30 bg-terracotta px-4 py-3 text-sm font-bold text-white shadow-[0_12px_36px_rgba(0,0,0,.25)] transition hover:scale-[1.03] sm:bottom-8 sm:right-8" aria-label="हिंदी AI वेटर से ऑर्डर करें">
       <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20"><Bot size={22}/></span><span className="text-left leading-tight">हिंदी AI वेटर<small className="block text-[10px] font-medium">बोलकर ऑर्डर करें</small></span>
     </button>}
