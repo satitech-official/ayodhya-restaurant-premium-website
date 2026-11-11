@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import QRWaiter from "@/components/QRWaiter";
 import { Check, ChevronDown, Minus, Plus, QrCode, Search, ShoppingBag, X, RefreshCw, GlassWater, Hand, ReceiptText, ArrowRight } from "lucide-react";
 import { RESTAURANT } from "@/lib/constants";
 
@@ -43,14 +44,14 @@ export default function QRGuestMenu({ items, categories, initialTable, tableCoun
     setCart((old) => {
       const key = String(id) + ":" + String(optionIndex);
       const prior = old.find((e) => e.key === key);
-      if (!prior && delta > 0) return [...old, { key, id, optionIndex, qty:1 }];
+      if (!prior && delta > 0) return [...old, { key, id, optionIndex, qty:Math.min(20,delta) }];
       return old.map((e) => e.key === key ? { ...e, qty:Math.min(20,Math.max(0,e.qty+delta)) } : e).filter((e) => e.qty > 0);
     });
   }
   async function placeOrder(e) {
     e.preventDefault();setError("");
-    if (!table || !isTable(table)) {setError("Please choose the correct table.");return;}
-    if (!cartDetails.length) {setError("Add an item first.");return;}
+    if (!table || !isTable(table)) {setError("Please choose the correct table.");return false;}
+    if (!cartDetails.length) {setError("Add an item first.");return false;}
     setBusy(true);
     if (!requestId.current) requestId.current = crypto.randomUUID();
     try {
@@ -62,7 +63,8 @@ export default function QRGuestMenu({ items, categories, initialTable, tableCoun
       if (!res.ok) throw new Error(data.error || "Could not place your order.");
       setDone(data);setCart([]);setCartOpen(false);
       if (typeof window !== "undefined") sessionStorage.setItem("ayodhya_last_qr_order", data.token);
-    } catch (err) {setError(err.message || "Could not place order.");}
+      return true;
+    } catch (err) {setError(err.message || "Could not place order.");return false;}
     finally {setBusy(false);}
   }
   async function service(kind) {
@@ -162,6 +164,7 @@ export default function QRGuestMenu({ items, categories, initialTable, tableCoun
           <p className="mt-6 text-center text-xs text-walnut">Items and prices are sourced from Ayodhya Restaurant's audited menu. Confirm final bill and availability with staff.</p>
         </div>
       )}
+      {enabled && <QRWaiter table={table} cartDetails={cartDetails} onAdd={(id,index,qty)=>changeItem(id,index,qty)} onRemove={(id,index,qty)=>changeItem(id,index,-qty)} onConfirmOrder={()=>placeOrder({preventDefault(){}})} done={done} />}
       {enabled && !done && <div className="fixed bottom-0 z-40 w-full border-t border-sand bg-white/95 px-4 py-4 shadow-2xl backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
           <div><p className="text-xs font-semibold text-walnut">{count} items · Table {table || "not selected"}</p><strong className="font-display text-2xl">{money(subtotal)}</strong></div>
