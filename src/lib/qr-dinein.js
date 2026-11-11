@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { pool } from "@/db";
+import { qrPool as pool } from "@/db/qr-pool";
 import { getMenuItems } from "@/lib/data";
 
 // Isolated dine-in pilot. No existing site menu, takeaway, booking or schema is modified.
