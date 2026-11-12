@@ -55,16 +55,16 @@ function buildFallback(message, menu, language = "both", cart = []) {
  if (/(क्या खास|suggest|recommend|best|सबसे अच्छा|क्या खा|कुछ अच्छा|खासियत|popular|what is good|what do you recommend)/i.test(message)) {
    const s = suggestions(menu);
    return { reply: english
-     ? "Here are some popular dishes from our menu: " + s.map(x => x.name + " for ₹" + x.price).join(", ") + ". What would you like?"
-     : "हमारे मेन्यू में ये खास डिश हैं: " + s.map(x => x.name + " " + x.price + " रुपये").join(", ") + "। आप क्या लेना चाहेंगे?",
+     ? "A few favourites: " + s.map(x => x.name + " for ₹" + x.price).join(", ") + "! Anything you like?"
+     : "ये हमारी खास डिश हैं: " + s.map(x => x.name + " " + x.price + " रुपये").join(", ") + "। इनमें क्या पसंद करेंगे?",
      operations: [], wantsCheckout: false };
  }
  // Do not turn a "done" request into a new dish selection.
  if (wantsCheckout && !/(पनीर|डोसा|tikka|dosa|lassi|लस्सी|बटर|butter|biryani|बिरयानी|paneer|rice|राइस)/i.test(message)) {
    return {
      reply: english
-       ? "Of course! Please review your full order, including quantities and total. Would you like to change anything? I will send it to the kitchen only after you confirm."
-       : "जी! पूरा ऑर्डर, मात्रा और कुल कीमत चेक कर लीजिए। क्या कुछ कम या ज़्यादा करना है? आपकी अंतिम पुष्टि के बाद ही किचन में भेजूँगा।",
+       ? "Sure! Let's review everything first. Anything to add or remove?"
+       : "जी! पहले पूरा ऑर्डर देख लें। कुछ कम या ज़्यादा करेंगे?",
      operations: [], wantsCheckout: true
    };
  }
@@ -103,12 +103,12 @@ function buildFallback(message, menu, language = "both", cart = []) {
  }
  if (!ops.length) {
    if (wantsCheckout) return { reply: english
-     ? "Please review your order. Would you like to change anything before confirming?"
+     ? "Please review your order. Shall I go through it with you?"
      : "पूरा ऑर्डर चेक कीजिए। पुष्टि से पहले कुछ बदलना चाहते हैं?",
      operations: [], wantsCheckout: true };
    return { reply: unclear.length
      ? (english ? "I couldn't identify " : "माफ़ कीजिए, ") + unclear.join("; ") + (english ? ". Please say the dish name on the menu." : "। मेन्यू में जैसा नाम है, वैसे बताइए।")
-     : (english ? "Please tell me the dish name and quantity, for example: two Paneer Tikka and one Lassi." : "जी बताइए, क्या खाना पसंद करेंगे? उदाहरण: दो पनीर टिक्का और एक लस्सी।"),
+     : (english ? "Please tell me the dish name and quantity, for example: two Paneer Tikka and one Lassi." : "जी, बताइए क्या लेंगे? जैसे दो पनीर टिक्का और एक लस्सी।"),
      operations: [], wantsCheckout: false };
  }
  const details = ops.map(op => {
@@ -116,8 +116,8 @@ function buildFallback(message, menu, language = "both", cart = []) {
    return op.qty + " × " + item.name;
  }).join(english ? " and " : " और ");
  let reply = english
-   ? (wantsRemove ? "I've removed " : "I've added ") + details + (wantsRemove ? " from your order. " : " to your order. ") + "Would you like anything else? Say 'done' when you're ready to review."
-   : (wantsRemove ? "ठीक है, आपके ऑर्डर से " : "जी, मैंने आपके ऑर्डर में ") + details + (wantsRemove ? " हटा दिया है।" : " जोड़ दिया है।") + " क्या कुछ और लेना चाहेंगे? पूरा हो तो 'बस' बोलिए।";
+   ? (wantsRemove ? "I've removed " : "I've added ") + details + (wantsRemove ? " from your order. " : " to your order. ") + "Anything else for you?"
+   : (wantsRemove ? "ठीक है, आपके ऑर्डर से " : "जी, मैंने आपके ऑर्डर में ") + details + (wantsRemove ? " हटा दिया है।" : " जोड़ दिया है।") + " और कुछ लेंगे?";
  if (unclear.length) reply += " " + unclear.join("; ") + (english ? ". Please clarify." : " — इसे दोबारा बताइए।");
  return { reply, operations: ops, wantsCheckout: false };
 }
