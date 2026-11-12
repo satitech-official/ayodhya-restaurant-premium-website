@@ -176,7 +176,7 @@ export default function QRGuestMenu({ items, categories, initialTable, tableCoun
           <button onClick={()=>{setCartOpen(true);setError("");}} type="button" className="inline-flex items-center gap-2 rounded-full bg-terracotta px-6 py-3 font-bold text-white disabled:opacity-50" disabled={!cart.length}><ShoppingBag size={18}/> View cart</button>
         </div>
       </div>}
-      {cartOpen && <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-0 sm:items-center sm:p-5" role="dialog" aria-modal="true" aria-label="Review your table order">
+      {cartOpen && <div className="fixed inset-0 z-[70] flex items-end justify-center bg-black/60 p-0 sm:items-center sm:p-5" role="dialog" aria-modal="true" aria-label="Review your table order">
         <div className="max-h-[94vh] w-full max-w-xl overflow-y-auto rounded-t-3xl bg-cream p-5 shadow-xl sm:rounded-3xl sm:p-7">
           <div className="flex items-start justify-between"><div><p className="text-xs font-bold uppercase tracking-wider text-terracotta">Table {table || "not selected"}</p><h2 className="font-display text-3xl font-bold">Review order</h2></div><button onClick={()=>setCartOpen(false)} aria-label="Close cart" className="rounded-full border p-2"><X/></button></div>
           <form onSubmit={placeOrder}>
