@@ -303,6 +303,8 @@ export default function QRWaiter({ table, cartDetails, onAdd, onRemove, onConfir
             <p className="truncate text-[14px] font-semibold text-[#32251e]">Your personal waiter</p>
             <p className="truncate text-[11px] text-[#897768]">{speaking ? "Speaking..." : listening ? "Listening..." : messages.at(-1)?.text || "नमस्ते! What would you like?"}</p>
           </div>
+          <button type="button" onClick={() => mic(language === "en" ? "en-IN" : "hi-IN")} disabled={busy || !!done} aria-label="Speak to waiter" className={"grid h-9 w-9 shrink-0 place-items-center rounded-full text-white disabled:opacity-50 lg:hidden " + (listening ? "animate-pulse bg-rose-600" : "bg-[#a85334]")}><Mic size={17}/></button>
+          <button type="button" onClick={() => mic("en-IN")} disabled={busy || !!done} aria-label="Order in English" className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#ead9ca] text-[10px] font-bold text-[#a85334] disabled:opacity-50 lg:hidden">EN</button>
           <button type="button" onClick={toggleSound} aria-label={voiceEnabled ? "Mute assistant" : "Unmute assistant"} className="grid h-9 w-9 place-items-center rounded-full text-[#7b675b] hover:bg-[#f7eee7]">
             {voiceEnabled ? <Volume2 size={18}/> : <VolumeX size={18}/>}
           </button>
@@ -349,7 +351,7 @@ export default function QRWaiter({ table, cartDetails, onAdd, onRemove, onConfir
             </form>
           </div>
         </div>
-        <div className="flex items-center gap-2 border-t border-[#efe5dc] bg-white px-3 py-2.5">
+        <div className="hidden items-center gap-2 border-t border-[#efe5dc] bg-white px-3 py-2.5 lg:flex">
           <button type="button" onClick={() => mic(language === "en" ? "en-IN" : "hi-IN")} disabled={busy || !!done} aria-label={listening ? "Stop recording" : "Speak Hindi order"} className={"flex h-10 flex-1 items-center justify-center gap-2 rounded-full px-4 text-[12px] font-bold text-white transition disabled:opacity-40 " + (listening ? "animate-pulse bg-rose-600" : "bg-[#a85334]")}>
             {listening ? <MicOff size={18}/> : <Mic size={18}/>}
             {listening ? "Listening..." : "Speak / बोलें"}
