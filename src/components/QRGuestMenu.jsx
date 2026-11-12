@@ -86,7 +86,7 @@ export default function QRGuestMenu({ items, categories, initialTable, tableCoun
     if(isTable(initialTable)) setTable(initialTable);
   },[initialTable]);
   return (
-    <div className={"min-h-screen bg-cream pb-32 text-charcoal " + (enabled ? "lg:pr-[445px]" : "")}>
+    <div className={"min-h-screen bg-cream pb-32 text-charcoal " + (enabled ? "lg:pr-[355px]" : "")}>
       <section className="bg-charcoal px-4 pb-10 pt-24 text-cream sm:pt-28">
         <div className="mx-auto max-w-6xl">
           <p className="text-xs font-bold uppercase tracking-[0.22em] text-brass">Ayodhya Restaurant · Betul</p>
