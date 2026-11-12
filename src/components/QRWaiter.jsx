@@ -212,7 +212,7 @@ export default function QRWaiter({
     }
   }
 
-  function microphone() {
+  function microphone(preferredLocale) {
     if (listening) { try { speechListening.current?.stop(); } catch {} return; }
     const Recognition = typeof window !== "undefined" && (window.SpeechRecognition || window.webkitSpeechRecognition);
     if (!Recognition) {
@@ -222,7 +222,7 @@ export default function QRWaiter({
     try {
       window.speechSynthesis?.cancel();
       const r = new Recognition();
-      r.lang = language === "en" ? "en-IN" : "hi-IN";
+      r.lang = preferredLocale || (language === "en" ? "en-IN" : "hi-IN");
       r.interimResults = false; r.continuous = false;
       r.maxAlternatives = 1;
       r.onresult = (e) => {
@@ -305,8 +305,13 @@ export default function QRWaiter({
         </div>
         <div className="shrink-0 border-t border-sand bg-white p-3">
           {!!hint && <p role="status" className="mb-2 text-[11px] text-amber-800">{hint}</p>}
+          {language === "both" && <div className="mb-2 flex items-center gap-2">
+            <span className="text-[10px] text-walnut">Speak in:</span>
+            <button type="button" disabled={busy || !!done} onClick={() => microphone("hi-IN")} className="rounded-full border border-sand bg-cream px-3 py-1.5 text-[11px] font-semibold text-terracotta">🎤 हिंदी</button>
+            <button type="button" disabled={busy || !!done} onClick={() => microphone("en-IN")} className="rounded-full border border-sand bg-cream px-3 py-1.5 text-[11px] font-semibold text-terracotta">🎤 English</button>
+          </div>}
           <form className="flex items-center gap-2" onSubmit={(e) => { e.preventDefault(); handleUtterance(draft); }}>
-            <button type="button" onClick={microphone} disabled={busy || !!done} aria-label={listening ? "Stop listening" : "Speak your order in Hindi or English"} className={"flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white disabled:opacity-40 " + (listening ? "animate-pulse bg-red-600" : "bg-terracotta")}>
+            <button type="button" onClick={() => microphone()} disabled={busy || !!done} aria-label={listening ? "Stop listening" : "Speak your order in Hindi or English"} className={"flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white disabled:opacity-40 " + (listening ? "animate-pulse bg-red-600" : "bg-terracotta")}>
               {listening ? <MicOff size={20}/> : <Mic size={20}/>}
             </button>
             <input aria-label="Hindi or English food order" value={draft} onChange={(e) => setDraft(e.target.value)} maxLength={350} disabled={!!done} className="min-w-0 flex-1 rounded-full border border-sand bg-cream px-3 py-2.5 text-[14px] outline-none focus:border-terracotta" placeholder="मुझे ये चाहिए / I want..." />
