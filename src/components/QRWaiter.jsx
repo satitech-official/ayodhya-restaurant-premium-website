@@ -206,7 +206,6 @@ export default function QRWaiter({ table, cartDetails, onAdd, onRemove, onConfir
     if (!text || sent.current || done) return;
     setDraft(""); setHint("");
     setMessages(m => [...m, { role: "user", text }]);
-    setChatOpen(true);
     if (!table) {
       const msg = "Please select your table first. / पहले टेबल चुनिए।";
       setMessages(m => [...m, { role: "assistant", text: msg }]); speak(msg); return;
@@ -236,6 +235,7 @@ export default function QRWaiter({ table, cartDetails, onAdd, onRemove, onConfir
       if (data.wantsCheckout) {
         // Next render has up-to-date cart. Never place an order without explicit customer approval.
         setReview(true);
+        setChatOpen(true);
         const list = currentCart.current;
         const msg = language === "en"
           ? "Sure. Let's check your items and total. Any changes before I send it?"
@@ -296,7 +296,7 @@ export default function QRWaiter({ table, cartDetails, onAdd, onRemove, onConfir
           <div className="min-w-0 flex-1">
             <p className="truncate text-[10px] font-bold uppercase tracking-[.14em] text-[#a95333]">Ayodhya · Table {table || "—"}</p>
             <p className="truncate text-[14px] font-semibold text-[#32251e]">Your personal waiter</p>
-            <p className="truncate text-[11px] text-[#897768]">{speaking ? "Speaking..." : listening ? "Listening..." : "नमस्ते! What would you like?"}</p>
+            <p className="truncate text-[11px] text-[#897768]">{speaking ? "Speaking..." : listening ? "Listening..." : messages.at(-1)?.text || "नमस्ते! What would you like?"}</p>
           </div>
           <button type="button" onClick={toggleSound} aria-label={voiceEnabled ? "Mute assistant" : "Unmute assistant"} className="grid h-9 w-9 place-items-center rounded-full text-[#7b675b] hover:bg-[#f7eee7]">
             {voiceEnabled ? <Volume2 size={18}/> : <VolumeX size={18}/>}
@@ -345,11 +345,11 @@ export default function QRWaiter({ table, cartDetails, onAdd, onRemove, onConfir
           </div>
         </div>
         <div className="flex items-center gap-2 border-t border-[#efe5dc] bg-white px-3 py-2.5">
-          <button type="button" onClick={() => { setChatOpen(true); mic(language === "en" ? "en-IN" : "hi-IN"); }} disabled={busy || !!done} aria-label={listening ? "Stop recording" : "Speak Hindi order"} className={"flex h-10 flex-1 items-center justify-center gap-2 rounded-full px-4 text-[12px] font-bold text-white transition disabled:opacity-40 " + (listening ? "animate-pulse bg-rose-600" : "bg-[#a85334]")}>
+          <button type="button" onClick={() => mic(language === "en" ? "en-IN" : "hi-IN")} disabled={busy || !!done} aria-label={listening ? "Stop recording" : "Speak Hindi order"} className={"flex h-10 flex-1 items-center justify-center gap-2 rounded-full px-4 text-[12px] font-bold text-white transition disabled:opacity-40 " + (listening ? "animate-pulse bg-rose-600" : "bg-[#a85334]")}>
             {listening ? <MicOff size={18}/> : <Mic size={18}/>}
             {listening ? "Listening..." : "Speak / बोलें"}
           </button>
-          <button type="button" onClick={() => { setChatOpen(true); mic("en-IN"); }} disabled={busy || !!done} className="rounded-full border border-[#ead9ca] px-3 py-2 text-[11px] font-bold text-[#8c563e] disabled:opacity-40" aria-label="Speak English order">EN</button>
+          <button type="button" onClick={() => mic("en-IN")} disabled={busy || !!done} className="rounded-full border border-[#ead9ca] px-3 py-2 text-[11px] font-bold text-[#8c563e] disabled:opacity-40" aria-label="Speak English order">EN</button>
           <button type="button" onClick={() => setChatOpen(v => !v)} className="flex items-center gap-1 rounded-full bg-[#f7eee7] px-3 py-2 text-[11px] font-bold text-[#7c5844] lg:hidden"><MessageCircle size={14}/>Chat</button>
         </div>
         {hint && <p role="status" className="px-3 pb-2 text-[10px] text-amber-800">{hint}</p>}
