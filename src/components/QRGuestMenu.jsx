@@ -27,6 +27,7 @@ export default function QRGuestMenu({ items, categories, initialTable, tableCoun
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(null);
   const [requestInfo, setRequestInfo] = useState("");
+  const [selectedByTouch, setSelectedByTouch] = useState(null);
   const requestId = useRef("");
   const filtered = useMemo(() => items.filter((it) => it.available !== false &&
     (category === "all" || it.category === category) &&
@@ -39,7 +40,11 @@ export default function QRGuestMenu({ items, categories, initialTable, tableCoun
   }).filter(Boolean), [cart, items]);
   const subtotal = cartDetails.reduce((a, c) => a + c.price * c.qty, 0);
   const count = cartDetails.reduce((a, c) => a + c.qty, 0);
-  function changeItem(id, optionIndex, delta) {
+  function changeItem(id, optionIndex, delta, source = "touch") {
+    if (source === "touch") {
+      const item = items.find((entry) => String(entry.id) === String(id));
+      if (item) setSelectedByTouch({ id: Date.now() + Math.random(), name: item.name, delta });
+    }
     setDone(null);setError("");requestId.current="";
     setCart((old) => {
       const key = String(id) + ":" + String(optionIndex);
@@ -81,7 +86,7 @@ export default function QRGuestMenu({ items, categories, initialTable, tableCoun
     if(isTable(initialTable)) setTable(initialTable);
   },[initialTable]);
   return (
-    <div className="min-h-screen bg-cream pb-32 text-charcoal">
+    <div className={"min-h-screen bg-cream pb-32 text-charcoal " + (enabled ? "lg:pr-[445px]" : "")}>
       <section className="bg-charcoal px-4 pb-10 pt-24 text-cream sm:pt-28">
         <div className="mx-auto max-w-6xl">
           <p className="text-xs font-bold uppercase tracking-[0.22em] text-brass">Ayodhya Restaurant · Betul</p>
@@ -164,8 +169,8 @@ export default function QRGuestMenu({ items, categories, initialTable, tableCoun
           <p className="mt-6 text-center text-xs text-walnut">Items and prices are sourced from Ayodhya Restaurant's audited menu. Confirm final bill and availability with staff.</p>
         </div>
       )}
-      {enabled && <QRWaiter table={table} cartDetails={cartDetails} onAdd={(id,index,qty)=>changeItem(id,index,qty)} onRemove={(id,index,qty)=>changeItem(id,index,-qty)} onConfirmOrder={()=>placeOrder({preventDefault(){}})} done={done} />}
-      {enabled && !done && <div className="fixed bottom-0 z-40 w-full border-t border-sand bg-white/95 px-4 py-4 shadow-2xl backdrop-blur">
+      {enabled && <QRWaiter table={table} cartDetails={cartDetails} selectedByTouch={selectedByTouch} onAdd={(id,index,qty)=>changeItem(id,index,qty,"assistant")} onRemove={(id,index,qty)=>changeItem(id,index,-qty,"assistant")} onConfirmOrder={()=>placeOrder({preventDefault(){}})} done={done} />}
+      {enabled && !done && <div className="fixed bottom-0 left-0 right-0 z-40 w-full border-t border-sand bg-white/95 px-4 py-4 shadow-2xl backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
           <div><p className="text-xs font-semibold text-walnut">{count} items · Table {table || "not selected"}</p><strong className="font-display text-2xl">{money(subtotal)}</strong></div>
           <button onClick={()=>{setCartOpen(true);setError("");}} type="button" className="inline-flex items-center gap-2 rounded-full bg-terracotta px-6 py-3 font-bold text-white disabled:opacity-50" disabled={!cart.length}><ShoppingBag size={18}/> View cart</button>
