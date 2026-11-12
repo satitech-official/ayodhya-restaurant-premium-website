@@ -125,6 +125,9 @@ export default function QRWaiter({ table, cartDetails, onAdd, onRemove, onConfir
     if (serial === voiceSerial.current) fallbackVoice(spoken, target);
   }, [voiceEnabled, premiumReady, table, fallbackVoice]);
 
+  const speakRef = useRef(speak);
+  useEffect(() => { speakRef.current = speak; }, [speak]);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     // QR scan auto-opens the compact assistant; audio permission is controlled by the browser.
@@ -132,7 +135,7 @@ export default function QRWaiter({ table, cartDetails, onAdd, onRemove, onConfir
       if (!hasWelcomed.current) {
         hasWelcomed.current = true;
         setAudioUnlocked(true);
-        speak(welcome.both, "hi");
+        speakRef.current(welcome.both, "hi");
       }
     };
     window.addEventListener("pointerdown", unlock, { once: true });
@@ -237,9 +240,11 @@ export default function QRWaiter({ table, cartDetails, onAdd, onRemove, onConfir
         setReview(true);
         setChatOpen(true);
         const list = currentCart.current;
+        const itemList = list.map(e => e.qty + " " + e.name + (e.variant !== "Regular" ? " " + e.variant : "")).join(", ");
+        const sum = list.reduce((n, e) => n + e.qty * e.price, 0);
         const msg = language === "en"
-          ? "Sure. Let's check your items and total. Any changes before I send it?"
-          : "जी, एक बार पूरा ऑर्डर देख लीजिए। कुछ कम या ज़्यादा?";
+          ? "Let me repeat your order. " + itemList + ". Total " + fmt(sum) + ". Any changes before I send it to the kitchen?"
+          : "एक बार ऑर्डर सुन लीजिए। " + itemList + "। कुल " + fmt(sum) + "। कुछ कम या ज़्यादा करेंगे?";
         setMessages(m => [...m, { role: "assistant", text: msg }]); speak(msg);
       } else {
         const answer = String(data.reply || "Anything else?").slice(0,500);
