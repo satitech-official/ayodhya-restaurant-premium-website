@@ -189,13 +189,21 @@ export default function QRWaiter({
         else onAdd(op.id, op.optionIndex, op.qty);
       }
       const text = String(data.reply || (language === "en" ? "What else would you like?" : "और क्या चाहिए?"));
-      setMessages((old) => [...old, { role: "assistant", text }]);
       setMode(data.mode || "guided");
-      if (data.wantsCheckout) {
-        // First render the updated cart then review; never auto-place.
+      const spokenLanguage = language === "both" ? (/[\u0900-\u097f]/.test(text) ? "hi" : "en") : language;
+      if (data.wantsCheckout && cartDetails.length) {
+        const dishSummary = cartDetails.map((e) => e.qty + " " + e.name + (e.variant && e.variant !== "Regular" ? " " + e.variant : "")).join(", ");
+        const fullReview = spokenLanguage === "en"
+          ? "Let me repeat your order: " + dishSummary + ". Total " + money(cartTotal) + ". Would you like to add or remove anything? Please confirm before I send it to the kitchen."
+          : "आपका पूरा ऑर्डर: " + dishSummary + "। कुल " + money(cartTotal) + "। कुछ कम या ज़्यादा करेंगे, या मैं किचन में भेजूँ? पहले पुष्टि करें।";
+        setMessages((old) => [...old, { role: "assistant", text: fullReview }]);
         setReview(true);
-      } else if ((data.operations || []).length) setReview(false);
-      say(text, language === "both" ? "hi" : language);
+        say(fullReview, spokenLanguage);
+      } else {
+        setMessages((old) => [...old, { role: "assistant", text }]);
+        if ((data.operations || []).length) setReview(false);
+        say(text, spokenLanguage);
+      }
     } catch (error) {
       const text = error.message || (language === "en" ? "Please try again or tap a menu item." : "कृपया फिर बोलें या डिश पर टैप करें।");
       setMessages((old) => [...old, { role: "assistant", text }]); setHint(text);
